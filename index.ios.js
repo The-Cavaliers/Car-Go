@@ -1,4 +1,13 @@
+import React from 'react';
 import { AppRegistry } from 'react-native';
-import { App } from './client/components/app';
+import App from './client/components/app';
+import { Provider } from 'react-redux'
+import store from './client/store';
 
-AppRegistry.registerComponent('CarGo', () => App);
+const router = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+AppRegistry.registerComponent('CarGo', () => router);
