@@ -7,12 +7,15 @@ import {
   Text
 } from 'react-native';
 
-export default class Profile extends Component {
+import TabBar from './TabBar';
+import styles from '../css/style';
+
+class Profile extends Component {
     constructor (props) {
-        super(props);
-        this.state = {
-            username: [],
-        };
+      super(props);
+      this.state = {
+          username: [],
+      };
     }
     componentDidMount() {
         this._loadInitialState().done();
@@ -24,22 +27,13 @@ export default class Profile extends Component {
       }
     };
     render() {
-        return (
-          <View style={styles.container}>
-            <Text>Welcome {this.state.username}</Text>
-          </View>
-        );
+      return (
+        <View style={styles.container}>
+          <Text>Welcome {this.state.username}</Text>
+          <TabBar />
+        </View>
+      );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 50,
-        backgroundColor: '#1abc9c',
-    },
-    input: {
-        height:40,
-       
-        marginBottom: 20
-    }
-});
+export default Profile;
