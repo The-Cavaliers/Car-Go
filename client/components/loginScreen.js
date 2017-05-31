@@ -107,7 +107,7 @@ const lock = new Auth0Lock({
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', picture: null }
+    this.state = { name: '', picture: null };
   }
 
   componentWillMount() {
@@ -123,7 +123,6 @@ class Login extends Component {
       this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
-
     });
   }
 
@@ -139,3 +138,4 @@ class Login extends Component {
 }
 
 export default Login;
+

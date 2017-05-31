@@ -5,7 +5,8 @@ import {
   View,
   Image,
   AsyncStorage,
-  Text
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 
 import TabBar from './TabBar';
@@ -17,6 +18,7 @@ class Profile extends Component {
       this.state = {
           username: [],
       };
+      this.loadHomeScreen = this.loadHomeScreen.bind(this);
     }
     componentDidMount() {
         this._loadInitialState().done();
@@ -28,15 +30,34 @@ class Profile extends Component {
         this.setState({username: value});
       }
     };
+    loadHomeScreen() {
+    this.props.navigation.navigate('Drawer');
+  }
     render() {
       const uri = this.props.picture;
       return (
         <View style={styles.container}>
-          <Text>Welcome Back {this.props.name}</Text>
+         <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
+            <Text>Welcome Back {this.props.name}</Text>
+          </TouchableOpacity>
           <TabBar />
         </View>
       );
     }
 }
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 50,
+    backgroundColor: '#1abc9c',
+  },
+  input: {
+    height: 40,
+    marginBottom: 20,
+  },
+});
 
 export default Profile;
