@@ -11,6 +11,7 @@ import {
 import styles from '../css/style';
 import CONFIG from '../../config/development.json';
 import Profile from './ProfileScreen';
+import Header from './ProfileHeader';
 
 const Auth0Lock = require('react-native-lock');
 
@@ -107,7 +108,10 @@ const lock = new Auth0Lock({
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: '' };
+    this.state = {
+      name: '',
+      picture: null,
+    };
   }
 
   componentWillMount() {
@@ -129,7 +133,8 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={style.profilePage}>
+        <Header headerText={this.state.name + "'s Profile"} />
         <Profile
           {...this.state}
           navigation={this.props.navigation}
@@ -138,6 +143,12 @@ class Login extends Component {
     );
   }
 }
+
+const style = {
+  profilePage: {
+    height: '100%',
+  },
+};
 
 export default Login;
 
