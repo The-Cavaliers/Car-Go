@@ -3,6 +3,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  Image,
   AsyncStorage,
   Text
 } from 'react-native';
@@ -20,6 +21,7 @@ class Profile extends Component {
     componentDidMount() {
         this._loadInitialState().done();
     }
+
     _loadInitialState = async() =>{
       let value = await AsyncStorage.getItem('username');
       if(value !== null) {
@@ -27,9 +29,10 @@ class Profile extends Component {
       }
     };
     render() {
+      const uri = this.props.picture;
       return (
         <View style={styles.container}>
-          <Text>Welcome {this.state.username}</Text>
+          <Text>Welcome Back {this.props.name}</Text>
           <TabBar />
         </View>
       );
