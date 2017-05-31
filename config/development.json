@@ -20,5 +20,9 @@
       "consumerSecret": "FILL_ME_IN",
       "callbackURL": "http://FILL_ME_IN/auth/twitter/callback"
     }
+  },
+  "auth0": {
+    "clientId" : "LFEbCRSP77eRVJTN4x91aGqrnuZSbXfC",
+    "domain": "phongtlam.auth0.com",
   }
 }
