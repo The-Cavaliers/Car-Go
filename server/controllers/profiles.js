@@ -11,6 +11,21 @@ module.exports.getAll = (req, res) => {
     });
 };
 
+//gets groups from the database
+module.exports.checkDestinations = (req, res) => {
+  models.Groups.where({ leaving_from: 'San francisco', going_to:'San Jose' }).fetch()
+  .then(profiles => {
+    if(profiles === null) {
+      console.log('nothing found')
+    } else {
+      console.log(profiles.attributes)
+    }
+  })
+  .catch(err => {
+    console.log('this is the err',err)
+    res.status(503);
+  })
+}
 // module.exports.create = (req, res) => {
 //   models.Profile.forge({ username: req.body.username, password: req.body.password })
 //     .save()

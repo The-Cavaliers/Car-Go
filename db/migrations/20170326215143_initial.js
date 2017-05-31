@@ -35,7 +35,7 @@ exports.up = function (knex, Promise) {
     knex.schema.createTable('groups', function(table) {
       table.increments('id').primary();
       table.string('name', 100);
-      table.string('leaving_from', 100).nullable().unique();
+      table.string('leaving_from', 100);
       table.string('going_to', 100);
       table.string('email');
       table.integer('user_id').references('users.id').onDelete('CASCADE');
