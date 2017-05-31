@@ -5,7 +5,7 @@ const propTypes = {
 };
 const DrawerButton = navigation => (
   <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-    <Image source={require('../assets/menu.jpg')} style={styles.icon} />
+    <Image source={require('../assets/car.jpg')} style={styles.icon} />
   </TouchableOpacity >
  );
 

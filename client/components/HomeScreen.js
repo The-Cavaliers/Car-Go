@@ -18,7 +18,7 @@ export default class Home extends Component {
     drawerLabel: 'Home',
     drawerIcon: ({ tintColor }) => (
       <Image
-        source={require('../assets/menu.jpg')}
+        source={require('../assets/car.jpg')}
         style={[styles.icon, {tintColor: tintColor}]}
       />
     ),
