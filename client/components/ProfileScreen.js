@@ -41,7 +41,7 @@ class Profile extends Component {
 //   container: {
 //     flex: 1,
 //     padding: 50,
-//     backgroundColor: '#1abc9c',
+//     backgroundColor: '#1abc9c ',
 //   },
 //   input: {
 //     height: 40,
