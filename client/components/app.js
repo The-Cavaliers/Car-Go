@@ -8,7 +8,7 @@ import { UserProfile } from './UserProfile';
 
 const App = StackNavigator({
   Login: { screen: Login },
-  Profile: { screen: Profile },
+  // Profile: { screen: Profile },
   Drawer: { screen: Drawer },
   UserProfile: { screen: UserProfile },
 });
