@@ -110,15 +110,15 @@ class Login extends Component {
     super(props);
     this.state = {
       name: '',
-      picture: null,
-    };
+      isPresent: false,
+    }
   }
 
   componentWillMount() {
-    this.FbLogin();
+    this._login();
   }
 
-  FbLogin() {
+  _login() {
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
@@ -127,11 +127,15 @@ class Login extends Component {
       this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
-      console.log(this.props);
+      // fetch from server
+        // if DB
+        // this.setState({ isPresent: true })
     });
   }
 
   render() {
+    isPresent = this.state.isPresent;
+    // return (isPresent) ? <HomePage /> : <Profile {...this.state} />;
     return (
       <View style={style.profilePage}>
         <Header headerText={this.state.name + "'s Profile"} />
@@ -151,4 +155,3 @@ const style = {
 };
 
 export default Login;
-
