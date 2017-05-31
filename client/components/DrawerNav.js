@@ -3,12 +3,10 @@ import { DrawerNavigator } from 'react-navigation';
 
 import JoinGroup from './JoinGroupScreen';
 import Home from './HomeScreen';
-import Profile from './profileScreen';
 
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
-  JoinGroup: { screen: JoinGroup },
-  Profile: { screen: Profile },
+  'Find Ride': { screen: JoinGroup },
 },
   {
     drawerWidth: 200,

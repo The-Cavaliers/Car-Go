@@ -11,7 +11,7 @@ import {
 
 import TabBar from './TabBar';
 import styles from '../css/style';
-
+import DrawerNav from './DrawerNav';
 class Profile extends Component {
     constructor (props) {
       super(props);
@@ -31,14 +31,14 @@ class Profile extends Component {
       }
     };
     loadHomeScreen() {
-    this.props.navigation.navigate('Drawer');
+    console.log(this.props.navigation.navigate('Drawer') );
   }
     render() {
-      const uri = this.props.picture;
+      // const uri = this.props.picture;
       return (
         <View style={styles.container}>
          <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
-            <Text>Welcome Back {this.props.name}</Text>
+            <Text>Welcome Back </Text>
           </TouchableOpacity>
           <TabBar />
         </View>
@@ -48,16 +48,16 @@ class Profile extends Component {
 
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 50,
-    backgroundColor: '#1abc9c',
-  },
-  input: {
-    height: 40,
-    marginBottom: 20,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 50,
+//     backgroundColor: '#1abc9c',
+//   },
+//   input: {
+//     height: 40,
+//     marginBottom: 20,
+//   },
+// });
 
 export default Profile;

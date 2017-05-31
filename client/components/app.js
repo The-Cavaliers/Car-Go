@@ -5,9 +5,11 @@ import Login from './LoginScreen';
 import Drawer from './DrawerNav';
 
 
-export const App = StackNavigator({
+const App = StackNavigator({
   Login: { screen: Login },
   Profile: { screen: Profile },
   Drawer: { screen: Drawer },
 });
+
+export default App;
 

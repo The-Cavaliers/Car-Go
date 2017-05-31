@@ -14,7 +14,6 @@ export default class Home extends Component {
 
   static navigationOptions = {
     title: 'Home Screen',
-
     drawerLabel: 'Home',
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -33,6 +32,7 @@ export default class Home extends Component {
       </View>
     );
   }
+
 
 }
 const styles = StyleSheet.create({
