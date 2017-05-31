@@ -52,5 +52,20 @@
 			</dict>
 		</dict>
 	</dict>
+
+	<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLName</key>
+    <string>auth0</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>{Bundle Identifier}</string>
+    </array>
+  </dict>
+</array>
+
 </dict>
 </plist>
