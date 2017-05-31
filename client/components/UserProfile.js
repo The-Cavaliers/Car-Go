@@ -21,7 +21,7 @@ const styles = {
     borderWidth: 1,
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
 };
 
