@@ -7,6 +7,7 @@ import rootReducer from './reducers/rootReducer';
 const defaultState = {
   user: '',
   group: '',
+  profileDetails: '',
 };
 const store = createStore(rootReducer, defaultState);
 // export const history = syncHistoryWithStore(browserHistory, store);
