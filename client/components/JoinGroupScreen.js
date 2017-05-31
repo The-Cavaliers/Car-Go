@@ -12,8 +12,8 @@ export default class JoinGroup extends Component {
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-        <Text>Join Group Screen </Text>
+        <Text> Find a Ride </Text>
       </TouchableOpacity>
-    );
+    )
   }
 }

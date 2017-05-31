@@ -11,41 +11,30 @@ import {
 
 import TabBar from './TabBar';
 import styles from '../css/style';
-import DrawerNav from './DrawerNav';
-class Profile extends Component {
-    constructor (props) {
-      super(props);
-      this.state = {
-          username: [],
-      };
-      this.loadHomeScreen = this.loadHomeScreen.bind(this);
-    }
-    componentDidMount() {
-        this._loadInitialState().done();
-    }
 
-    _loadInitialState = async() =>{
-      let value = await AsyncStorage.getItem('username');
-      if(value !== null) {
-        this.setState({username: value});
-      }
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: [],
     };
-    loadHomeScreen() {
-    console.log(this.props.navigation.navigate('Drawer') );
+    this.loadHomeScreen = this.loadHomeScreen.bind(this);
   }
-    render() {
+  loadHomeScreen() {
+    this.props.navigation.navigate('Drawer');
+  }
+  render() {
       // const uri = this.props.picture;
-      return (
-        <View style={styles.container}>
-         <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
+    return (
+      <View style={styles.container}>
+          <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
             <Text>Welcome Back </Text>
           </TouchableOpacity>
           <TabBar />
         </View>
-      );
-    }
+    );
+  }
 }
-
 
 
 // const styles = StyleSheet.create({
