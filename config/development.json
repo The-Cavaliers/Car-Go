@@ -23,6 +23,6 @@
   },
   "auth0": {
     "clientId" : "LFEbCRSP77eRVJTN4x91aGqrnuZSbXfC",
-    "domain": "phongtlam.auth0.com",
+    "domain": "phongtlam.auth0.com"
   }
 }
