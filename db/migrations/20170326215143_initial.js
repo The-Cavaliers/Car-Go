@@ -27,7 +27,7 @@ exports.up = function (knex, Promise) {
       table.string('password', 100);
       table.string('token', 100);
       table.string('email', 100).nullable().unique()
-      table.string('picture_url', 100);
+      table.string('picture_url');
       table.string('profile', 100);
       table.timestamps(true, true);
     }),
@@ -57,9 +57,8 @@ exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
     knex.schema.dropTable('profiles'),
+    knex.schema.dropTable('messages'),
     knex.schema.dropTable('users'),
     knex.schema.dropTable('groups'),
-    knex.schema.dropTable('messages'),
   ]);
 };
-
