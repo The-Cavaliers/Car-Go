@@ -13,14 +13,16 @@ module.exports.getAll = (req, res) => {
 
 //gets groups from the database
 module.exports.checkDestinations = (req, res) => {
-  console.log(req.body.leaving_from)
-  console.log(req.body.going_to)
-  models.Groups.where({ leaving_from: 'San francisco', going_to:'San Jose' }).fetch()
+  models.Groups.where({ leaving_from: req.body.leaving_from, going_to:req.body.going_to }).fetchAll()
+  models.Groups.fetchAll()
+  //models.Groups.where('going_to', '=', 'Fremont')
   .then(groups => {
+    console.log(groups)
     if(groups === null) {
+      //do some error handling here
       console.log('nothing found')
     } else {
-      res.status(201).send(groups.attributes);
+      res.status(201).send(groups);
     }
   })
   .catch(err => {

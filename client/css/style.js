@@ -24,10 +24,11 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 10,
     alignSelf: 'stretch',
-    width: 250,
+    width: null,
     borderWidth: 1,
     borderColor: '#fff',
     backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
   },
   input: {
     fontSize: 16,
@@ -50,6 +51,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#455A64',
   },
+  group: {
+    borderRadius: 2,
+    borderWidth: 3,
+    margin: 20,
+    padding: 20,
+    backgroundColor: 'rgba(255,255,255,1)',
+    fontWeight: '600',
+  }
+
 });
 
 export default styles;
