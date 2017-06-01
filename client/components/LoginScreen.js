@@ -53,6 +53,7 @@ class Login extends Component {
       })
       .then((response) => {
         // response from server, will need to et global state
+        // response.data[0] object
         console.log('response from /sign-up server', response);
       })
       .catch((error) => {

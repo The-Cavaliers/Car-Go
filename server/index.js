@@ -24,7 +24,7 @@ app.post('/sign-login', (req, res) => {
     email: user.email,
   })
   .then((response) => {
-    console.log('response from KNEX', response)
+    console.log('response from KNEX', response);
     if (response.length === 0) {
       new User({
         username: user.username,
@@ -34,23 +34,17 @@ app.post('/sign-login', (req, res) => {
         social_provider: user.provider,
       }).save()
       .then((users) => {
-        res.send(users.toJSON());
+        res.send(users);
       })
       .catch((error) => {
         console.log('err', error);
-        res.send('PLS HALP! ERROR')
-      })
+        res.send('PLS HALP! ERROR');
+      });
     } else {
-      res.send(response.toJSON());
+      res.send(response);
     }
   });
 });
-
-const checkIfUserExists = () => {
-  knex.query('SELECT')
-
-}
-
 
 const PORT = process.env.port || 3000;
 
