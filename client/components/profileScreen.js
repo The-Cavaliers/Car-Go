@@ -34,7 +34,6 @@ class Profile extends Component {
         </View>
     );
   }
-  // add for commit
 }
 
 
