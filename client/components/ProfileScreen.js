@@ -36,6 +36,8 @@ class Profile extends Component {
   }
 }
 
+// changes
+
 
 // const styles = StyleSheet.create({
 //   container: {
