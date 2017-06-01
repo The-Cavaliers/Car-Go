@@ -34,14 +34,14 @@ app.post('/sign-login', (req, res) => {
         social_provider: user.provider,
       }).save()
       .then((users) => {
-        res.send(users);
+        res.send([false, users]);
       })
       .catch((error) => {
         console.log('err', error);
         res.send('PLS HALP! ERROR');
       });
     } else {
-      res.send(response);
+      res.send([true, response]);
     }
   });
 });

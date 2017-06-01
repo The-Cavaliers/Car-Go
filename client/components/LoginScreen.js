@@ -43,7 +43,6 @@ class Login extends Component {
       // this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
-      console.log('provider', profile.identities[0].provider)
       axios.post('http://localhost:3000/sign-login', {
         username: profile.name,
         token: token.accessToken,
@@ -52,9 +51,10 @@ class Login extends Component {
         provider: profile.identities[0].provider,
       })
       .then((response) => {
-        // response from server, will need to et global state
-        // response.data[0] object
+        // response from server, will need to add to global state
+        // response.data[0] object will be boolean check
         console.log('response from /sign-up server', response);
+        console.log(response.data[0])
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
