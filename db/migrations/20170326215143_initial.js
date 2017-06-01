@@ -39,6 +39,7 @@ exports.up = function (knex, Promise) {
       table.string('leaving_from', 100);
       table.string('going_to', 100);
       table.string('email');
+      table.string('travelDate', 100);
       table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
