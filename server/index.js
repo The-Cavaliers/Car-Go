@@ -1,27 +1,56 @@
 'use strict';
 const User = require('../db/models/users');
+// const User = require('./app');
 
 const app = require('./app');
 
-const bookshelf = app.get('bookshelf');
+const dbConfig = {
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    user: 'postgres',
+    password: '1234',
+    database: 'thesis_devel',
+    charset: 'utf8',
+  },
+};
+
+const knex = require('knex')(dbConfig);
 
 app.post('/sign-login', (req, res) => {
   const user = req.body;
-  console.log('USER ISssssssss', user)
-  new User({
-    username: user.username,
-    token: user.token,
+  console.log('USER ISssssssss', user);
+  knex('users').where({
     email: user.email,
-    picture_url: user.picture_url,
-  }).save()
-  .then((users) => {
-    res.send(users.toJSON());
   })
-  .catch((error) => {
-    console.log('err', error);
-    res.send('PLS HALP! ERROR')
-  })
+  .then((response) => {
+    console.log('response from KNEX', response)
+    if (response.length === 0) {
+      new User({
+        username: user.username,
+        token: user.token,
+        email: user.email,
+        picture_url: user.picture_url,
+        social_provider: user.provider,
+      }).save()
+      .then((users) => {
+        res.send(users.toJSON());
+      })
+      .catch((error) => {
+        console.log('err', error);
+        res.send('PLS HALP! ERROR')
+      })
+    } else {
+      res.send(response.toJSON());
+    }
+  });
 });
+
+const checkIfUserExists = () => {
+  knex.query('SELECT')
+
+}
+
 
 const PORT = process.env.port || 3000;
 

@@ -21,10 +21,11 @@ exports.up = function (knex, Promise) {
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
 
-    knex.schema.createTable('users', function(table) {
+    knex.schema.createTableIfNotExists('users', function(table) {
       table.increments('id').primary();
       table.string('username', 100).nullable().unique();
       table.string('password', 100);
+      table.string('social_provider', 100);
       table.string('token', 100);
       table.string('email', 100).nullable().unique()
       table.string('picture_url');

@@ -43,18 +43,20 @@ class Login extends Component {
       // this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
-      axios.post('http://localhost:3000//sign-login', {
+      console.log('provider', profile.identities[0].provider)
+      axios.post('http://localhost:3000/sign-login', {
         username: profile.name,
         token: token.accessToken,
         email: profile.email,
         picture_url: profile.picture,
+        provider: profile.identities[0].provider,
       })
       .then((response) => {
-        // post to store
-        console.log('response from //sign-login', response);
+        // response from server, will need to et global state
+        console.log('response from /sign-up server', response);
       })
       .catch((error) => {
-        console.log('error from //sign-login', error);
+        console.log('error from /sign-up', error);
       });
     });
   }

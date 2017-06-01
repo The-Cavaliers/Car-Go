@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
-const User = require('../db/models/users');
+// const User = require('../db/models/users');
 
 const app = express();
 
@@ -27,30 +27,15 @@ app.use('/api/profiles', routes.profiles);
 app.use('/groups', routes.groups)
 
 // Phong's work
-const dbConfig = {
-  client: 'mysql',
-  connection: {
-    host: 'localhost',
-    user: 'postgres',
-    password: '1234',
-    database: 'thesis_devel',
-    charset: 'utf8',
-  },
+
+// app.set('bookshelf', bookshelf);
+
+const allowCrossDomain = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
 };
 
-const knex = require('knex')(dbConfig);
-const bookshelf = require('bookshelf')(knex);
-
-app.set('bookshelf', bookshelf);
-
-// const allowCrossDomain = (req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   next();
-// };
-//
-// app.use(allowCrossDomain);
-
+app.use(allowCrossDomain);
 
 // end of Phong's work
-
 module.exports = app;
