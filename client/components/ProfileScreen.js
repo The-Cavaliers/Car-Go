@@ -27,14 +27,16 @@ class Profile extends Component {
       // const uri = this.props.picture;
     return (
       <View style={styles.container}>
-          <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
-            <Text>Welcome Back </Text>
-          </TouchableOpacity>
-          <TabBar />
-        </View>
+        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
+          <Text>Welcome Back </Text>
+        </TouchableOpacity>
+        <TabBar />
+      </View>
     );
   }
 }
+
+// changes
 
 
 // const styles = StyleSheet.create({

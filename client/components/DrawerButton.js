@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
-const propTypes = {
-  navigation: PropTypes.object.isRequired,
-};
+import PropTypes from 'prop-types';
+// const propTypes = {
+//   navigation: PropTypes.object.isRequired,
+// };
 const DrawerButton = navigation => (
   <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
     <Image source={require('../assets/car.jpg')} style={styles.icon} />
-  </TouchableOpacity >
+  </TouchableOpacity>
  );
 
-DrawerButton.propTypes = propTypes;
+// DrawerButton.propTypes = propTypes;
 const styles = StyleSheet.create({
   icon: {
     width: 24,
@@ -17,4 +18,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+DrawerButton.propTypes = {
+  navigation: PropTypes.object,
+}
+
 export default DrawerButton;
