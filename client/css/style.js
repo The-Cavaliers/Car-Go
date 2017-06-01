@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginLeft: 30,
     marginRight: 30,
-    borderColor: 'red',
+    borderColor: '#66bfff',
     marginTop: 3,
     marginBottom: 3,
     padding: 20,
@@ -77,6 +77,10 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     width: 22,
     color: '#fff',
+  },
+  error: {
+    marginBottom: 4,
+    color: 'red'
   }
 
 });

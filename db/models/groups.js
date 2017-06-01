@@ -1,11 +1,11 @@
 
 const db = require('../');
 
-const Groups = db.Model.extend({
+const Group = db.Model.extend({
   tableName: 'groups',
-  auths: function() {
-    return this.hasMany('users');
+  user: function() {
+    return this.hasMany('Users');
   }
 });
 
-module.exports = db.model('Groups', Groups);
+module.exports = db.model('Group', Group);

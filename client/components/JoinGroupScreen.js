@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   Text,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker'
@@ -13,6 +14,7 @@ export default class JoinGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      showSearchError: false,
       groupsView: false,
       LeavingFrom: '',
       goingTo: '',
@@ -48,13 +50,17 @@ export default class JoinGroup extends Component {
     .then((res) => {
       this.setState({
         groups: res,
-        groupsView: true
+        groupsView: true,
+        showSearchError: false
 
       })
       console.log('this is the response',res)
     })
     .catch((err) => {
-       console.log('cant find match');
+      this.setState({
+        showSearchError: true
+      })
+       console.log('cant find match', );
     });
   }
   render() {
@@ -62,6 +68,7 @@ export default class JoinGroup extends Component {
       <View>
 
         <View style={styles.inputContainer}>
+          {this.state.showSearchError ? <Text style={styles.error}>No groups found, try another date</Text> : null}
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -106,7 +113,7 @@ export default class JoinGroup extends Component {
           </TouchableOpacity>
         </View>
 
-        {this.state.groupsView ? <View>
+        {this.state.groupsView ? <ScrollView>
           {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
             <Text>
@@ -120,7 +127,7 @@ export default class JoinGroup extends Component {
             </TouchableOpacity>
           </View>
           )}
-          </View>
+          </ScrollView>
         : null}
 
       </View>
