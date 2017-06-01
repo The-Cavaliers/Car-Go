@@ -36,7 +36,7 @@ class Profile extends Component {
   }
 }
 
-// change
+// changes
 
 
 // const styles = StyleSheet.create({
