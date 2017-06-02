@@ -11,6 +11,7 @@ import {
 
 import TabBar from './TabBar';
 import styles from '../css/style';
+import UserProfile from './UserProfile';
 
 class Profile extends Component {
   constructor(props) {
