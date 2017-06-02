@@ -1,14 +1,10 @@
-'use strict';
-const User = require('../db/models/users');
-
-const app = require('./app');
-
-const dbConfig = require('./dbConfig.js');
+const User = require('../../db/models/users');
+const dbConfig = require('../dbConfig');
 const knex = require('knex')(dbConfig);
 
-app.post('/sign-login', (req, res) => {
+module.exports.checkUser = (req, res) => {
   const user = req.body;
-  //console.log('USER ISssssssss', user);
+  console.log('USER ISssssssss', user);
   knex('users').where({
     email: user.email,
   })
@@ -27,16 +23,10 @@ app.post('/sign-login', (req, res) => {
       })
       .catch((error) => {
         console.log('err', error);
-        res.send('PLS HALP! ERROR');
+        res.send('PLS HALP! ERROR from server side', error);
       });
     } else {
       res.send([true, response]);
     }
   });
-});
-
-const PORT = process.env.port || 3000;
-
-app.listen(PORT, () => {
-  console.log(`GoCar listening on port ${PORT}!`);
-});
+};

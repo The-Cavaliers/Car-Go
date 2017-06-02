@@ -25,10 +25,9 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/groups', routes.groups)
+app.use('/sign-login', routes.users)
 
 // Phong's work
-
-// app.set('bookshelf', bookshelf);
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
