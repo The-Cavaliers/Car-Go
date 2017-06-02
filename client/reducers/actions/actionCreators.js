@@ -1,3 +1,5 @@
+// actions are plain JS objects
+
 
 export function createGroup(index) {
   return {
@@ -9,5 +11,12 @@ export function joinGroup(index) {
   return {
     type: 'Join_Group',
     index,
+  };
+}
+
+export function setProfile(profileDetails) {
+  return {
+    type: 'SET_PROFILE',
+    profileDetails,
   };
 }

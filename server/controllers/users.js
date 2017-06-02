@@ -9,7 +9,6 @@ module.exports.checkUser = (req, res) => {
     email: user.email,
   })
   .then((response) => {
-    console.log('response from KNEX', response);
     if (response.length === 0) {
       new User({
         username: user.username,
