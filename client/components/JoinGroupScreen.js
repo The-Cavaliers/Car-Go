@@ -27,7 +27,6 @@ export default class JoinGroup extends Component {
       goingTo: '',
       groups: {},
       date: new Date(),
-      sendemail: '',
     }
   }
   sendInputValues = () => {
@@ -71,12 +70,11 @@ export default class JoinGroup extends Component {
     });
   }
 
-  handleJoinClick = () => {
-    console.log('clicked');
-    this.sendEmail();
+  handleJoinClick = (email) => {
+    this.sendEmail(email);
   }
 
-  sendEmail = () => {
+  sendEmail = (email) => {
     fetch('http://127.0.0.1:3000/email', {
       method: 'POST',
       headers: {
@@ -84,7 +82,7 @@ export default class JoinGroup extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        sendemail: this.state.sendemail,
+        email: email,
       }),
     })
     .then(res => (res.json()))
@@ -152,7 +150,7 @@ export default class JoinGroup extends Component {
               To: {item.going_to}
             </Text>
 
-            <TouchableOpacity onPress={this.handleJoinClick} key={idx} style={styles.joinButton}>
+            <TouchableOpacity onPress={() => this.handleJoinClick(item.email)} key={idx} style={styles.joinButton}>
              <Text style={styles.joinbuttonText}>Join</Text>
             </TouchableOpacity>
           </View>

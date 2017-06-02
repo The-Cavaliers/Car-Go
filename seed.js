@@ -9,8 +9,8 @@ const last = ['Trump', 'Obama', 'Reagan', 'Bush', 'Ford', 'Carter', 'Nixon', 'Ja
 
 const going = ['Oakland', 'San Francisco', 'Sunnyvale', 'Mt. View', 'Hayward', 'Palo Alto', 'Santa Clara', 'Cupertino'];
 
-const email = ['hello@gmail.com', 'bye@gmail.com', 'hi@gmail.com', 'why@gmail.com','sowhat@gmail.com','joe@gmail.com','notsogood@gmail.com','ok@gmail.com']
-  for (var i = 0; i < 500; i++) {
+const email = ['walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com','walkingforyears@gmail.com' ]
+  for (var i = 0; i < 1000; i++) {
     new models.Groups({
       name: first[Math.floor(Math.random() * 8)] + ' ' + last[Math.floor(Math.random() * 8)],
       leaving_from: going[Math.floor(Math.random() * 8)],

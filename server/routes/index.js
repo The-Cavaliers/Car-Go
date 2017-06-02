@@ -3,3 +3,5 @@ module.exports.auth = require('./auth');
 module.exports.profiles = require('./profiles');
 module.exports.groups = require('./groups');
 module.exports.users = require('./users');
+module.exports.email = require('./email');
+
