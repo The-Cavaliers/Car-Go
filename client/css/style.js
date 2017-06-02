@@ -81,6 +81,11 @@ const styles = StyleSheet.create({
   error: {
     marginBottom: 4,
     color: 'red'
+  },
+  icon: {
+    height:36,
+    width: 36,
+    borderRadius: 16,
   }
 
 });

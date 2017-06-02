@@ -26,7 +26,8 @@ export default class JoinGroup extends Component {
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: new Date()
+      date: new Date(),
+      user_img: 'person.png'
     }
   }
   sendInputValues = () => {
@@ -35,7 +36,7 @@ export default class JoinGroup extends Component {
       goingTo: '',
       date: new Date()
     })
-    this.getGroups()
+    this.getGroups();
   }
   componentDidMount() {
   }
@@ -67,6 +68,28 @@ export default class JoinGroup extends Component {
         showSearchError: true
       })
        console.log('cant find match', );
+    });
+  }
+
+  handleJoinClick = (email) => {
+    this.sendEmail(email);
+  }
+
+  sendEmail = (email) => {
+    fetch('http://127.0.0.1:3000/email', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+    })
+    .catch((err) => {
     });
   }
   render() {
@@ -122,13 +145,14 @@ export default class JoinGroup extends Component {
         {this.state.groupsView ? <ScrollView>
           {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
+          <Image style={styles.icon} source={require('../assets/person.png')} />
             <Text>
               Group: {item.name}&nbsp;
               From: {item.leaving_from}&nbsp;
               To: {item.going_to}
             </Text>
 
-            <TouchableOpacity key={idx} style={styles.joinButton}>
+            <TouchableOpacity onPress={() => this.handleJoinClick(item.email)} key={idx} style={styles.joinButton}>
              <Text style={styles.joinbuttonText}>Join</Text>
             </TouchableOpacity>
           </View>
