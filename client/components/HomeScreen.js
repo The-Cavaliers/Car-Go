@@ -32,15 +32,15 @@ export default class Home extends Component {
     super(props);
       this.state ={
         region: {
-          latitude: 37.68125885,
-          longitude: -122.4705065,
+          latitude: 0,
+          longitude: 0,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }
       }
     };
   
-watchID: ?number = null;
+  watchID: ?number = null;
 
   componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
