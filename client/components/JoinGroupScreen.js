@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   Text,
+  Image,
   ScrollView,
   TouchableOpacity,
   Image,
@@ -27,6 +28,7 @@ export default class JoinGroup extends Component {
       goingTo: '',
       groups: {},
       date: new Date(),
+      user_img: 'person.png'
     }
   }
   sendInputValues = () => {
@@ -144,6 +146,7 @@ export default class JoinGroup extends Component {
         {this.state.groupsView ? <ScrollView>
           {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
+          <Image style={styles.icon} source={require('../assets/person.png')} />
             <Text>
               Group: {item.name}&nbsp;
               From: {item.leaving_from}&nbsp;
