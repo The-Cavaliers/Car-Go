@@ -13,6 +13,9 @@ import styles from '../css/style';
 import CONFIG from '../../config/development.json';
 import Profile from './ProfileScreen';
 import Header from './ProfileHeader';
+import { connect } from 'react-redux'; // inject data where we need
+
+// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
 const Auth0Lock = require('react-native-lock');
 
@@ -20,6 +23,13 @@ const lock = new Auth0Lock({
   clientId: CONFIG.auth0.clientId,
   domain: CONFIG.auth0.domain,
 });
+
+const mapStateToProps = (state) => {
+  return {
+    // profileDetails: state.profileDetails,
+    state,
+  }
+}
 
 class Login extends Component {
   constructor(props) {
@@ -70,7 +80,7 @@ class Login extends Component {
         <Header headerText={this.state.name + "'s Profile"} />
         <Profile
           {...this.props}
-          navigation={this.props.navigation}
+          // navigation={this.props.navigation}
         />
       </View>
     );
@@ -83,4 +93,4 @@ const style = {
   },
 };
 
-export default Login;
+export default connect(mapStateToProps)(Login);
