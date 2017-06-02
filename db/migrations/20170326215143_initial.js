@@ -23,7 +23,7 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTableIfNotExists('users', function(table) {
       table.increments('id').primary();
-      table.string('username', 100).nullable().unique();
+      table.string('username', 100).nullable();
       table.string('password', 100);
       table.string('social_provider', 100);
       table.string('token', 100);

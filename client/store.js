@@ -4,11 +4,17 @@ import { createStore, compose } from 'redux';
 
 import rootReducer from './reducers/rootReducer';
 
-const defaultState = {
-  user: '',
-  group: '',
-  profileDetails: '',
-};
-const store = createStore(rootReducer, defaultState);
+// const defaultState = {
+//   group: '',
+//   profileDetails: {
+//     username: '',
+//     email: '',
+//     id: '',
+//     picture_url: '',
+//     social_provider: '',
+//     token: '',
+//   },
+// };
+const store = createStore(rootReducer);
 // export const history = syncHistoryWithStore(browserHistory, store);
 export default store;

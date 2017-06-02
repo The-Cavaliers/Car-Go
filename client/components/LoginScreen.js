@@ -69,7 +69,7 @@ class Login extends Component {
       <View style={style.profilePage}>
         <Header headerText={this.state.name + "'s Profile"} />
         <Profile
-          {...this.state}
+          {...this.props}
           navigation={this.props.navigation}
         />
       </View>

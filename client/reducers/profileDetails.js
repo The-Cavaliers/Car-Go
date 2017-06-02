@@ -1,6 +1,21 @@
-function profileDetails(state = [], action) {
+function profileDetails(state = {}, action) {
   console.log('from profileDetails Reducer', state, action);
-  return state;
+  switch(action.type) {
+    case 'SET_PROFILE':
+      return {
+        ...state,
+        profileDetails: {
+          username: '',
+          email: '',
+          id: '',
+          picture_url: '',
+          social_provider: '',
+          token: '',
+        },
+      };
+    default:
+      return state;
+  }
 }
 
 
