@@ -42,7 +42,7 @@ buck-out/
 *.keystore
 
 #Ignore CocoaPods
-./ios/Pods/
+ios/Pods/
 
 
 # fastlane
