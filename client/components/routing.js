@@ -18,15 +18,3 @@ export const navReducer = (state, action) => {
   const nextState = AppNavigator.router.getStateForAction(action, state);
   return nextState || state;
 };
-
-class routing extends React.Component {
-  render() {
-    return (
-      <View>
-        <AppNavigator />
-      </View>
-    );
-  }
-}
-
-export default routing;
