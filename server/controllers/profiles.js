@@ -23,8 +23,8 @@ module.exports.checkDestinations = (req, res) => {
   .then(groups => {
     //console.log(groups)
     if(groups.length === 0) {
-      res.status(201).send(null)
       console.log('nothing found')
+      res.status(201).send(null)
     } else {
       res.status(201).send(groups);
     }

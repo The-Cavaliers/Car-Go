@@ -26,7 +26,8 @@ export default class JoinGroup extends Component {
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: new Date()
+      date: new Date(),
+      sendemail: '',
     }
   }
   sendInputValues = () => {
@@ -35,7 +36,7 @@ export default class JoinGroup extends Component {
       goingTo: '',
       date: new Date()
     })
-    this.getGroups()
+    this.getGroups();
   }
   componentDidMount() {
   }
@@ -67,6 +68,29 @@ export default class JoinGroup extends Component {
         showSearchError: true
       })
        console.log('cant find match', );
+    });
+  }
+
+  handleJoinClick = () => {
+    console.log('clicked');
+    this.sendEmail();
+  }
+
+  sendEmail = () => {
+    fetch('http://127.0.0.1:3000/email', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sendemail: this.state.sendemail,
+      }),
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+    })
+    .catch((err) => {
     });
   }
   render() {
@@ -128,7 +152,7 @@ export default class JoinGroup extends Component {
               To: {item.going_to}
             </Text>
 
-            <TouchableOpacity key={idx} style={styles.joinButton}>
+            <TouchableOpacity onPress={this.handleJoinClick} key={idx} style={styles.joinButton}>
              <Text style={styles.joinbuttonText}>Join</Text>
             </TouchableOpacity>
           </View>
