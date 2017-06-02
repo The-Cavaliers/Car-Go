@@ -39,8 +39,7 @@ export default class Home extends Component {
         }
       }
     };
-  
-  watchID: ?number = null;
+
 
   componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -59,12 +58,12 @@ export default class Home extends Component {
 
     },
     (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 500}
     );
-     this.watchID = navigator.geolocation.watchPosition((position) => {
-      var lastPosition = JSON.stringify(position);
-      //console.log(lastPosition);
-    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
   }
 
   // clicker() {
