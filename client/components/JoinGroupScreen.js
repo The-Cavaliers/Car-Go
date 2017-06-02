@@ -18,7 +18,6 @@ export default class JoinGroup extends Component {
       groupsView: false,
       LeavingFrom: '',
       goingTo: '',
-      travelDate: '',
       groups: {},
       date: new Date()
     }
