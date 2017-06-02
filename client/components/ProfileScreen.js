@@ -8,10 +8,17 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { connect } from 'react-redux'; // inject data where we need
 
 import TabBar from './TabBar';
 import styles from '../css/style';
 import UserProfile from './UserProfile';
+
+const mapStateToProps = (state) => {
+  return {
+    state,
+  }
+}
 
 class Profile extends Component {
   constructor(props) {
@@ -52,4 +59,5 @@ class Profile extends Component {
 //   },
 // });
 
-export default Profile;
+// export default Profile;
+export default connect(mapStateToProps)(Profile);

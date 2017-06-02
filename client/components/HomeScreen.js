@@ -10,12 +10,20 @@ import {
   Animated,
 } from 'react-native';
 
+import { connect } from 'react-redux'; // inject data where we need
+
 import DrawerButton from './DrawerButton';
 import MapView from 'react-native-maps';
 
 
 
-export default class Home extends Component {
+const mapStateToProps = (state) => {
+  return {
+    state,
+  }
+}
+
+class Home extends Component {
 
   static navigationOptions= ({navigation}) => ({
     title: 'Home Screen',
@@ -115,3 +123,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default connect(mapStateToProps)(Home);

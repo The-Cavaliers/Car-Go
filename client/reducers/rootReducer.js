@@ -2,17 +2,14 @@ import { combineReducers } from 'redux';
 import group from './group';
 import profileDetails from './profileDetails';
 import { navReducer } from '../components/routing';
+import Drawer from '../components/DrawerNav';
+import AppNavigator from '../components/routing';
 
 const rootReducer = combineReducers({
   group,
   profileDetails,
-  // tabBar: (state, action) => TabBar.router.getStateForAction(action, state),
-  // tabOne: (state, action) => JoinGroup.router.getStateForAction(action, state),
-  // routing: routerReducer,
-  // nav: (state, action) => (
-  //   routing.router.getStateForAction(action, state)
-  // )
-  nav: navReducer,
+  nav: (state, action) => AppNavigator.router.getStateForAction(action, state),
+  drawer: (state, action) => Drawer.router.getStateForAction(action, state),
 });
 
 export default rootReducer;

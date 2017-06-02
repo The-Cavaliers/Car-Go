@@ -6,7 +6,7 @@ import Drawer from './DrawerNav';
 import { UserProfile } from './UserProfile';
 
 
-export const AppNavigator = StackNavigator({
+const AppNavigator = StackNavigator({
   Login: { screen: Login },
   // Profile: { screen: Profile },
   Drawer: { screen: Drawer },
@@ -14,7 +14,9 @@ export const AppNavigator = StackNavigator({
 });
 
 // const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Login'));
-export const navReducer = (state, action) => {
-  const nextState = AppNavigator.router.getStateForAction(action, state);
-  return nextState || state;
-};
+// export const navReducer = (state, action) => {
+//   const nextState = AppNavigator.router.getStateForAction(action, state);
+//   return nextState || state;
+// };
+
+export default AppNavigator;

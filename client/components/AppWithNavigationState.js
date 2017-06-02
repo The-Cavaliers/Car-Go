@@ -4,6 +4,7 @@ import * as actionCreators from '../reducers/actions/actionCreators'; // import 
 import routing from './routing';
 import { AppNavigator } from './routing';
 import Login from './LoginScreen';
+import Profile from './ProfileScreen';
 
 
 // universal state
@@ -19,7 +20,7 @@ export function mapDispatchToProps(dispatch) {
   return bindActionCreators(actionCreators, dispatch);
 }
 
-const AppWithNavigationState = connect(mapStateToProps, mapDispatchToProps)(Login);
+// const AppWithNavigationState = connect(mapStateToProps, mapDispatchToProps)(Login);
 // connect everything with routing
 
-export default AppWithNavigationState;
+// export default AppWithNavigationState;
