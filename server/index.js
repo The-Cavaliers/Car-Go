@@ -35,7 +35,7 @@ app.post('/sign-login', (req, res) => {
   });
 });
 
-const PORT = process.env.port || 3001;
+const PORT = process.env.port || 3000;
 
 app.listen(PORT, () => {
   console.log(`GoCar listening on port ${PORT}!`);

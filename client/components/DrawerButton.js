@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const DrawerButton = props => (
   <TouchableOpacity onPress={() => props.navigation.navigate('DrawerOpen')}>
-    <Image source={require('../assets/menuu.png')} style={styles.icon} />
+    <Image source={require('../assets/menuu.jpg')} style={styles.icon} />
   </TouchableOpacity >
  );
 

@@ -32,8 +32,8 @@ export default class Home extends Component {
     super(props);
       this.state ={
         region: {
-          latitude: 0,
-          longitude: 0,
+          latitude: 37.68125885,
+          longitude: -122.4705065,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }
@@ -63,7 +63,7 @@ watchID: ?number = null;
     );
      this.watchID = navigator.geolocation.watchPosition((position) => {
       var lastPosition = JSON.stringify(position);
-      console.log(lastPosition);
+      //console.log(lastPosition);
     });
   }
 
