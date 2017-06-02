@@ -6,11 +6,18 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
+import DrawerButton from './DrawerButton';
 
 export default class JoinGroup extends Component {
+   static navigationOptions= ({navigation}) => ({
+    title: 'Find Ride',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Find Ride',
+  });
   constructor(props) {
     super(props)
     this.state = {
