@@ -36,12 +36,13 @@ export default class Home extends Component {
           longitude: 0,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }
+        },
+        isMapVisible: false,
       }
     };
 
 
-  componentWillMount () {
+  componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       console.log('JSON', initialPosition);
@@ -53,8 +54,10 @@ export default class Home extends Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
           loc: 0,
-        }
+        },
+        isMapVisible: true,
       })
+      
 
     },
     (error) => alert(JSON.stringify(error)),
@@ -77,7 +80,8 @@ export default class Home extends Component {
   // }
 
   render() {
-    return (
+    return (! this.isMapVisible ? 
+     (
 			<MapView
 				provider={MapView.PROVIDER_GOOGLE}
 				style={styles.map}
@@ -89,7 +93,12 @@ export default class Home extends Component {
 
 				/>
 			</MapView>
-    );
+    ) :
+    (
+      <View>
+      <Text> loading ...</Text>
+      </View>
+    ));
   }
 }
 const styles = StyleSheet.create({
