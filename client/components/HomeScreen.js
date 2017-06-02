@@ -41,7 +41,7 @@ export default class Home extends Component {
     };
 
 
-  componentDidMount () {
+  componentWillMount () {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       console.log('JSON', initialPosition);
