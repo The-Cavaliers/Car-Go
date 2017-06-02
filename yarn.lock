@@ -5642,6 +5642,12 @@ react-native-auth0@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/react-native-auth0/-/react-native-auth0-0.0.1.tgz#6a712cc0f00740337396205bc3da453f52d25026"
 
+react-native-datepicker@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.5.1.tgz#c9ba7c92da9552ad5deac18a7fc742673996e57c"
+  dependencies:
+    moment "2.x.x"
+
 react-native-deprecated-custom-components@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-deprecated-custom-components/-/react-native-deprecated-custom-components-0.1.0.tgz#f716d431ef2dc4f91b7a686af091ee3656538086"

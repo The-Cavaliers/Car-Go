@@ -4,22 +4,12 @@ const User = require('../db/models/users');
 
 const app = require('./app');
 
-const dbConfig = {
-  client: 'pg',
-  connection: {
-    host: 'localhost',
-    user: 'postgres',
-    password: '1234',
-    database: 'thesis_devel',
-    charset: 'utf8',
-  },
-};
-
+const dbConfig = require('./dbConfig.js');
 const knex = require('knex')(dbConfig);
 
 app.post('/sign-login', (req, res) => {
   const user = req.body;
-  console.log('USER ISssssssss', user);
+  //console.log('USER ISssssssss', user);
   knex('users').where({
     email: user.email,
   })

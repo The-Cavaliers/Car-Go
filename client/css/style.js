@@ -53,11 +53,34 @@ const styles = StyleSheet.create({
   },
   group: {
     borderRadius: 2,
-    borderWidth: 3,
-    margin: 20,
+    borderWidth: 1,
+    marginLeft: 30,
+    marginRight: 30,
+    borderColor: '#66bfff',
+    marginTop: 3,
+    marginBottom: 3,
     padding: 20,
     backgroundColor: 'rgba(255,255,255,1)',
-    fontWeight: '600',
+  },
+  joinButton: {
+    height:28,
+    width: 28,
+    borderRadius: 14,
+    backgroundColor: '#66bfff',
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+  },
+  joinbuttonText: {
+    fontSize: 10,
+    marginTop: 8,
+    marginLeft: 4,
+    width: 22,
+    color: '#fff',
+  },
+  error: {
+    marginBottom: 4,
+    color: 'red'
   }
 
 });

@@ -1,4 +1,6 @@
 const models = require('../../db/models');
+const dbConfig = require('../dbConfig.js');
+const knex = require('knex')(dbConfig);
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
@@ -13,13 +15,15 @@ module.exports.getAll = (req, res) => {
 
 //gets groups from the database
 module.exports.checkDestinations = (req, res) => {
-  models.Groups.where({ leaving_from: req.body.leaving_from, going_to:req.body.going_to }).fetchAll()
-  models.Groups.fetchAll()
-  //models.Groups.where('going_to', '=', 'Fremont')
+  var date = req.body.travelDate;
+  var leaving_from = req.body.leaving_from;
+  var going_to = req.body.going_to;
+  console.log('this is the date',date);
+  knex('groups').where('leaving_from', leaving_from).andWhere('going_to', going_to).andWhere('travelDate', date)
   .then(groups => {
-    console.log(groups)
-    if(groups === null) {
-      //do some error handling here
+    //console.log(groups)
+    if(groups.length === 0) {
+      res.status(201).send(null)
       console.log('nothing found')
     } else {
       res.status(201).send(groups);

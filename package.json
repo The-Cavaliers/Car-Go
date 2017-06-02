@@ -6,7 +6,8 @@
     "server-start": "nodemon server",
     "test": "jest",
     "build": "webpack --watch",
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "seed": "node seed.js"
   },
   "dependencies": {
     "axios": "^0.16.1",
@@ -40,6 +41,7 @@
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.2",
+    "react-native-datepicker": "^1.5.1",
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-fbsdk": "^0.6.0",
     "react-native-lock": "^0.6.0",
