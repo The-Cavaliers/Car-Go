@@ -14,6 +14,11 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - GoogleMaps (2.1.1):
+    - GoogleMaps/Maps (= 2.1.1)
+  - GoogleMaps/Base (2.1.1)
+  - GoogleMaps/Maps (2.1.1):
+    - GoogleMaps/Base
   - Lock (1.29.1):
     - Lock/Core (= 1.29.1)
     - Lock/UI (= 1.29.1)
@@ -38,24 +43,89 @@ PODS:
   - Lock/WebView (1.29.1):
     - Lock/CoreUI
   - Masonry (0.6.4)
+  - React (0.44.2):
+    - React/Core (= 0.44.2)
+  - react-native-google-maps (0.15.2):
+    - GoogleMaps (= 2.1.1)
+    - React
+  - react-native-maps (0.15.2):
+    - React
+  - React/Core (0.44.2):
+    - React/cxxreact
+    - Yoga (= 0.44.2.React)
+  - React/cxxreact (0.44.2):
+    - React/jschelpers
+  - React/jschelpers (0.44.2)
+  - React/RCTActionSheet (0.44.2):
+    - React/Core
+  - React/RCTAnimation (0.44.2):
+    - React/Core
+  - React/RCTGeolocation (0.44.2):
+    - React/Core
+  - React/RCTImage (0.44.2):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTLinkingIOS (0.44.2):
+    - React/Core
+  - React/RCTNetwork (0.44.2):
+    - React/Core
+  - React/RCTSettings (0.44.2):
+    - React/Core
+  - React/RCTText (0.44.2):
+    - React/Core
+  - React/RCTVibration (0.44.2):
+    - React/Core
+  - React/RCTWebSocket (0.44.2):
+    - React/Core
   - SimpleKeychain (0.7.0)
   - TouchIDAuth (0.2.0):
     - SimpleKeychain (~> 0.3)
+  - Yoga (0.44.2.React)
 
 DEPENDENCIES:
+  - GoogleMaps
   - Lock (~> 1.29)
   - Lock/Email
   - Lock/Safari
   - Lock/SMS
   - Lock/TouchID
+  - react-native-google-maps (from `../node_modules/react-native-maps`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
+  - React/Core (from `../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTAnimation (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - Yoga (from `../node_modules/react-native/ReactCommon/yoga/Yoga.podspec`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: ../node_modules/react-native
+  react-native-google-maps:
+    :path: ../node_modules/react-native-maps
+  react-native-maps:
+    :path: ../node_modules/react-native-maps
+  Yoga:
+    :path: ../node_modules/react-native/ReactCommon/yoga/Yoga.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   Lock: 8dcce0f7b77961141f11431f30d8fcc07a2708d3
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  React: 68b26ea7726bf0731e954db0187fd8b749ec2863
+  react-native-google-maps: d0b8772eb76e1615ea32c73bc9d573360b8c0817
+  react-native-maps: fe2e4680b4d3fcfd84d636ccedd470fe358d55e1
   SimpleKeychain: b50cef3b87939d480ea1143425c00f5b4b70fe21
   TouchIDAuth: 0cf861f58a2cacfc1c12cb02de4850729d943c81
+  Yoga: 735d941f871ac6c4853334c164c424e013a79a17
 
-PODFILE CHECKSUM: 3bca28c8883e2c1c8a569cbfa80d28b64eb02204
+PODFILE CHECKSUM: fc6ebf7b19730bb5675d9fc1aab475226e5fd819
 
 COCOAPODS: 1.2.1

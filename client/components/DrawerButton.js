@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 // const propTypes = {
 //   navigation: PropTypes.object.isRequired,
 // };
-const DrawerButton = navigation => (
-  <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-    <Image source={require('../assets/car.jpg')} style={styles.icon} />
-  </TouchableOpacity>
+
+const DrawerButton = props => (
+  <TouchableOpacity onPress={() => props.navigation.navigate('DrawerOpen')}>
+    <Image source={require('../assets/menuu.jpg')} style={styles.icon} />
+  </TouchableOpacity >
  );
 
 // DrawerButton.propTypes = propTypes;
@@ -21,6 +22,6 @@ const styles = StyleSheet.create({
 
 DrawerButton.propTypes = {
   navigation: PropTypes.object,
-}
+};
 
 export default DrawerButton;

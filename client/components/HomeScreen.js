@@ -2,47 +2,116 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   TextInput,
-  View,
   Text,
   TouchableOpacity,
   Image,
+  View,
+  Button,
+  Animated,
 } from 'react-native';
 
 import DrawerButton from './DrawerButton';
+import MapView from 'react-native-maps';
+
+
 
 export default class Home extends Component {
 
-  static navigationOptions = {
+  static navigationOptions= ({navigation}) => ({
     title: 'Home Screen',
+    headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Home',
     drawerIcon: ({ tintColor }) => (
       <Image
-        source={require('../assets/car.jpg')}
+        source={require('../assets/menu.jpg')}
         style={[styles.icon, {tintColor: tintColor}]}
       />
     ),
-  };
+  });
+  constructor(props) {
+    super(props);
+      this.state ={
+        region: {
+          latitude: 0,
+          longitude: 0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        isMapVisible: false,
+      }
+    };
 
-  render() {
-    return (
-      <View>
-       <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-        <Text>Home Screen </Text>
-       </TouchableOpacity>
-      </View>
+
+  componentDidMount () {
+    navigator.geolocation.getCurrentPosition((position) => {
+      var initialPosition = JSON.stringify(position);
+      console.log('JSON', initialPosition);
+      console.log('POSITION', position);
+      this.setState({
+        region:  {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+          loc: 0,
+        },
+        isMapVisible: true,
+      })
+      
+
+    },
+    (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 500}
     );
   }
 
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
 
+  // clicker() {
+  //   console.log('in homescreen click')
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     console.log('POSITIOOM IS', position)
+  //   },
+  //   (error) => console.log('ERrrrrrrr', JSON.stringify(error)),
+  //     {enableHighAccuracy: true, timeout: 50000, maximumAge: 1000}
+  //   );
+  // }
+
+  render() {
+    return (! this.isMapVisible ? 
+     (
+			<MapView
+				provider={MapView.PROVIDER_GOOGLE}
+				style={styles.map}
+				region={this.state.region}
+			>
+				<MapView.Marker
+					coordinate={this.state.region}
+					pinColor="red"
+
+				/>
+			</MapView>
+    ) :
+    (
+      <View>
+      <Text> loading ...</Text>
+      </View>
+    ));
+  }
 }
 const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
   },
-  container: {
+  containers: {
     flex: 1,
-    padding: 50,
-    color: 'gray',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  },
+  map: {
+    flex: 1,
   },
 });

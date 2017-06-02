@@ -13,7 +13,7 @@
 #import <React/RCTRootView.h>
 
 #import "A0LockReact.h"
-
+@import GoogleMaps;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -21,6 +21,7 @@
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  [GMSServices provideAPIKey:@"AIzaSyBceIvMOR_RbHOlhO61y-9vQ8ndtAw5oy0"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"CarGo"
