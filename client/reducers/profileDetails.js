@@ -4,14 +4,14 @@ function profileDetails(state = {}, action) {
     case 'SET_PROFILE':
       return {
         ...state,
-        profileDetails: {
-          username: '',
-          email: '',
-          id: '',
-          picture_url: '',
-          social_provider: '',
-          token: '',
-        },
+        // profileDetails: {
+        //   username: '',
+        //   email: '',
+        //   id: '',
+        //   picture_url: '',
+        //   social_provider: '',
+        //   token: '',
+        // },
       };
     default:
       return state;
