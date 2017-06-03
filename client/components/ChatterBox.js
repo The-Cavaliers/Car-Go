@@ -18,7 +18,6 @@ class ChatterBox extends React.Component {
     this.socket.emit('add-user', { username: 'userName', groupname: 'groupName' });
   }
   componentWillMount() {
-    console.log('in will mount ChatterBox', socket.on('connect'))
     AsyncStorage.getItem('AsyncProfile', (err, result) => {
       const AsyncProfile = JSON.parse(result);
       console.log('AsyncProfile', AsyncProfile);
