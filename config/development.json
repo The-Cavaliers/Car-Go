@@ -1,7 +1,12 @@
 {
-  "knex": {
+  "knex_config": {
+    "client": "pg",
     "connection": {
-      "database": "thesis_devel"
+      "host": "localhost",
+      "user": "postgres",
+      "password": "1234",
+      "database": "thesis_devel",
+      "charset": "utf8"
     }
   },
   "passport": {

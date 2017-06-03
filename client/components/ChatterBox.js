@@ -1,13 +1,15 @@
 import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
+import CONFIG from '../../config/development.json';
+
 class ChatterBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = { messages: [] };
     this.onSend = this.onSend.bind(this);
     // Socket IO connection
-    this.socket = SocketIOClient('http://localhost:3000');
+    this.socket = SocketIOClient(CONFIG.URL);
     this.socketMessages = [];
     // Keeps listening to the server side message emission;
     // this.socket.on('message', this.onReceivedMessage);
@@ -43,7 +45,7 @@ class ChatterBox extends React.Component {
         userName: 'May',
         groupName: 'ABC',
       });
-    this.socket.on('message', );
+    this.socket.on('message');
   }
   onReceivedMessage(messages) {
     console.log(messages);

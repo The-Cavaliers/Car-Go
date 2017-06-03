@@ -5,7 +5,7 @@ const GroupController = require('../controllers').Users;
 
 router.route('/')
   .post((req, res) => {
-    console.log('in user controller')
+    console.log('in user controller');
     GroupController.checkUser(req, res);
   });
 

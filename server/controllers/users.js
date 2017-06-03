@@ -1,6 +1,7 @@
 const User = require('../../db/models/users');
-const dbConfig = require('../dbConfig');
-const knex = require('knex')(dbConfig);
+const CONFIG = require('../../config/development.json');
+// const dbConfig = require('../dbConfig');
+const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.checkUser = (req, res) => {
   const user = req.body;
