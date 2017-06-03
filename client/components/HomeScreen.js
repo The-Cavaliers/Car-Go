@@ -65,8 +65,6 @@ class Home extends Component {
         },
         isMapVisible: true,
       })
-      
-
     },
     (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 500}
@@ -88,7 +86,7 @@ class Home extends Component {
   // }
 
   render() {
-    return (! this.isMapVisible ? 
+    return (this.state.isMapVisible ?
      (
 			<MapView
 				provider={MapView.PROVIDER_GOOGLE}

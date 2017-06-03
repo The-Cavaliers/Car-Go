@@ -8,12 +8,11 @@ import {
   TextInput,
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux'; // inject data where we need
 
-import styles from '../css/style';
 import CONFIG from '../../config/development.json';
 import Profile from './ProfileScreen';
 import Header from './ProfileHeader';
-import { connect } from 'react-redux'; // inject data where we need
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
