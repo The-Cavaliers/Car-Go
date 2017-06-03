@@ -27,6 +27,7 @@
     "grunt-eslint": "^19.0.0",
     "grunt-mocha-test": "^0.13.2",
     "grunt-pg": "^0.3.1",
+    "http": "^0.0.0",
     "image-webpack-loader": "^3.3.1",
     "knex": "^0.13.0",
     "mocha": "^3.4.2",
@@ -56,6 +57,7 @@
     "redis": "^2.7.1",
     "redux": "^3.6.0",
     "sendgrid": "^5.1.1",
+    "socket.io": "^2.0.2",
     "supertest": "^3.0.0"
   },
   "devDependencies": {
