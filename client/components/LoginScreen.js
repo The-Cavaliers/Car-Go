@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
-  TouchableOpacity,
-  Image,
   AsyncStorage,
-  TextInput,
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux'; // inject data where we need
@@ -52,7 +48,7 @@ class Login extends Component {
       // this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
-      axios.post('http://localhost:3000/sign-login', {
+      axios.post(`${CONFIG.URL}/sign-login`, {
         username: profile.name,
         token: token.accessToken,
         email: profile.email,
@@ -62,8 +58,10 @@ class Login extends Component {
       .then((response) => {
         // response from server, will need to add to global state
         // response.data[0] object will be boolean check
-        console.log('response from /sign-up server', response);
-        console.log(response.data[0])
+        console.log('response from /sign-up server', response.data[1][0]);
+        console.log(response.data[0]);
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]), () => {
+        });
       })
       .catch((error) => {
         console.log('error from /sign-up', error);

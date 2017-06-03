@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
-// const User = require('../db/models/users');
 
 const app = express();
 
@@ -24,11 +23,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
-app.use('/groups', routes.groups)
+app.use('/groups', routes.groups);
 
-app.use('/sign-login', routes.users)
+app.use('/sign-login', routes.users);
 
-app.use('/email', routes.email)
+app.use('/email', routes.email);
 
 
 // Phong's work

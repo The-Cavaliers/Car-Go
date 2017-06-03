@@ -4,7 +4,6 @@ const knex = require('knex')(dbConfig);
 
 module.exports.checkUser = (req, res) => {
   const user = req.body;
-  console.log('USER ISssssssss', user);
   knex('users').where({
     email: user.email,
   })

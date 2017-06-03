@@ -27,5 +27,6 @@
   },
   "SENDGRID" : {
     "key": "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"
-  }
+  },
+  "URL": "http://localhost:3000"
 }
