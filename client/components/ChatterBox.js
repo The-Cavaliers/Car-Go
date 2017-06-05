@@ -80,6 +80,7 @@ class ChatterBox extends React.Component {
     });
   }
 
+
   render() {
     const user = {
       _id: this.state.userId || -1,
