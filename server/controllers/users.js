@@ -14,7 +14,7 @@ module.exports.checkUser = (req, res) => {
         social_provider: user.provider,
       }).returning('*').into('users')
       .then((userLogin) => {
-        console.log('RET ID', userLogin)
+        console.log('RET ID', userLogin);
         // userLogin.id = id;
         res.send([false, userLogin]);
       })

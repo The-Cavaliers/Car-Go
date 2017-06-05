@@ -64,13 +64,13 @@ export default class JoinGroup extends Component {
         showSearchError: false
 
       })
-      console.log('this is the response',res)
+      // console.log('this is the response',res)
     })
     .catch((err) => {
       this.setState({
         showSearchError: true
       })
-       console.log('cant find match', );
+      //  console.log('cant find match', );
     });
   }
 

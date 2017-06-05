@@ -4,7 +4,8 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
 
-import DrawerButton from './DrawerButton'; 
+import DrawerButton from './DrawerButton';
+
 class ChatterBox extends React.Component {
   static navigationOptions= ({navigation}) => ({
     title: 'Chatter Box',
@@ -13,20 +14,20 @@ class ChatterBox extends React.Component {
   });
   constructor(props) {
     super(props);
-    this.state = { messages: [] };
+    this.state = { messages: [], userId: null };
     this.onSend = this.onSend.bind(this);
     this.storeMessages = this.storeMessages.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     // Keeps listening to the server side message emission;
     this.socket = SocketIOClient(CONFIG.URL);
     this.socket.on('message', this.onReceivedMessage);
+    // this.determineUser();
     // initial user details
   }
 
   componentWillMount() {
     AsyncStorage.getItem('AsyncProfile', (err, result) => {
       const AsyncProfile = JSON.parse(result);
-      console.log('AsyncProfile', AsyncProfile);
       this.setState({
         messages: [
           {
@@ -42,6 +43,22 @@ class ChatterBox extends React.Component {
         ],
       });
     });
+
+    AsyncStorage.getItem('USER_ID')
+      .then((userId) => {
+        // If there isn't a stored userId, then fetch one from the server.
+        if (!userId) {
+          this.socket.emit('userJoined', null);
+          this.socket.on('userJoined', () => {
+            AsyncStorage.setItem('USER_ID', userId);
+            this.setState({ userId });
+          });
+        } else {
+          this.socket.emit('userJoined', userId);
+          this.setState({ userId });
+        }
+      })
+      .catch((e) => alert(e));
   }
 
   componentDidMount() {
@@ -49,7 +66,9 @@ class ChatterBox extends React.Component {
     // this.socketMessages = [];
   }
 
+
   onSend(messages = []) {
+    console.log('MESSAGE', messages);
     this.socket.emit('message', messages[0]);
     this.storeMessages(messages);
   }
@@ -65,13 +84,12 @@ class ChatterBox extends React.Component {
   }
 
   render() {
+    const user = { _id: this.state.userId || -1 };
     return (
       <GiftedChat
         messages={this.state.messages}
         onSend={this.onSend}
-        user={{
-          _id: 1,
-        }}
+        user={user}
       />
     );
   }

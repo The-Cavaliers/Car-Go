@@ -29,7 +29,7 @@ class UserProfile extends Component {
     this.setState({
       profile: { ...this.state },
     });
-    console.log('This is the state', this.state);
+    // console.log('This is the state', this.state);
     this.props.navigation.navigate('Drawer');
   }
 

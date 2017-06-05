@@ -1,4 +1,3 @@
-import React from 'react';
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 import Login from './LoginScreen';
 import Drawer from './DrawerNav';

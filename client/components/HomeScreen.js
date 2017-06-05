@@ -38,8 +38,8 @@ class Home extends Component {
     super(props);
       this.state ={
         region: {
-          latitude: 0,
-          longitude: 0,
+          latitude: 37.783692,
+          longitude: -122.408967,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         },
@@ -55,8 +55,8 @@ class Home extends Component {
       // console.log('POSITION', position);
       this.setState({
         region:  {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude: 37.783692,
+          longitude: -122.408967,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
           loc: 0,
