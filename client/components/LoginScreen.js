@@ -30,9 +30,9 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      isPresent: false,
+      username: '',
     }
+    this._login = this._login.bind(this);
   }
 
   componentWillMount() {
@@ -60,8 +60,8 @@ class Login extends Component {
         // response.data[0] object will be boolean check
         console.log('response from /sign-up server', response.data[1][0]);
         console.log(response.data[0]);
-        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]), () => {
-        });
+        this.setState({ username: response.data[1][0].username });
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
@@ -70,11 +70,9 @@ class Login extends Component {
   }
 
   render() {
-    isPresent = this.state.isPresent;
-    // return (isPresent) ? <HomePage /> : <Profile {...this.state} />;
     return (
       <View style={style.profilePage}>
-        <Header headerText={this.state.name + "'s Profile"} />
+        <Header headerText={`${this.state.username}'s Profile`} />
         <Profile
           {...this.props}
           // navigation={this.props.navigation}
