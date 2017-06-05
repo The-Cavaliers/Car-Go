@@ -54,13 +54,15 @@ class Login extends Component {
         email: profile.email,
         picture_url: profile.picture,
         provider,
-      };
+      }
+      console.log('USER LOGIN', userLogin)
       this.setState({ username });
       axios.post(`${CONFIG.URL}/sign-login`, userLogin)
       .then((response) => {
-        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response));
         // response from server, will need to add to global state
         // response.data[0] object will be boolean check
+        console.log('response from /sign-up server', response.data[1][0]);
         console.log(response.data[0]); // check if is in db
       })
       .catch((error) => {
