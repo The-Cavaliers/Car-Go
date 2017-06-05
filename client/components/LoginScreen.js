@@ -75,7 +75,6 @@ class Login extends Component {
         <Header headerText={`${this.state.username}'s Profile`} />
         <Profile
           {...this.props}
-          // navigation={this.props.navigation}
         />
       </View>
     );
