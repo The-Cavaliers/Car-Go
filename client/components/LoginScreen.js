@@ -62,7 +62,7 @@ class Login extends Component {
       }).catch((error) => {
         console.log('ERROR SETTING NEW LOGIN PROFILE: ', error);
       });
-    });
+    })
   }
 
   passState(data) {
