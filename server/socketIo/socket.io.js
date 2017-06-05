@@ -14,6 +14,5 @@ module.exports = (server) => {
     // socket.on('add-user', (data) => {
     //   console.log(data);
     // });
-
   });
-}
+};
