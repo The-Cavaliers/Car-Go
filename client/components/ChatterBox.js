@@ -25,7 +25,7 @@ class ChatterBox extends React.Component {
         messages: [
           {
             _id: 1,
-            // text: `Hi ${AsyncProfile.username}!`, // input global state name here
+            text: `Hi ${AsyncProfile.username}!`, // input global state name here
             createdAt: new Date(),
             user: {
               _id: 2,
@@ -44,27 +44,12 @@ class ChatterBox extends React.Component {
   }
 
   onSend(messages = []) {
-    // this.setState(previousState => ({
-    //   messages: GiftedChat.append(previousState.messages, messages),
-    // }));
-    // // emit the messages to server
-    // this.socket.emit('message',
-    //   {
-    //     message: messages,
-    //     date: 'today',
-    //     userName: 'May',
-    //     groupName: 'ABC',
-    //   });
-    // this.socket.on('message');
     this.socket.emit('message', messages[0]);
     this.storeMessages(messages);
   }
 
   onReceivedMessage(messages) {
-    console.log(messages);
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
+    this.storeMessages(messages);
   }
 
   storeMessages(messages) {
