@@ -78,7 +78,10 @@ class Login extends Component {
   render() {
     return (
       <View style={style.profilePage}>
-        <HomeScreen/>
+        <Header headerText={`${this.state.username}'s Profile`} />
+        <Profile
+          {...this.props}
+        />
       </View>
     );
   }

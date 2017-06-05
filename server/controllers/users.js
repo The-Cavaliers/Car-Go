@@ -5,6 +5,10 @@ module.exports.checkUser = (req, res) => {
   const user = req.body;
   knex('users').where('email', user.email)
   .then((response) => {
+<<<<<<< HEAD
+=======
+    console.log('RESPONSE FROM SERVER', response);
+>>>>>>> first update after rebase
     if (response.length === 0) {
       knex.insert({
         username: user.username,
