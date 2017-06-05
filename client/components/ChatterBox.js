@@ -59,7 +59,7 @@ class ChatterBox extends React.Component {
         messages: [
           {
             _id: 1,
-            // text: `Hi ${AsyncProfile.username}!`, // input global state name here
+            text: `Hi ${AsyncProfile.username}!`, // input global state name here
             createdAt: new Date(),
             user: {
               _id: 2,
