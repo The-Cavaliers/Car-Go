@@ -21,7 +21,7 @@ module.exports.checkUser = (req, res) => {
       .catch((error) => {
         console.log('err', error);
         res.send('PLS HALP! ERROR from server side', error);
-      });
+      })
     } else {
       res.send([true, response]);
     }
