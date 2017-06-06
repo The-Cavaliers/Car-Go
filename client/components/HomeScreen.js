@@ -53,8 +53,8 @@ class Home extends Component {
   componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
-      console.log('JSON', initialPosition);
-      console.log('POSITION', position);
+      //console.log('JSON', initialPosition);
+      //console.log('POSITION', position);
       this.setState({
         region:  {
           latitude: position.coords.latitude,

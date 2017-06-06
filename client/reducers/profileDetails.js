@@ -1,5 +1,5 @@
 function profileDetails(state = {}, action) {
-  console.log('from profileDetails Reducer', state, action);
+  //console.log('from profileDetails Reducer', state, action);
   switch(action.type) {
     case 'SET_PROFILE':
       return {

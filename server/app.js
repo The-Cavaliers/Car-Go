@@ -24,10 +24,9 @@ app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/groups', routes.groups);
-
 app.use('/sign-login', routes.users);
-
 app.use('/email', routes.email);
+app.use('/newgroup', routes.addgroup);
 
 
 // Phong's work
