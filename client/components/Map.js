@@ -78,7 +78,6 @@ class Maps extends Component {
          longitude: JSON.parse(item.from_coords)[1]
         });
       });
-      console.log(coords);
       this.setState({listOfRegions: coords });
       // console.log(this.state.listOfRegions);
     })
@@ -98,7 +97,6 @@ class Maps extends Component {
           showsPointsOfInterest={true}
           region={this.state.region}
           >
-          {console.log(this.state.listOfRegions)}
           {this.state.listOfRegions.map((marker, id) => {
             return (
               <MapView.Marker key={id}
