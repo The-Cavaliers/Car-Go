@@ -6,12 +6,6 @@ const seedDataBase = function (argument) {
   const last = ['Trump', 'Obama', 'Reagan', 'Bush', 'Ford', 'Carter', 'Nixon', 'Jackson'];
 
   const going = ['Oakland', 'San Francisco', 'Sunnyvale', 'Mt. View', 'Hayward', 'Palo Alto', 'Santa Clara', 'Cupertino'];
-  // const locationCoords = {
-  //   Oakland: [[37.775037, -122.229411]],
-  //   'San Francisco': [[37.786523, -122.404455], [37.783404, -122.407167]],
-  // };
-
-  // const longCoords = [-122.229411, -122.404455, -122.407167, -122.027204, -122.108273, -122.110117, -122.171446, -122.032995];
   const addressLocation = {
     Oakland:
     {
@@ -68,7 +62,6 @@ const seedDataBase = function (argument) {
   for (let i = 0; i < 50; i++) {
     const leavingFrom = going[Math.floor(Math.random() * 8)];
     const goingTo = going[Math.floor(Math.random() * 8)];
-    //console.log(JSON.stringify([addressLocation[leavingFrom].lat[Math.floor(Math.random() * 0)]]));
     new models.Groups({
       name: `${first[Math.floor(Math.random() * 8)]} ${last[Math.floor(Math.random() * 8)]}`,
       leaving_from: leavingFrom,

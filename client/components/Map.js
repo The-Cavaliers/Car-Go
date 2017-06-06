@@ -13,7 +13,8 @@ import {
 import { connect } from 'react-redux'; // inject data where we need
 import pick from 'lodash/pick'
 import MapView from 'react-native-maps';
-
+import axios from 'axios';
+import CONFIG from '../../config/development.json';
 
 
 const mapStateToProps = (state) => {
@@ -35,20 +36,22 @@ class Maps extends Component {
       />
     ),
   });
+
   constructor(props) {
     super(props);
       this.state ={
         region: {
+          latitude: 37.775037,
+          longitude: -122.229411,
           latitudeDelta: 0.0322,
           longitudeDelta: 0.6421,
         },
-        isMapVisible: false,
-        routeCoordinates: [],
+          isMapVisible: false,
+          listOfRegions: {},
       }
     };
 
-
-  componentDidMount () {
+ componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
     //   console.log('JSON', initialPosition);
@@ -67,24 +70,25 @@ class Maps extends Component {
     (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-      const { routeCoordinates } = this.state
-      const newLatLngs = {latitude: position.coords.latitude, longitude: position.coords.longitude }  
-      const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-      positionLatLngs.latitudeDelta = 0.0922,
-      positionLatLngs.longitudeDelta = 0.0421,
-      this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) })
-    });
-  }
+    axios.get(`${CONFIG.URL}/getMapDetails`)
+    .then((response) => {
+      const coords = {};
+      response.data.forEach(function (item){
+        coords.latitude = JSON.parse(item.from_coords)[0];
+        coords.longitude = JSON.parse(item.from_coords)[1];
+      });
+      this.setState({listOfRegions: coords });
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
+      console.log(this.state.listOfRegions);
+    })
+    .catch((error) =>{
+      console.log(error);
+    })
   }
 
 
   render() {
-    return (this.state.isMapVisible ?
-      (
+    return (
 		<MapView
           style={styles.map}
           showsUserLocation={true}
@@ -92,18 +96,16 @@ class Maps extends Component {
           showsCompass={true}
           showsPointsOfInterest={true}
           region={this.state.region}
-          overlays={[{
-            coordinates:this.state.routeCoordinates,
-            strokeColor: '#19B5FE',
-            lineWidth: 10,
-          }]}
-          />
-      ) :
-      (
-        <View>
-        <Text> loading ...</Text>
-        </View>
-      ));
+          >
+     this.state.listOfRegions.map((item, idx) => {
+            return (
+              <MapView.Marker key={idx}
+                coordinate={item.coordinates}
+               />
+              )
+              })
+        </MapView>
+      );
   }
 }
 const styles = StyleSheet.create({

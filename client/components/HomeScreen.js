@@ -8,15 +8,12 @@ import {
   View,
   Button,
   Animated,
+
 } from 'react-native';
 
 import { connect } from 'react-redux'; // inject data where we need
-
-import DrawerButton from './DrawerButton';
-// import Geocoder from 'react-native-geocoding';
-// Geocoder.setApiKey('AIzaSyDpzJnZVR260R_2L2k5x91UY2g-YIcBWg8'); 
+import DrawerButton from './DrawerButton'; 
 import Map from './Map';
-
 
 const mapStateToProps = (state) => {
   return {
@@ -39,17 +36,8 @@ class Home extends Component {
   });
 
   render() {
-    // Geocoder.getFromLocation("Colosseum").then(
-    //   json => {
-    //     var location = json.results[0].geometry.location;
-    //     alert(location.lat + ", " + location.lng);
-    //   },
-    //   error => {
-    //     alert(error);
-    //   }
-    // );
     return (  
-      <Map />
+     	<Map />
     )
   }
 }

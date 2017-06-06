@@ -29,7 +29,10 @@ export default class CreateGroup extends Component {
     }
   }
   componentDidMount() {
-    AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
+    _loadInitialState = async() =>{
+    let user_data = await AsyncStorage.getItem('user_data');
+    if( !user_data) {
+      console.log(JSON.parse(user_data));
       var user = JSON.parse(user_data)
       this.setState({
         username: user.username,
@@ -37,7 +40,8 @@ export default class CreateGroup extends Component {
         email: user.email,
         picture_url: user.picture_url,
       })
-    });
+    }
+    }
   }
 
   handleAddGroupClick = () => {

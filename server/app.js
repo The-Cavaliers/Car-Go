@@ -27,6 +27,7 @@ app.use('/groups', routes.groups);
 app.use('/sign-login', routes.users);
 app.use('/email', routes.email);
 app.use('/newgroup', routes.addgroup);
+app.use('/getMapDetails', routes.maps);
 
 
 // Phong's work
