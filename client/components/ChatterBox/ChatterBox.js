@@ -2,14 +2,12 @@ import React from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
-import CONFIG from '../../config/development.json';
+import CONFIG from '../../../config/development.json';
 
 import DrawerButton from './DrawerButton';
 
-const avatar = require('../assets/carpool.png');
-
 class ChatterBox extends React.Component {
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions= ({ navigation }) => ({
     title: 'Chatter Box',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'ChatterBox',
@@ -82,24 +80,6 @@ class ChatterBox extends React.Component {
       console.log('socket id in front end', this.socket.id);
     });
   }
-
-    // AsyncStorage.getItem('USER_ID')
-    // .then((userId) => {
-    //   // If there isn't a stored userId, then fetch one from the server.
-    //   if (!userId) {
-    //     this.socket.emit('userJoined', null);
-    //     this.socket.on('userJoined', () => {
-    //       AsyncStorage.setItem('USER_ID', userId);
-    //       this.setState({ userId });
-    //     });
-    //   } else {
-    //     this.socket.emit('userJoined', userId);
-    //     this.setState({ userId });
-    //   }
-    // })
-    // .catch(e => alert(e));
-    // this.socket.emit('add-user', { username: 'userName', groupname: 'groupName' });
-    // this.socketMessages = [];
 
   render() {
     const user = {
