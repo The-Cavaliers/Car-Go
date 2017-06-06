@@ -6,3 +6,4 @@ module.exports.Maps = require('./maps');
 module.exports.GetGroups = require('./getGroups')
 module.exports.RemoveGroup = require('./removeGroup')
 
+module.exports.Selectgroup = require('./selectgroup');

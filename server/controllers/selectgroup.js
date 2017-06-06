@@ -25,6 +25,4 @@ module.exports.selectgroup = (req, res) => {
   //     res.send([true, response]);
   //   }
   // });
-
-  
 };

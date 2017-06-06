@@ -30,6 +30,7 @@ exports.up = function (knex, Promise) {
       table.string('email', 100).nullable().unique();
       table.string('picture_url');
       table.string('profile', 100);
+      table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
 
@@ -44,6 +45,7 @@ exports.up = function (knex, Promise) {
       table.string('seats', 100);
       table.string('from_coords', 100);
       table.string('to_coords', 100);
+      table.string('messages');
       table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
