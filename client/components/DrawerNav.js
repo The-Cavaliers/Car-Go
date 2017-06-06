@@ -4,7 +4,7 @@ import JoinGroup from './JoinGroupScreen';
 import Home from './HomeScreen';
 import CreateGroup from './CreateGroup';
 import Profile from './ProfileScreen';
-import ChatterBox from './ChatterBox';
+import ChatterBox from './ChatterBox/ChatterBox';
 
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
