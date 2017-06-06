@@ -9,6 +9,7 @@ import { connect } from 'react-redux'; // inject data where we need
 import CONFIG from '../../config/development.json';
 import Profile from './ProfileScreen';
 import Header from './ProfileHeader';
+import HomeScreen from './HomeScreen'
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
@@ -73,10 +74,7 @@ class Login extends Component {
     return (
       <View style={style.profilePage}>
         <Header headerText={`${this.state.username}'s Profile`} />
-        <Profile
-          {...this.props}
-          // navigation={this.props.navigation}
-        />
+        <HomeScreen/>
       </View>
     );
   }
