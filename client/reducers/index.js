@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import group from './group';
-import profileDetails from './profileDetails';
+import loginProfile from './LoginProfileReducer';
+import preferences from './ProfilePreferenceReducer';
 import Drawer from '../components/DrawerNav';
 import AppNavigator from '../components/routing';
-import preferences from './ProfilePreferenceReducer';
 
 const rootReducer = combineReducers({
   group,
   preferences,
-  profileDetails,
+  loginProfile,
   nav: (state, action) => AppNavigator.router.getStateForAction(action, state),
   drawer: (state, action) => Drawer.router.getStateForAction(action, state),
 });

@@ -1,4 +1,4 @@
-import { SET_PROFILE } from './type';
+import { SET_PROFILE, LOGIN_PROFILE } from './type';
 
 export const createGroup = (index) => {
   return {
@@ -11,6 +11,15 @@ export const joinGroup = (index) => {
     type: 'Join_Group',
     index,
   };
+};
+
+export const setLoginProfile = (data) => {
+  setTimeout(function() {
+    return {
+      type: LOGIN_PROFILE,
+      data,
+    };
+  }, 1000);
 };
 
 export const setProfile = (data) => {
