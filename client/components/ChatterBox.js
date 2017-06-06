@@ -2,9 +2,13 @@ import React from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
+<<<<<<< HEAD:client/components/ChatterBox/ChatterBox.js
 import CONFIG from '../../../config/development.json';
 
 import DrawerButton from './DrawerButton';
+=======
+import CONFIG from '../../config/development.json';
+>>>>>>> updated chat:client/components/ChatterBox.js
 
 class ChatterBox extends React.Component {
   static navigationOptions= ({ navigation }) => ({
