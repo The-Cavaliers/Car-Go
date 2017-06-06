@@ -24,5 +24,5 @@ module.exports.checkUser = (req, res) => {
     } else {
       res.send([true, response]);
     }
-  });
+  })
 };
