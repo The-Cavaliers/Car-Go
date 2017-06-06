@@ -4,4 +4,5 @@ module.exports.profiles = require('./profiles');
 module.exports.groups = require('./groups');
 module.exports.users = require('./users');
 module.exports.email = require('./email');
+module.exports.addgroup = require('./addgroup');
 

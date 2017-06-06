@@ -23,6 +23,7 @@ module.exports.emailUser = function(req, res) {
 	  if (error) {
 	    console.log('Error response received');
 	  }
+	  console.log('email sent');
 	  //console.log(response.statusCode);
 	  //console.log(response.body);
 	  //console.log(response.headers);

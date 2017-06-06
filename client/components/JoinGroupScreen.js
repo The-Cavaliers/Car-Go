@@ -20,13 +20,16 @@ export default class JoinGroup extends Component {
   });
   constructor(props) {
     super(props)
+    var getDate = new Date()
+    //getDate.slice(0,8)
+    console.log(getDate)
     this.state = {
       showSearchError: false,
       groupsView: false,
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: new Date(),
+      date: false,
       user_img: 'person.png'
     }
   }
@@ -94,7 +97,7 @@ export default class JoinGroup extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
 
         <View style={styles.inputContainer}>
           {this.state.showSearchError ? <Text style={styles.error}>No groups found, try another date</Text> : null}
@@ -112,12 +115,11 @@ export default class JoinGroup extends Component {
             value={this.state.goingTo}
             placeholder="Going To"
           />
-          <Text>Choose Date</Text>
           <DatePicker
             style={{width: 200}}
             date={this.state.date}
             mode="date"
-            placeholder="select date"
+            placeholder="Select Date"
             format="YYYY-MM-DD"
             minDate="2017-06-01"
             maxDate="2021-06-01"
@@ -131,7 +133,7 @@ export default class JoinGroup extends Component {
                 marginLeft: 0
               },
               dateInput: {
-                marginLeft: 36
+                marginLeft: 36,
               }
               // ... You can check the source to find the other keys.
             }}
