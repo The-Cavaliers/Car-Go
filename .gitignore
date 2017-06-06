@@ -49,7 +49,7 @@ ios/Pods/*
 
 # Keys
 #
-./config/development.json
+/config/development.json
 
 # fastlane
 #

@@ -14,6 +14,11 @@ import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
 export default class CreateGroup extends Component {
+    static navigationOptions= ({navigation}) => ({
+    title: 'Create Group',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Create Group',
+  });
     constructor(props) {
     super(props)
     this.state = {
@@ -29,10 +34,7 @@ export default class CreateGroup extends Component {
     }
   }
   componentDidMount() {
-    _loadInitialState = async() =>{
-    let user_data = await AsyncStorage.getItem('user_data');
-    if( !user_data) {
-      console.log(JSON.parse(user_data));
+    AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
       var user = JSON.parse(user_data)
       this.setState({
         username: user.username,
@@ -40,8 +42,7 @@ export default class CreateGroup extends Component {
         email: user.email,
         picture_url: user.picture_url,
       })
-    }
-    }
+    });
   }
 
   handleAddGroupClick = () => {

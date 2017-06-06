@@ -4,7 +4,13 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
 
+import DrawerButton from './DrawerButton'; 
 class ChatterBox extends React.Component {
+  static navigationOptions= ({navigation}) => ({
+    title: 'Chatter Box',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'ChatterBox',
+  });
   constructor(props) {
     super(props);
     this.state = { messages: [] };
