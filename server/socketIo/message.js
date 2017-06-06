@@ -1,6 +1,7 @@
 module.exports = (socket) => {
-  console.log('A client just joined on (socket.id)', socket.id);
+  // console.log('A client just joined on (socket.id)', socket.id);
 
+  // main sending message module
   socket.on('message', (message) => {
     console.log('message from server', message);
     const messageData = {

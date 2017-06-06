@@ -1,8 +1,8 @@
 const socketIo = require('socket.io');
-const onConnect = require('./ioConnect');
+const onConnect = require('./message');
 
 module.exports = (server) => {
-  const websocket = socketIo(server);
+  const io = socketIo(server);
 
-  websocket.on('connect', onConnect);
+  io.on('connect', onConnect);
 };
