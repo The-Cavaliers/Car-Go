@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 30,
     flexGrow: 1,
-    backgroundColor: '#1abc9c',
+    backgroundColor: '#fff',
   },
   welcome: {
     textAlign: 'center',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     width: null,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#08C5FF',
     alignItems: 'center',
   },
   input: {

@@ -56,7 +56,7 @@ export default class CreateGroup extends Component {
     this.setState({
       LeavingFrom: '',
       goingTo: '',
-      date: new Date()
+      date: false
     })
   }
   addGroup = () => {
@@ -92,7 +92,7 @@ export default class CreateGroup extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Image style={styles.icon} source={{uri:this.state.picture_url }} />
 
         <View style={styles.inputContainer}>
@@ -111,12 +111,11 @@ export default class CreateGroup extends Component {
             value={this.state.goingTo}
             placeholder="Going To"
           />
-          <Text>Choose Date</Text>
           <DatePicker
             style={{width: 200}}
             date={this.state.date}
             mode="date"
-            placeholder="select date"
+            placeholder="Select Date"
             format="YYYY-MM-DD"
             minDate="2017-06-01"
             maxDate="2021-06-01"
