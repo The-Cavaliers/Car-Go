@@ -1,6 +1,7 @@
 const app = require('./app');
 const server = require('http').Server(app);
-const websocket = require('socket.io')
+const websocket = require('./socketIo/socket.io');
+
 
 websocket(server);
 

@@ -3,8 +3,6 @@ import { connect } from 'react-redux'; // inject data where we need
 import * as actionCreators from '../reducers/actions/actionCreators'; // import everything
 import routing from './routing';
 import { AppNavigator } from './routing';
-import Login from './LoginScreen';
-import Profile from './ProfileScreen';
 
 
 // universal state

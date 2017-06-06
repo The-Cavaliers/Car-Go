@@ -1,6 +1,5 @@
 import React from 'react';
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
-import { View } from 'react-native';
 import Login from './LoginScreen';
 import Drawer from './DrawerNav';
 import { UserProfile } from './UserProfile';

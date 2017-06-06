@@ -46,22 +46,22 @@ class Login extends Component {
         return;
       }
       // this.setState({ name: profile.name });
-      console.log('profile:', profile);
-      console.log('token:', token);
-      axios.post(`${CONFIG.URL}/sign-login`, {
-        username: profile.name,
+      const provider = profile.identities[0].provider;
+      const username = provider === 'auth0' ? profile.nickname : profile.name;
+      const userLogin = {
+        username,
         token: token.accessToken,
         email: profile.email,
         picture_url: profile.picture,
-        provider: profile.identities[0].provider,
-      })
+        provider,
+      };
+      this.setState({ username });
+      axios.post(`${CONFIG.URL}/sign-login`, userLogin)
       .then((response) => {
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
         // response from server, will need to add to global state
         // response.data[0] object will be boolean check
-        console.log('response from /sign-up server', response.data[1][0]);
-        console.log(response.data[0]);
-        this.setState({ username: response.data[1][0].username });
-        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
+        console.log(response.data[0]); // check if is in db
       })
       .catch((error) => {
         console.log('error from /sign-up', error);

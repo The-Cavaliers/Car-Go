@@ -1,5 +1,7 @@
+const socketIo = require('socket.io');
+
 module.exports = (server) => {
-  const websocket = require('socket.io')(server);
+  const websocket = socketIo(server);
 
   websocket.on('connection', (socket) => {
     console.log('A client just joined on', socket.id);
@@ -14,6 +16,5 @@ module.exports = (server) => {
     // socket.on('add-user', (data) => {
     //   console.log(data);
     // });
-
   });
-}
+};
