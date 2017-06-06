@@ -47,7 +47,7 @@ class Maps extends Component {
           longitudeDelta: 0.6421,
         },
           isMapVisible: false,
-          listOfRegions: {},
+          listOfRegions: [],
       }
     };
 
@@ -72,14 +72,15 @@ class Maps extends Component {
     );
     axios.get(`${CONFIG.URL}/getMapDetails`)
     .then((response) => {
-      const coords = {};
+      const coords = [];
       response.data.forEach(function (item){
-        coords.latitude = JSON.parse(item.from_coords)[0];
-        coords.longitude = JSON.parse(item.from_coords)[1];
+       coords.push( {latitude: JSON.parse(item.from_coords)[0], 
+         longitude: JSON.parse(item.from_coords)[1]
+        });
       });
+      console.log(coords);
       this.setState({listOfRegions: coords });
-
-      console.log(this.state.listOfRegions);
+      // console.log(this.state.listOfRegions);
     })
     .catch((error) =>{
       console.log(error);
@@ -97,14 +98,16 @@ class Maps extends Component {
           showsPointsOfInterest={true}
           region={this.state.region}
           >
-     this.state.listOfRegions.map((item, idx) => {
+          {console.log(this.state.listOfRegions)}
+          {this.state.listOfRegions.map((marker, id) => {
             return (
-              <MapView.Marker key={idx}
-                coordinate={item.coordinates}
+              <MapView.Marker key={id}
+                coordinate= {marker}
                />
-              )
-              })
-        </MapView>
+            )
+          })}
+
+      </MapView>
       );
   }
 }
