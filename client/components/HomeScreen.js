@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux'; // inject data where we need
-import DrawerButton from './DrawerButton'; 
+import DrawerButton from './DrawerButton';
 import Map from './Map';
 
 const mapStateToProps = (state) => {
@@ -34,9 +34,57 @@ class Home extends Component {
       />
     ),
   });
+  constructor(props) {
+    super(props);
+      this.state ={
+        region: {
+          latitude: 37.783692,
+          longitude: -122.408967,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        isMapVisible: false,
+      }
+    };
+
+
+  componentDidMount () {
+    navigator.geolocation.getCurrentPosition((position) => {
+      var initialPosition = JSON.stringify(position);
+      // console.log('JSON', initialPosition);
+      // console.log('POSITION', position);
+      this.setState({
+        region:  {
+          latitude: 37.783692,
+          longitude: -122.408967,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+          loc: 0,
+        },
+        isMapVisible: true,
+      })
+    },
+    (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 500}
+    );
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  // clicker() {
+  //   console.log('in homescreen click')
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     console.log('POSITIOOM IS', position)
+  //   },
+  //   (error) => console.log('ERrrrrrrr', JSON.stringify(error)),
+  //     {enableHighAccuracy: true, timeout: 50000, maximumAge: 1000}
+  //   );
+  // }
 
   render() {
-    return (  
+    return (
      	<Map />
     )
   }

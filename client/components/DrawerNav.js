@@ -1,4 +1,3 @@
-
 import { DrawerNavigator } from 'react-navigation';
 
 import JoinGroup from './JoinGroupScreen';
