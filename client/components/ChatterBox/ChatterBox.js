@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
-import CONFIG from '../../config/development.json';
+import CONFIG from '../../../config/development.json';
 
 import DrawerButton from './DrawerButton';
 
 class ChatterBox extends React.Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions= ({ navigation }) => ({
     title: 'Chatter Box',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'ChatterBox',
@@ -80,7 +80,6 @@ class ChatterBox extends React.Component {
       console.log('socket id in front end', this.socket.id);
     });
   }
-
 
   render() {
     const user = {
