@@ -6,6 +6,8 @@ import ChatterBox from './ChatterBox';
 import ViewGroups from './ViewGroups';
 import UserProfile from './UserProfile';
 import Join from './Groups';
+import PubNub from './clientPubNub';
+
 
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
@@ -15,8 +17,8 @@ const Drawer = DrawerNavigator({
   'Create Group': { screen: CreateGroup },
   Profile: { screen: Profile },
   // ViewGroups: { screen: ViewGroups },
-
   Join: { screen: Join },
+  PubNub: {screen: PubNub },
 },
   {
     drawerWidth: 200,
