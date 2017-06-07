@@ -38,7 +38,7 @@ class Maps extends Component {
       listOfRegions: [],
     };
 
- componentWillMount () {
+ componentDidMount () {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
     //   console.log('JSON', initialPosition);
@@ -53,11 +53,11 @@ class Maps extends Component {
         },
         isMapVisible: true,
       })
-    },
-    (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-    axios.get(`${CONFIG.URL}/getMapDetails`)
+    axios.get(`${CONFIG.URL}/getMapDetails`, {
+      params: {
+        location: [position.coords.latitude, position.coords.longitude]
+      }
+    })
     .then((response) => {
       const coords = [];
       response.data.forEach(function (item){
@@ -65,12 +65,16 @@ class Maps extends Component {
          longitude: JSON.parse(item.from_coords)[1]
         });
       });
-      this.setState({listOfRegions: coords });
+     this.setState({listOfRegions: coords });
       console.log(this.state.listOfRegions);
     })
     .catch((error) =>{
       console.log(error);
     })
+    },
+    (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
   }
 
   // componentWillMount() {
@@ -118,6 +122,7 @@ class Maps extends Component {
           showsPointsOfInterest={true}
           region={this.state.region}
           >
+          {console.log(this.state.listOfRegions)}
           {this.state.listOfRegions.map((marker, id) => {
             return (
               <MapView.Marker key={id}
