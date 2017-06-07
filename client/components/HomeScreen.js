@@ -10,11 +10,24 @@ import {
   Animated,
 
 } from 'react-native';
-
-import { connect } from 'react-redux'; // inject data where we need
+import TabView from 'react-native-scrollable-tab-view';
+import JoinGroupScreen from './JoinGroupScreen';
+import CreateGroup from './CreateGroup';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import DrawerButton from './DrawerButton';
+import GroupsButton from './GroupsButton';
 import Map from './Map';
+import CONFIG from '../../config/development.json';
 
+// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
+
+const Auth0Lock = require('react-native-lock');
+
+const lock = new Auth0Lock({
+  clientId: CONFIG.auth0.clientId,
+  domain: CONFIG.auth0.domain,
+});
 const mapStateToProps = (state) => {
   return {
     state,
@@ -22,21 +35,10 @@ const mapStateToProps = (state) => {
 }
 
 class Home extends Component {
-
-  static navigationOptions= ({navigation}) => ({
-    title: 'Home Screen',
-    headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('../assets/menu.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  });
   constructor(props) {
     super(props);
       this.state ={
+        username: '',
         region: {
           latitude: 37.783692,
           longitude: -122.408967,
@@ -45,7 +47,25 @@ class Home extends Component {
         },
         isMapVisible: false,
       }
-    };
+    this._login = this._login.bind(this);
+  };
+
+  componentWillMount() {
+    this._login();
+  }
+
+  static navigationOptions= ({navigation}) => ({
+    title: 'CarGo',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Home',
+    headerRight: <GroupsButton navigation={navigation} />,
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('../assets/menu.jpg')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  });
 
 
   componentDidMount () {
@@ -83,9 +103,47 @@ class Home extends Component {
   //   );
   // }
 
+ _login() {
+    lock.show({}, (err, profile, token) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      // this.setState({ name: profile.name });
+      console.log('profile:', profile);
+      console.log('token:', token);
+      axios.post(`${CONFIG.URL}/sign-login`, {
+        username: profile.name,
+        token: token.accessToken,
+        email: profile.email,
+        picture_url: profile.picture,
+        provider: profile.identities[0].provider,
+      })
+      .then((response) => {
+        // response from server, will need to add to global state
+        // response.data[0] object will be boolean check
+        console.log('response from /sign-up server', response.data[1][0]);
+        console.log(response.data[0]);
+        this.setState({ username: response.data[1][0].username });
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
+      })
+      .catch((error) => {
+        console.log('error from /sign-up', error);
+      });
+    });
+  }
   render() {
     return (
-     	<Map />
+
+      <TabView tabBarPosition={'bottom'} initialPage={1}>
+
+        <JoinGroupScreen tabLabel='Join Group' />
+
+        <Map tabLabel='View Map' />
+
+        <CreateGroup tabLabel='Create Group' />
+
+      </TabView>
     )
   }
 }

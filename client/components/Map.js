@@ -25,17 +25,17 @@ const mapStateToProps = (state) => {
 
 class Maps extends Component {
 
-  static navigationOptions= ({navigation}) => ({
-    title: 'Home Screen',
-    headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('../assets/menu.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  });
+  // static navigationOptions= ({navigation}) => ({
+  //   title: 'Home Screen',
+  //   headerLeft: <DrawerButton navigation={navigation} />,
+  //   drawerLabel: 'Home',
+  //   drawerIcon: ({ tintColor }) => (
+  //     <Image
+  //       source={require('../assets/menu.jpg')}
+  //       style={[styles.icon, {tintColor: tintColor}]}
+  //     />
+  //   ),
+  // });
 
   constructor(props) {
     super(props);
@@ -74,7 +74,7 @@ class Maps extends Component {
     .then((response) => {
       const coords = [];
       response.data.forEach(function (item){
-       coords.push( {latitude: JSON.parse(item.from_coords)[0], 
+       coords.push( {latitude: JSON.parse(item.from_coords)[0],
          longitude: JSON.parse(item.from_coords)[1]
         });
       });

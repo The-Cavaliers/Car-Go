@@ -1,16 +1,15 @@
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 // const propTypes = {
 //   navigation: PropTypes.object.isRequired,
 // };
 
-const DrawerButton = props => (
-  <TouchableOpacity onPress={() => props.navigation.navigate('DrawerOpen')}>
+const ViewButton = props => (
+  <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
     <Image source={require('../assets/menuu.jpg')} style={styles.icon} />
   </TouchableOpacity>
  );
-
 // DrawerButton.propTypes = propTypes;
 const styles = StyleSheet.create({
   icon: {
@@ -20,8 +19,8 @@ const styles = StyleSheet.create({
   },
 });
 
-DrawerButton.propTypes = {
+ViewButton.propTypes = {
   navigation: PropTypes.object,
 };
 
-export default DrawerButton;
+export default ViewButton;

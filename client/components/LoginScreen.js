@@ -9,6 +9,7 @@ import { connect } from 'react-redux'; // inject data where we need
 import CONFIG from '../../config/development.json';
 import Profile from './ProfileScreen';
 import Header from './ProfileHeader';
+import HomeScreen from './HomeScreen';
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
@@ -27,6 +28,11 @@ const mapStateToProps = (state) => {
 }
 
 class Login extends Component {
+  static navigationOptions= ({navigation}) => ({
+    title: 'Create Group',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Create Group',
+  });
   constructor(props) {
     super(props);
     this.state = {
@@ -46,22 +52,22 @@ class Login extends Component {
         return;
       }
       // this.setState({ name: profile.name });
-      const provider = profile.identities[0].provider;
-      const username = provider === 'auth0' ? profile.nickname : profile.name;
-      const userLogin = {
-        username,
+      console.log('profile:', profile);
+      console.log('token:', token);
+      axios.post(`${CONFIG.URL}/sign-login`, {
+        username: profile.name,
         token: token.accessToken,
         email: profile.email,
         picture_url: profile.picture,
-        provider,
-      };
-      this.setState({ username });
-      axios.post(`${CONFIG.URL}/sign-login`, userLogin)
+        provider: profile.identities[0].provider,
+      })
       .then((response) => {
-        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
         // response from server, will need to add to global state
         // response.data[0] object will be boolean check
-        console.log(response.data[0]); // check if is in db
+        console.log('response from /sign-up server', response.data[1][0]);
+        console.log(response.data[0]);
+        this.setState({ username: response.data[1][0].username });
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
@@ -72,11 +78,7 @@ class Login extends Component {
   render() {
     return (
       <View style={style.profilePage}>
-        <Header headerText={`${this.state.username}'s Profile`} />
-        <Profile
-          {...this.props}
-          // navigation={this.props.navigation}
-        />
+        <HomeScreen/>
       </View>
     );
   }
@@ -89,3 +91,8 @@ const style = {
 };
 
 export default connect(mapStateToProps)(Login);
+        //<Header headerText={`${this.state.username}'s Profile`} />
+        //<Profile
+          //{...this.props}
+          // navigation={this.props.navigation}
+        ///>

@@ -41,7 +41,7 @@ exports.up = function (knex, Promise) {
       table.string('email');
       table.string('travelDate', 100);
       table.string('img_url', 100);
-      table.sting('seats', 100);
+      table.string('seats', 100);
       table.string('from_coords', 100);
       table.string('to_coords', 100);
       table.integer('user_id').references('users.id').onDelete('CASCADE');

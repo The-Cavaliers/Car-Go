@@ -14,7 +14,7 @@ import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
 export default class CreateGroup extends Component {
-    static navigationOptions= ({navigation}) => ({
+  static navigationOptions= ({navigation}) => ({
     title: 'Create Group',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Create Group',

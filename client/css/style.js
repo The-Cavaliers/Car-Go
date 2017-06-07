@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     width: null,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: '#08C5FF',
+    backgroundColor: '#E4F2FA',
     alignItems: 'center',
   },
   input: {
