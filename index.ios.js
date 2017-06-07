@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store from './client/store';
 // import AppWithNavigationState from './client/components/AppWithNavigationState';
 import AppNavigator from './client/components/routing';
+import ReduxThunk from 'redux-thunk';
 
 const router = () => (
   <Provider store={store}>

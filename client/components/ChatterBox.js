@@ -72,6 +72,26 @@ class ChatterBox extends React.Component {
       });
     });
   }
+  // componentWillMount() {
+  //   AsyncStorage.getItem('AsyncProfile', (err, result) => {
+  //     const AsyncProfile = JSON.parse(result);
+  //     console.log('AsyncProfile', AsyncProfile);
+  //     this.setState({
+  //       messages: [
+  //         {
+  //           _id: 1,
+  //           text: `Hi ${AsyncProfile.username}!`, // input global state name here
+  //           createdAt: new Date(),
+  //           user: {
+  //             _id: 2,
+  //             name: 'React Native',
+  //             avatar: 'https://facebook.github.io/react/img/logo_og.png',
+  //           },
+  //         },
+  //       ],
+  //     });
+  //   });
+  // }
 
   checkUserId() {
     this.socket.on('connect', () => {
