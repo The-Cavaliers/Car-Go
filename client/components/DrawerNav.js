@@ -2,14 +2,14 @@ import { DrawerNavigator } from 'react-navigation';
 import JoinGroup from './JoinGroupScreen';
 import Home from './HomeScreen';
 import CreateGroup from './CreateGroup';
-// import Profile from './ProfileScreen';
+import Profile from './ProfileScreen';
 import ChatterBox from './ChatterBox';
 import ViewGroups from './ViewGroups';
 import UserProfile from './UserProfile';
 
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
-  // Profile: { screen: Profile },
+  Profile: { screen: Profile },
   ChatterBox: { screen: ChatterBox },
   ViewGroups: { screen: ViewGroups },
   FindRide: { screen: JoinGroup },
@@ -22,4 +22,4 @@ const Drawer = DrawerNavigator({
   },
 );
 
-export default Drawer;
+export default Drawer
