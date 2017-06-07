@@ -21,9 +21,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 >>>>>>> added tabs and moved the map to landing after login
 import DrawerButton from './DrawerButton';
+import GroupsButton from './GroupsButton';
 import Map from './Map';
 import CONFIG from '../../config/development.json';
-import GroupsButton from './GroupsButton';
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
@@ -46,14 +46,10 @@ class Home extends Component {
       username: '',
     }
     this._login = this._login.bind(this);
-    this.changePage = this.changePage.bind(this);
   }
 
   componentWillMount() {
     this._login();
-  }
-  changePage() {
-
   }
 
   static navigationOptions= ({navigation}) => ({
