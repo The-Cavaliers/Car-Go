@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import DrawerButton from './DrawerButton';
 import Map from './Map';
 import CONFIG from '../../config/development.json';
+import GroupsButton from './GroupsButton';
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
@@ -45,23 +46,21 @@ class Home extends Component {
       username: '',
     }
     this._login = this._login.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   componentWillMount() {
     this._login();
   }
-  changePage = () => {
-    console.log('clicked')
+  changePage() {
+
   }
 
   static navigationOptions= ({navigation}) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Home',
-    headerRight: <TouchableOpacity onPress={this.changePage}
-                  style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>Groups</Text>
-                </TouchableOpacity>,
+    headerRight: <GroupsButton navigation={navigation} />,
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('../assets/menu.jpg')}
@@ -141,7 +140,6 @@ class Home extends Component {
         console.log(response.data[0]);
         this.setState({ username: response.data[1][0].username });
         AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
-        this.props.navigation.navigate('Drawer');
       })
       .catch((error) => {
         console.log('error from /sign-up', error);

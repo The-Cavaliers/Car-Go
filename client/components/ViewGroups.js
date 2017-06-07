@@ -12,6 +12,7 @@ class ViewGroups extends Component {
 	constructor(props) {
 		super(props)
 	}
+<<<<<<< HEAD
 	static navigationOptions= ({navigation}) => ({
     title: 'CarGo',
     headerLeft: <ViewButton navigation={navigation} />,
@@ -23,6 +24,8 @@ class ViewGroups extends Component {
       />
     ),
   });
+=======
+>>>>>>> added groups page with tabs for chat and map.
 	render() {
 		return (
      <TabView tabBarPosition={'bottom'} initialPage={1}>
@@ -37,10 +40,14 @@ class ViewGroups extends Component {
 		)
 	}
 };
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
   },
 });
+=======
+
+>>>>>>> added groups page with tabs for chat and map.
 export default ViewGroups;
