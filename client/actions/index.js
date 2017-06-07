@@ -1,4 +1,4 @@
-import { SET_PROFILE, LOGIN_PROFILE } from './type';
+import { LOGIN_PROFILE, SET_PROFILE } from './type';
 
 export const createGroup = (index) => {
   return {
@@ -13,19 +13,26 @@ export const joinGroup = (index) => {
   };
 };
 
-export const setLoginProfile = (data) => {
-  setTimeout(function() {
-    return {
-      type: LOGIN_PROFILE,
-      data,
-    };
-  }, 1000);
-};
-
 export const setProfile = (data) => {
   return {
     type: SET_PROFILE,
     data,
   };
 };
+
+const setLoginProfile = (data) => {
+  return {
+    type: LOGIN_PROFILE,
+    data,
+  };
+};
+
+export const setLoginProfileAsync = (data) => {
+  console.log('DATA FROM SETLOGINASYNC: ', data);
+  return function (dispatch) {
+    dispatch(setLoginProfile(data));
+  };
+};
+
+export default setLoginProfileAsync;
 

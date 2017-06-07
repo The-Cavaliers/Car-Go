@@ -67,11 +67,13 @@ class UserProfile extends Component {
     this.loadHomeScreen = this.loadHomeScreen.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
   }
+
   changeProperty(property, name) {
     const newProperty = {};
     newProperty[property] = name;
-    console.log(this.props);
+    // console.log('This is the new property: ', newProperty);
     this.props.setProfile(newProperty);
+    // console.log(this.props);
   }
 
   loadHomeScreen() {

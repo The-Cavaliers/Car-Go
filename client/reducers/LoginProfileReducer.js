@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 };
 
 function loginProfile(state = INITIAL_STATE, { type, data }) {
-  console.log('DATATATATA: ', data);
   switch (type) {
     case LOGIN_PROFILE:
       return {

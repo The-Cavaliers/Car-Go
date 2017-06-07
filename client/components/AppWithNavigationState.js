@@ -9,8 +9,4 @@ const mapStateToProp = (state) => {
   };
 };
 
-// export function mapDispatchToProps(dispatch) {
-//   return bindActionCreators(actionCreators, dispatch);
-// }
-
 export default mapStateToProp;

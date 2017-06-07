@@ -57,8 +57,7 @@ class Login extends Component {
       })
       .then((response) => {
         console.log('response from /sign-up server', response.data[1][0]);
-        console.log(response.data[0][1]);
-        this.props.setLoginProfile(response.data[0][1]);
+        this.props.setLoginProfileAsync(response.data[1][0]);
         console.log('NEW STATE FROM LOGIN: ', this.props);
       }).catch((error) => {
         console.log('ERROR SETTING NEW LOGIN PROFILE: ', error);
