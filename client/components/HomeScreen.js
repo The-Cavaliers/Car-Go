@@ -10,16 +10,11 @@ import {
   Animated,
 
 } from 'react-native';
-<<<<<<< HEAD
-
-import { connect } from 'react-redux'; // inject data where we need
-=======
 import TabView from 'react-native-scrollable-tab-view';
 import JoinGroupScreen from './JoinGroupScreen';
 import CreateGroup from './CreateGroup';
 import axios from 'axios';
 import { connect } from 'react-redux';
->>>>>>> added tabs and moved the map to landing after login
 import DrawerButton from './DrawerButton';
 import GroupsButton from './GroupsButton';
 import Map from './Map';
@@ -41,12 +36,19 @@ const mapStateToProps = (state) => {
 
 class Home extends Component {
   constructor(props) {
-      super(props);
-    this.state = {
-      username: '',
-    }
+    super(props);
+      this.state ={
+        username: '',
+        region: {
+          latitude: 37.783692,
+          longitude: -122.408967,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+        isMapVisible: false,
+      }
     this._login = this._login.bind(this);
-  }
+  };
 
   componentWillMount() {
     this._login();
@@ -64,18 +66,6 @@ class Home extends Component {
       />
     ),
   });
-  constructor(props) {
-    super(props);
-      this.state ={
-        region: {
-          latitude: 37.783692,
-          longitude: -122.408967,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        },
-        isMapVisible: false,
-      }
-    };
 
 
   componentDidMount () {
