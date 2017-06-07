@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux'; // inject data where we need
-
+import DrawerButton from './DrawerButton';
 import TabBar from './TabBar';
 import styles from '../css/style';
 import UserProfile from './UserProfile';
@@ -21,13 +21,19 @@ const mapStateToProps = (state) => {
 }
 
 class Profile extends Component {
+  static navigationOptions= ({navigation}) => ({
+    title: 'CarGo',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Profile',
+  });
   constructor(props) {
     super(props);
     this.state = {
       username: [],
     };
-    this.loadHomeScreen = this.loadHomeScreen.bind(this);
+    //this.loadHomeScreen = this.loadHomeScreen.bind(this);
   }
+
   loadHomeScreen() {
     this.props.navigation.navigate('Drawer');
   }
@@ -35,9 +41,7 @@ class Profile extends Component {
       // const uri = this.props.picture;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
           <Text>Welcome Back </Text>
-        </TouchableOpacity>
         <TabBar />
       </View>
     );

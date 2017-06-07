@@ -10,11 +10,28 @@ import {
   Animated,
 
 } from 'react-native';
+<<<<<<< HEAD
 
 import { connect } from 'react-redux'; // inject data where we need
+=======
+import TabView from 'react-native-scrollable-tab-view';
+import JoinGroupScreen from './JoinGroupScreen';
+import CreateGroup from './CreateGroup';
+import axios from 'axios';
+import { connect } from 'react-redux';
+>>>>>>> added tabs and moved the map to landing after login
 import DrawerButton from './DrawerButton';
 import Map from './Map';
+import CONFIG from '../../config/development.json';
 
+// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
+
+const Auth0Lock = require('react-native-lock');
+
+const lock = new Auth0Lock({
+  clientId: CONFIG.auth0.clientId,
+  domain: CONFIG.auth0.domain,
+});
 const mapStateToProps = (state) => {
   return {
     state,
@@ -22,11 +39,29 @@ const mapStateToProps = (state) => {
 }
 
 class Home extends Component {
+  constructor(props) {
+      super(props);
+    this.state = {
+      username: '',
+    }
+    this._login = this._login.bind(this);
+  }
+
+  componentWillMount() {
+    this._login();
+  }
+  changePage = () => {
+    console.log('clicked')
+  }
 
   static navigationOptions= ({navigation}) => ({
-    title: 'Home Screen',
+    title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Home',
+    headerRight: <TouchableOpacity onPress={this.changePage}
+                  style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Groups</Text>
+                </TouchableOpacity>,
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('../assets/menu.jpg')}
@@ -83,9 +118,48 @@ class Home extends Component {
   //   );
   // }
 
+ _login() {
+    lock.show({}, (err, profile, token) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      // this.setState({ name: profile.name });
+      console.log('profile:', profile);
+      console.log('token:', token);
+      axios.post(`${CONFIG.URL}/sign-login`, {
+        username: profile.name,
+        token: token.accessToken,
+        email: profile.email,
+        picture_url: profile.picture,
+        provider: profile.identities[0].provider,
+      })
+      .then((response) => {
+        // response from server, will need to add to global state
+        // response.data[0] object will be boolean check
+        console.log('response from /sign-up server', response.data[1][0]);
+        console.log(response.data[0]);
+        this.setState({ username: response.data[1][0].username });
+        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
+        this.props.navigation.navigate('Drawer');
+      })
+      .catch((error) => {
+        console.log('error from /sign-up', error);
+      });
+    });
+  }
   render() {
     return (
-     	<Map />
+
+      <TabView tabBarPosition={'bottom'} initialPage={1}>
+
+        <JoinGroupScreen tabLabel='Join Group' />
+
+        <Map tabLabel='View Map' />
+
+        <CreateGroup tabLabel='Create Group' />
+
+      </TabView>
     )
   }
 }

@@ -7,9 +7,10 @@ import Profile from './ProfileScreen';
 import ChatterBox from './ChatterBox';
 
 const Drawer = DrawerNavigator({
+  //Login: { screen: Home },
   Home: { screen: Home },
-  'Find Ride': { screen: JoinGroup },
-  'Create Group': { screen: CreateGroup },
+  //'Find Ride': { screen: JoinGroup },
+  //'Create Group': { screen: CreateGroup },
   Profile: { screen: Profile },
   ChatterBox: { screen: ChatterBox },
 },

@@ -1,12 +1,15 @@
 import { StackNavigator, addNavigationHelpers } from 'react-navigation';
-import Login from './LoginScreen';
 import Drawer from './DrawerNav';
 import { UserProfile } from './UserProfile';
 
 
 const AppNavigator = StackNavigator({
+<<<<<<< HEAD
   // Login: { screen: Login },
   // Profile: { screen: Profile },
+=======
+  //Profile: { screen: Profile },
+>>>>>>> added tabs and moved the map to landing after login
   Drawer: { screen: Drawer },
   UserProfile: { screen: UserProfile },
 });
