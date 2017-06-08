@@ -10,6 +10,7 @@ import Profile from './ProfileScreen';
 import Header from './ProfileHeader';
 import HomeScreen from './HomeScreen';
 import * as actions from '../actions';
+import DrawerButton from './DrawerButton';
 
 
 const Auth0Lock = require('react-native-lock');
@@ -26,7 +27,7 @@ const style = {
 };
 
 class Login extends Component {
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'Create Group',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Create Group',

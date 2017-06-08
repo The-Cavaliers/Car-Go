@@ -15,7 +15,7 @@ const Drawer = DrawerNavigator({
   ChatterBox: { screen: ChatterBox },
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
-  // Profile: { screen: Profile },
+  Profile: { screen: Profile },
   // ViewGroups: { screen: ViewGroups },
   Join: { screen: Join },
 },

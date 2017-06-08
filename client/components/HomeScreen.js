@@ -49,20 +49,21 @@ class Home extends Component {
     this._login = this._login.bind(this);
   };
 
-  componentWillMount() {
-       this._login();
-    AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
-       var user = JSON.parse(user_data)
-       console.log(user);
-       // if(!user.id) {
-       // }
-     })
-  }
+  // componentWillMount() {
+  //      this._login();
+  //   AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
+  //      var user = JSON.parse(user_data)
+  //      console.log(user);
+  //      if(!user.id) {
+        
+  //      }
+  //    })
+  // }
 
   static navigationOptions = ({navigation}) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Home',
+    drawerLabel: 'Log Out',
     headerRight: <GroupsButton navigation={navigation} />,
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -74,6 +75,7 @@ class Home extends Component {
 
 
   componentDidMount () {
+    this._login();
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       // console.log('JSON', initialPosition);

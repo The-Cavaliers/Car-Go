@@ -56,11 +56,11 @@ const styles = {
 
 
 class UserProfile extends Component {
-  // static navigationOptions= ({navigation}) => ({
-  //   title: 'Find Ride',
-  //   headerLeft: <DrawerButton navigation={navigation} />,
-  //   drawerLabel: 'Find Ride',
-  // });
+  static navigationOptions = ({navigation}) => ({
+    title: 'User Profile',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'User Profile',
+  });
   constructor(props) {
     super(props);
     this.state = {

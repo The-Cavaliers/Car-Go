@@ -74,25 +74,22 @@ class ChatterBox extends React.Component {
   }
 
   giveFirstMessage() {
-    AsyncStorage.getItem('AsyncProfile', (err, result) => {
-      const AsyncProfile = JSON.parse(result);
-      this.setState({
-        messages: [
-          {
-            _id: 1,
-            text: `Hi ${this.props.username}!`, // input global state name here
-            createdAt: new Date(),
-            user: {
-              _id: 2,
-              name: 'React Native',
-              avatar: 'https://static.vecteezy.com/system/resources/previews/000/147/625/original/carpool-vector.jpg',
-            },
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: `Hi ${this.props.username}!`, // input global state name here
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://static.vecteezy.com/system/resources/previews/000/147/625/original/carpool-vector.jpg',
           },
-        ],
-        username: this.props.username,
-        picture_url: this.props.picture_url,
-      });
-    });
+        },
+      ],
+      username: this.props.username,
+      picture_url: this.props.picture_url,
+    })
   }
 
   checkUserId() {
