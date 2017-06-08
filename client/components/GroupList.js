@@ -21,7 +21,8 @@ export default class CreateGroup extends Component {
       user_id: '',
       email: '',
       picture_url: '',
-      groups: []
+      groups: [],
+      group_id: ''
     }
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
@@ -42,7 +43,10 @@ export default class CreateGroup extends Component {
   handleChatClick() {
 
   }
-  removeGroup() {
+  removeGroup(id) {
+    this.setState({
+      group_id: id,
+    })
     //console.log(this.state.user_id);
     fetch('http://127.0.0.1:3000/removegroup', {
       method: 'POST',
@@ -51,12 +55,13 @@ export default class CreateGroup extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        group_id: id,
         user_id: this.state.user_id
       }),
     })
     .then(res => (res.json()))
     .then((res) => {
-      //console.log('this is the response',res)
+      console.log('this is the response',res)
       this.setState({
         groups: res
       })
@@ -90,24 +95,21 @@ export default class CreateGroup extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={styles.container}>
+        {this.state.groups.length === 0 ? <Text style={styles.error}>You have no groups</Text> : null}
         {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
+            <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
+              <Text style={styles.chatbuttonText}>chat</Text>
+            </TouchableOpacity>
             <Image style={styles.icon} source={require('../assets/person.png')} />
-            <Text>
-              Group: {item.name}&nbsp;
-              From: {item.leaving_from}&nbsp;
-              To: {item.going_to}
-            </Text>
-
-            <View>
-              <TouchableOpacity onPress={() => this.removeGroup()} key={idx} style={styles.removeButton}>
-                <Text style={styles.removebuttonText}>dlt</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
-                <Text style={styles.joinbuttonText}>Msg</Text>
+            <Text style={styles.name} >Group: {item.name}</Text>
+            <Text style={styles.from} >From: {item.leaving_from}</Text>
+            <Text style={styles.to}>To: {item.going_to}</Text>
+            <Text style={styles.date}>Date: {item.travelDate}</Text>
+            <View style={styles.removeBtnHolder}>
+              <TouchableOpacity onPress={() => this.removeGroup(item.id)} key={idx} style={styles.removeButton}>
+                <Text style={styles.removebuttonText}>delete</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -5,7 +5,8 @@ const knex = require('knex')(dbConfig);
 
 module.exports.getGroups = function (req, res) {
 	var id = req.body.user_id;
-  knex('groups').where('user_id', id)
+  knex('groups')
+  .where('user_id', id)
   .then(groups => {
     if(groups.length === 0) {
       console.log('nothing found');

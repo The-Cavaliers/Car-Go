@@ -61,15 +61,30 @@ class Home extends Component {
     this._login = this._login.bind(this);
   };
 
-  // componentWillMount() {
-  //     //  this._login();
-  //   AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
-  //      var user = JSON.parse(user_data)
-  //      console.log(user);
-  //      if(!user.id) {
-  //      }
-  //    })
-  // }
+
+  componentWillMount() {
+    this._login();
+    AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
+       var user = JSON.parse(user_data)
+       console.log(user);
+       if(!user.id) {
+       }
+     })
+  }
+
+  static navigationOptions = ({navigation}) => ({
+    title: 'CarGo',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Log Out',
+    headerRight: <GroupsButton navigation={navigation} />,
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('../assets/menu.jpg')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  });
+
 
   componentDidMount () {
     this._login();
