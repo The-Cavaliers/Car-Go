@@ -8,15 +8,16 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
-export default class JoinGroup extends Component {
-   static navigationOptions= ({navigation}) => ({
-    title: 'Find Ride',
+class JoinGroup extends Component {
+   static navigationOptions = ({navigation}) => ({
+    title: 'User Profile',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Find Ride',
+    drawerLabel: 'User Profile',
   });
   constructor(props) {
     super(props)
@@ -26,11 +27,12 @@ export default class JoinGroup extends Component {
     this.state = {
       showSearchError: false,
       groupsView: false,
+      groupName: '',
       LeavingFrom: '',
       goingTo: '',
       groups: {},
       date: false,
-      user_img: 'person.png'
+      user_img: 'person.png',
     }
   }
   sendInputValues = () => {
@@ -166,3 +168,25 @@ export default class JoinGroup extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  };
+};
+
+export default connect(mapStateToProps)(JoinGroup);
+

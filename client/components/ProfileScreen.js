@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
 }
 
 class Profile extends Component {
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Profile',
@@ -42,7 +42,6 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
           <Text>Welcome Back </Text>
-        <TabBar />
       </View>
     );
   }

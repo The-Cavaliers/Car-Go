@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { setProfile } from '../actions';
+import DrawerButton from './DrawerButton';
 
 
 const styles = {
@@ -55,6 +56,11 @@ const styles = {
 
 
 class UserProfile extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: 'User Profile',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'User Profile',
+  });
   constructor(props) {
     super(props);
     this.state = {
@@ -73,6 +79,7 @@ class UserProfile extends Component {
     newProperty[property] = name;
     // console.log('This is the new property: ', newProperty);
     this.props.setProfile(newProperty);
+    console.log(this.props);
     // console.log(this.props);
   }
 

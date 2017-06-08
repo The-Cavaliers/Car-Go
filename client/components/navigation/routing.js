@@ -1,4 +1,4 @@
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import Drawer from './DrawerNav';
 
 const AppNavigator = StackNavigator({
