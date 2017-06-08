@@ -9,7 +9,7 @@ module.exports.getMapPins = (req, res) => {
   console.log('Response', req.query);
 
 // Reverse Geocoding
-  geocoder.reverseGeocode(37.783692, -122.408967, (err, data) => {
+  geocoder.reverseGeocode(37.545142, -121.987177, (err, data) => {
   // do something with data
     console.log(data.results[0].address_components[3].long_name);
     knex('groups').where({
