@@ -52,7 +52,7 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTable('messages', (table) => {
       table.increments('id').primary();
-      table.string('text', 100);
+      table.string('text', 1000);
       table.integer('users_id').references('users.id').onDelete('CASCADE');
       table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
