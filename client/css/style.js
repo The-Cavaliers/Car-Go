@@ -78,6 +78,22 @@ const styles = StyleSheet.create({
     width: 22,
     color: '#fff',
   },
+  removeButton: {
+    height:28,
+    width: 28,
+    borderRadius: 14,
+    backgroundColor: 'red',
+    position: 'absolute',
+    bottom: 2,
+    left: 2,
+  },
+  removebuttonText: {
+    fontSize: 10,
+    marginTop: 8,
+    marginLeft: 4,
+    width: 22,
+    color: '#fff',
+  },
   error: {
     marginBottom: 4,
     color: 'red'

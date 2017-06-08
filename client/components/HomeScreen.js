@@ -53,18 +53,13 @@ class Home extends Component {
   };
 
   componentWillMount() {
+       this._login();
     AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
        var user = JSON.parse(user_data)
        console.log(user);
        if(!user.id) {
-      this._login();
-        console.log('this is it')
-
-       } else {
-
        }
      })
-
   }
 
   static navigationOptions= ({navigation}) => ({

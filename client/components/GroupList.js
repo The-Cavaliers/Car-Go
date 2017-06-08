@@ -24,6 +24,7 @@ export default class CreateGroup extends Component {
       groups: []
     }
     this.handleChatClick = this.handleChatClick.bind(this);
+    this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
     AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
@@ -41,6 +42,29 @@ export default class CreateGroup extends Component {
   handleChatClick() {
 
   }
+  removeGroup() {
+    //console.log(this.state.user_id);
+    fetch('http://127.0.0.1:3000/removegroup', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: this.state.user_id
+      }),
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+      //console.log('this is the response',res)
+      this.setState({
+        groups: res
+      })
+    })
+    .catch((err) => {
+       console.log('cant find match', err);
+    });
+  }
 
   getGroups = (id) => {
     fetch('http://127.0.0.1:3000/grouplist', {
@@ -55,7 +79,7 @@ export default class CreateGroup extends Component {
     })
     .then(res => (res.json()))
     .then((res) => {
-      console.log('this is the response',res)
+      //console.log('this is the response',res)
       this.setState({
         groups: res
       })
@@ -76,9 +100,16 @@ export default class CreateGroup extends Component {
               To: {item.going_to}
             </Text>
 
-            <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
-              <Text style={styles.joinbuttonText}>Msg</Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity onPress={() => this.removeGroup()} key={idx} style={styles.removeButton}>
+                <Text style={styles.removebuttonText}>dlt</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
+                <Text style={styles.joinbuttonText}>Msg</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>

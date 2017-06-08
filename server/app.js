@@ -29,6 +29,7 @@ app.use('/email', routes.email);
 app.use('/newgroup', routes.addgroup);
 app.use('/getMapDetails', routes.maps);
 app.use('/grouplist', routes.getgroups);
+app.use('/removegroup', routes.removegroup);
 
 // Phong's work
 //

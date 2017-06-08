@@ -4,4 +4,5 @@ module.exports.SendEmail = require('./sendEmail');
 module.exports.Addgroup = require('./addGroup');
 module.exports.Maps = require('./maps');
 module.exports.GetGroups = require('./getGroups')
+module.exports.RemoveGroup = require('./removeGroup')
 
