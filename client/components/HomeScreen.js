@@ -19,6 +19,7 @@ import DrawerButton from './DrawerButton';
 import GroupsButton from './GroupsButton';
 import Map from './Map';
 import CONFIG from '../../config/development.json';
+import * as actions from '../actions';
 
 // import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
@@ -28,11 +29,7 @@ const lock = new Auth0Lock({
   clientId: CONFIG.auth0.clientId,
   domain: CONFIG.auth0.domain,
 });
-const mapStateToProps = (state) => {
-  return {
-    state,
-  }
-}
+
 
 class Home extends Component {
   constructor(props) {
@@ -54,7 +51,7 @@ class Home extends Component {
     this._login();
   }
 
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Home',
@@ -125,7 +122,8 @@ class Home extends Component {
         console.log('response from /sign-up server', response.data[1][0]);
         console.log(response.data[0]);
         this.setState({ username: response.data[1][0].username });
-        AsyncStorage.setItem('AsyncProfile', JSON.stringify(response.data[1][0]));
+        this.props.setLoginProfileAsync(response.data[1][0]);
+        console.log('Props from login:', this.props);
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
@@ -154,4 +152,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(Home);
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  };
+};
+
+
+export default connect(mapStateToProps, actions)(Home);

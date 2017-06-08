@@ -6,15 +6,16 @@ import CreateGroup from './CreateGroup';
 import Profile from './ProfileScreen';
 import ChatterBox from './ChatterBox';
 import ViewGroups from './ViewGroups';
+import UserProfile from './UserProfile';
 
 const Drawer = DrawerNavigator({
-  //Login: { screen: Home },
   Home: { screen: Home },
-  //'Find Ride': { screen: JoinGroup },
-  //'Create Group': { screen: CreateGroup },
-  Profile: { screen: Profile },
+  UserProfile: { screen: UserProfile },
   ChatterBox: { screen: ChatterBox },
-  ViewGroups: {screen: ViewGroups},
+  'Find Ride': { screen: JoinGroup },
+  'Create Group': { screen: CreateGroup },
+  Profile: { screen: Profile },
+  // ViewGroups: { screen: ViewGroups },
 },
   {
     drawerWidth: 200,
