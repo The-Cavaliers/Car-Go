@@ -1,8 +1,8 @@
 const app = require('./app');
 const server = require('http').Server(app);
-const websocket = require('./socketIo/socket.io.index');
+const io = require('./socketIo/socket.io.index');
 
-websocket(server);
+io(server);
 
 const PORT = process.env.port || 3000;
 

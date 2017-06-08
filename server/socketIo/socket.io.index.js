@@ -1,5 +1,5 @@
 const socketIo = require('socket.io');
-const onConnect = require('./message');
+const onConnect = require('./socket.io.handlers');
 
 module.exports = (server) => {
   const io = socketIo(server);

@@ -25,6 +25,7 @@ app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use('/groups', routes.groups);
 app.use('/sign-login', routes.users);
+app.use('/select-group', routes.selectgroup);
 app.use('/email', routes.email);
 app.use('/newgroup', routes.addgroup);
 app.use('/getMapDetails', routes.maps);
