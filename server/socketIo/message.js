@@ -11,6 +11,6 @@ module.exports = (socket) => {
       createdAt: new Date(message.createdAt),
       // roomId,
     };
-    socket.broadcast.emit('message', messageData);
+    socket.broadcast.emit('message', messageData)
   });
 };
