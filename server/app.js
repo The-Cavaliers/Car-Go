@@ -28,9 +28,10 @@ app.use('/sign-login', routes.users);
 app.use('/email', routes.email);
 app.use('/newgroup', routes.addgroup);
 app.use('/getMapDetails', routes.maps);
-
+app.use('/grouplist', routes.getgroups);
 
 // Phong's work
+//
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

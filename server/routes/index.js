@@ -6,4 +6,5 @@ module.exports.users = require('./users');
 module.exports.email = require('./email');
 module.exports.addgroup = require('./addgroup');
 module.exports.maps = require('./maps');
+module.exports.getgroups = require('./getgroups');
 

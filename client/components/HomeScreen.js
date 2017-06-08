@@ -8,6 +8,7 @@ import {
   View,
   Button,
   Animated,
+  AsyncStorage,
 
 } from 'react-native';
 import TabView from 'react-native-scrollable-tab-view';
@@ -46,12 +47,24 @@ class Home extends Component {
           longitudeDelta: 0.0421,
         },
         isMapVisible: false,
+        isLoggedIn: false
       }
     this._login = this._login.bind(this);
   };
 
   componentWillMount() {
-    this._login();
+    AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
+       var user = JSON.parse(user_data)
+       console.log(user);
+       if(!user.id) {
+      this._login();
+        console.log('this is it')
+
+       } else {
+
+       }
+     })
+
   }
 
   static navigationOptions= ({navigation}) => ({
@@ -103,15 +116,15 @@ class Home extends Component {
   //   );
   // }
 
- _login() {
+  _login() {
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
         return;
       }
       // this.setState({ name: profile.name });
-      console.log('profile:', profile);
-      console.log('token:', token);
+      //console.log('profile:', profile);
+      //console.log('token:', token);
       axios.post(`${CONFIG.URL}/sign-login`, {
         username: profile.name,
         token: token.accessToken,
