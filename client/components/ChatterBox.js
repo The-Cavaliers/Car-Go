@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
+import { loginProfile } from '../reducers/index';
 
 import DrawerButton from './DrawerButton';
 
@@ -10,7 +12,7 @@ const avatar = require('../assets/carpool.png');
 
 class ChatterBox extends React.Component {
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'Chatter Box',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'ChatterBox',
@@ -78,7 +80,7 @@ class ChatterBox extends React.Component {
         messages: [
           {
             _id: 1,
-            text: `Hi ${AsyncProfile.username}!`, // input global state name here
+            text: `Hi ${this.props.username}!`, // input global state name here
             createdAt: new Date(),
             user: {
               _id: 2,
@@ -87,8 +89,8 @@ class ChatterBox extends React.Component {
             },
           },
         ],
-        username: AsyncProfile.username,
-        picture_url: AsyncProfile.picture_url,
+        username: this.props.username,
+        picture_url: this.props.picture_url,
       });
     });
   }
@@ -101,9 +103,9 @@ class ChatterBox extends React.Component {
 
   render() {
     const user = {
-      _id: this.state.userId || -1,
-      name: this.state.username,
-      avatar: this.state.picture_url,
+      _id: this.props.userId || -1,
+      name: this.props.username,
+      avatar: this.props.picture_url,
     };
     return (
       <GiftedChat
@@ -115,4 +117,24 @@ class ChatterBox extends React.Component {
   }
 }
 
-export default ChatterBox;
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  };
+};
+
+
+export default connect(mapStateToProps)(ChatterBox);

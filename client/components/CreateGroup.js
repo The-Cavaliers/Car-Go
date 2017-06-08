@@ -33,17 +33,6 @@ export default class CreateGroup extends Component {
       user_img: 'person.png'
     }
   }
-  componentDidMount() {
-    AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
-      var user = JSON.parse(user_data)
-      this.setState({
-        username: user.username,
-        user_id: user.id,
-        email: user.email,
-        picture_url: user.picture_url,
-      })
-    });
-  }
 
   handleAddGroupClick = () => {
     var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true};

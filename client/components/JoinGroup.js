@@ -1,4 +1,3 @@
-
 import { StackNavigator } from 'react-navigation';
 import JoinGroupTwo from './JoinGroupTwo';
 

@@ -54,8 +54,8 @@ class Home extends Component {
     AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
        var user = JSON.parse(user_data)
        console.log(user);
-       if(!user.id) {
-       }
+       // if(!user.id) {
+       // }
      })
   }
 
@@ -98,25 +98,12 @@ class Home extends Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  // clicker() {
-  //   console.log('in homescreen click')
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     console.log('POSITIOOM IS', position)
-  //   },
-  //   (error) => console.log('ERrrrrrrr', JSON.stringify(error)),
-  //     {enableHighAccuracy: true, timeout: 50000, maximumAge: 1000}
-  //   );
-  // }
-
   _login() {
     lock.show({}, (err, profile, token) => {
       if (err) {
         console.log(err);
         return;
       }
-      // this.setState({ name: profile.name });
-      //console.log('profile:', profile);
-      //console.log('token:', token);
       axios.post(`${CONFIG.URL}/sign-login`, {
         username: profile.name,
         token: token.accessToken,
@@ -129,9 +116,9 @@ class Home extends Component {
         // response.data[0] object will be boolean check
         console.log('response from /sign-up server', response.data[1][0]);
         console.log(response.data[0]);
-        this.setState({ username: response.data[1][0].username });
         this.props.setLoginProfileAsync(response.data[1][0]);
         console.log('Props from login:', this.props);
+        console.log(this.props.navigation)
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
