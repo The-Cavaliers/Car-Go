@@ -149,9 +149,3 @@ export default class CreateGroup extends Component {
     )
   }
 }
-
-      // <View>
-      //   <TouchableOpacity onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-      //     <Text>in create group</Text>
-      //   </TouchableOpacity>
-      // </View>

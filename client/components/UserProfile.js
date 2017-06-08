@@ -1,97 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
-  View,
+  // View,
   TouchableOpacity,
-  Image,
-  AsyncStorage,
+  // Image,
+  // AsyncStorage,
   TextInput,
-  AppRegistry,
+  // AppRegistry,
   ScrollView,
 } from 'react-native';
 
-
-class UserProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      about_me: '',
-      preferred_ride: '',
-      language: '',
-      music_preference: '',
-      profile: {},
-    };
-    this.loadHomeScreen = this.loadHomeScreen.bind(this);
-  }
-
-  loadHomeScreen() {
-    this.setState({
-      profile: { ...this.state },
-    });
-    // console.log('This is the state', this.state);
-    this.props.navigation.navigate('Drawer');
-  }
-
-  render() {
-    return (
-      <ScrollView style={{ padding: 10 }}>
-        <Text style={styles.details}>Your Name</Text>
-        <TextInput
-          style={styles.userInput}
-          onChangeText={(name) => this.setState({ name })}
-          value={this.state.text}
-          placeholder="Name"
-        />
-        <Text style={styles.details}>About Me</Text>
-        <TextInput
-          style={styles.aboutMe}
-          onChangeText={(about_me) => this.setState({ about_me })}
-          value={this.state.text}
-          placeholder="About me"
-        />
-        <Text style={styles.details}>Preferred Ride</Text>
-        <TextInput
-          style={styles.userInput}
-            onChangeText={(preferred_ride) => {
-              this.setState({
-                preferred_ride: preferred_ride,
-              });
-            }
-          }
-          value={this.state.text}
-          placeholder="Preferred Ride"
-        />
-        <Text style={styles.details}>Preferred Language</Text>
-        <TextInput
-          style={styles.userInput}
-          onChangeText={(language) => this.setState({ language })}
-          value={this.state.text}
-          placeholder="Preferred Language"
-        />
-        <Text style={styles.details}>Music Preferrence</Text>
-        <TextInput
-          style={styles.userInput}
-          onChangeText={(music_preference) => this.setState({ music_preference })}
-          value={this.state.text}
-          placeholder="Music Preferrence"
-        />
-        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.navigationButton}>
-          <Text>Submit Profile</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    );
-  }
-}
+import { setProfile } from '../actions';
 
 
 const styles = {
   profilePageStyle: {
-    backgroundColor: '#1abc9c',
+    backgroundColor: '#6bffff',
+    padding: 10,
   },
   userInput: {
     height: 30,
-    borderColor: 'gray',
     margin: 10,
     paddingLeft: 30,
     borderRadius: 5,
@@ -100,7 +29,6 @@ const styles = {
   },
   aboutMe: {
     height: 100,
-    borderColor: 'gray',
     margin: 10,
     paddingLeft: 30,
     display: 'flex',
@@ -125,5 +53,100 @@ const styles = {
   },
 };
 
-module.exports.UserProfile = UserProfile;
-export default UserProfile;
+
+class UserProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      about_me: '',
+      preferred_ride: '',
+      language: '',
+      music_preference: '',
+    };
+    this.loadHomeScreen = this.loadHomeScreen.bind(this);
+    this.changeProperty = this.changeProperty.bind(this);
+  }
+
+  changeProperty(property, name) {
+    const newProperty = {};
+    newProperty[property] = name;
+    // console.log('This is the new property: ', newProperty);
+    this.props.setProfile(newProperty);
+    // console.log(this.props);
+  }
+
+  loadHomeScreen() {
+    this.setState({
+      profile: { ...this.state },
+    });
+    this.props.navigation.navigate('Drawer');
+  }
+
+  render() {
+    return (
+      <ScrollView style={styles.profilePageStyle}>
+        <Text style={styles.details}>Your Name</Text>
+        <TextInput
+          style={styles.userInput}
+          onChangeText={(name) => this.changeProperty('name', name)}
+          value={this.props.name}
+          placeholder="Name"
+        />
+        <Text style={styles.details}>About Me</Text>
+        <TextInput
+          style={styles.aboutMe}
+          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
+          value={this.props.about_me}
+          placeholder="About me"
+        />
+        <Text style={styles.details}>Preferred Ride</Text>
+        <TextInput
+          style={styles.userInput}
+            onChangeText={(preferred_ride) => {this.changeProperty('preferred_ride', preferred_ride)}}
+          value={this.props.preferred_ride}
+          placeholder="Preferred Ride"
+        />
+        <Text style={styles.details}>Preferred Language</Text>
+        <TextInput
+          style={styles.userInput}
+          onChangeText={(language) => this.changeProperty('language', language)}
+          value={this.props.language}
+          placeholder="Preferred Language"
+        />
+        <Text style={styles.details}>Music Preferrence</Text>
+        <TextInput
+          style={styles.userInput}
+          onChangeText={(music_preference) => this.changeProperty('music_preference', music_preference)}
+          value={this.props.music_preference}
+          placeholder="Music Preferrence"
+        />
+        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.navigationButton}>
+          <Text>Submit Profile</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    );
+  }
+}
+
+const mapStateToProps = ({ preferences }) => {
+  const {
+    name,
+    about_me,
+    preferred_ride,
+    language,
+    music_preference,
+  } = preferences;
+
+  return {
+    name,
+    about_me,
+    preferred_ride,
+    language,
+    music_preference,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setProfile,
+})(UserProfile);

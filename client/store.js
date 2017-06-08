@@ -1,20 +1,10 @@
-import { createStore, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import rootReducer from './reducers/index';
 // import { syncHistoryWithStore } from 'react-router-redux';
 // import { browserHistory } from 'react-router';
 
-import rootReducer from './reducers/rootReducer';
 
-const defaultState = {
-  group: '',
-  profileDetails: {
-    username: '',
-    email: '',
-    id: '',
-    picture_url: '',
-    social_provider: '',
-    token: '',
-  },
-};
-const store = createStore(rootReducer, defaultState);
+const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
 // export const history = syncHistoryWithStore(browserHistory, store);
 export default store;
