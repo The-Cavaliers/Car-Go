@@ -45,6 +45,7 @@ class Login extends Component {
         console.log(err);
         return;
       }
+      console.log('PROFILE from auth0', profile)
       // this.setState({ name: profile.name });
       console.log('profile:', profile);
       console.log('token:', token);
