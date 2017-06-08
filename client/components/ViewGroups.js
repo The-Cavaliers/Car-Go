@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import TabView from 'react-native-scrollable-tab-view';
 import ViewButton from './ViewButton';
+import GroupList from './GroupList';
 
 class ViewGroups extends Component {
 	constructor(props) {
@@ -31,7 +32,7 @@ class ViewGroups extends Component {
 
         <Text tabLabel='Groups Map'>Mahima Put Map Here</Text>
 
-        <Text tabLabel='View Groups'>List of Groups for User</Text>
+        <GroupList tabLabel='View Groups'/>
 
         <Text tabLabel='Chats'>Phong Put Chats here</Text>
 
