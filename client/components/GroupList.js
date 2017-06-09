@@ -24,12 +24,14 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      group_id: ''
+      group_id: '',
+      showLoading: false
     }
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
+    console.log('_______________',this.props)
     this.getGroups(this.props.id)
   }
 
@@ -65,6 +67,9 @@ class CreateList extends Component {
   }
 
   getGroups = () => {
+    this.setState({
+      showLoading: true
+    })
     fetch('http://127.0.0.1:3000/grouplist', {
       method: 'POST',
       headers: {
@@ -77,9 +82,10 @@ class CreateList extends Component {
     })
     .then(res => (res.json()))
     .then((res) => {
-      //console.log('this is the response',res)
+      console.log('this is the response',res)
       this.setState({
-        groups: res
+        groups: res,
+        showLoading: false
       })
     })
     .catch((err) => {
@@ -89,13 +95,17 @@ class CreateList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.groups.length === 0 ? <Text style={styles.error}>You have no groups</Text> : null}
+        {this.state.showLoading ? <Image style={styles.loading} source={require('../assets/loading.gif')} />
+        : null}
+        {this.state.groups.length === 0 ?
+          <Text style={styles.error}>You have no groups</Text>
+        : null}
         {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
             <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
               <Text style={styles.chatbuttonText}>chat</Text>
             </TouchableOpacity>
-            <Image style={styles.icon} source={require('../assets/person.png')} />
+            <Image style={styles.icon} source={{uri: item.img_url}} />
             <Text style={styles.name} >Group: {item.name}</Text>
             <Text style={styles.from} >From: {item.leaving_from}</Text>
             <Text style={styles.to}>To: {item.going_to}</Text>

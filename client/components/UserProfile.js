@@ -25,20 +25,24 @@ class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      about_me: '',
-      preferred_ride: '',
-      language: '',
-      music_preference: '',
+      first: '',
+      last: '',
+      gender: '',
+      phone: '',
+      car: '',
+      pets: '',
+      mini_bio: '',
+      music: '',
     };
     this.loadHomeScreen = this.loadHomeScreen.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
+    this.numberChecker = this.numberChecker.bind(this);
+    this.clearFields = this.clearFields.bind(this);
   }
 
   changeProperty(property, name) {
     const newProperty = {};
     newProperty[property] = name;
-    // console.log('This is the new property: ', newProperty);
     this.props.setProfile(newProperty);
     console.log(this.props);
     // console.log(this.props);
@@ -50,6 +54,35 @@ class UserProfile extends Component {
     });
     this.props.navigation.navigate('Drawer');
   }
+  numberChecker(text){
+  let newText = '';
+  let numbers = '0123456789';
+    for (var i=0; i < text.length; i++) {
+         if(numbers.indexOf(text[i]) > -1 ) {
+              newText = newText + text[i];
+         }
+         else {
+               // your call back function
+               alert("please enter numbers only");
+          }
+         this.setState({
+          phone: newText
+        });
+     }
+  }
+  clearFields() {
+    this.setState({
+      first: '',
+      last: '',
+      gender: '',
+      phone: '',
+      car: '',
+      pets: '',
+      mini_bio: '',
+      music: '',
+    })
+  }
+
 
   render() {
     return (
@@ -58,51 +91,62 @@ class UserProfile extends Component {
           underlineColorIos="transparent"
           style={styles.input}
           placeholder="Leaving From"
-          onChangeText={(name) => this.changeProperty('name', name)}
-          value={this.props.name}
+          onChangeText={first => this.setState({ first })}
+          value={this.state.first}
           placeholder="First Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
           placeholder="Leaving From"
-          onChangeText={(name) => this.changeProperty('name', name)}
-          value={this.props.name}
+          onChangeText={last => this.setState({ last })}
+          value={this.state.last}
           placeholder="Last Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
           placeholder="Leaving From"
-          onChangeText={(name) => this.changeProperty('name', name)}
-          value={this.props.name}
+          onChangeText={gender => this.setState({ gender })}
+          value={this.state.gender}
           placeholder="Gender"
         />
         <TextInput
           style={styles.input}
-          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
-          value={this.props.about_me}
-          placeholder="About me"
+          onChangeText = {(text)=> this.numberChecker(text)}
+          keyboardType = 'numeric'
+          value = {this.state.phone}
+          maxLength = {10}
+          placeholder="Phone Number"
         />
         <TextInput
           style={styles.input}
-            onChangeText={(preferred_ride) => {this.changeProperty('preferred_ride', preferred_ride)}}
-          value={this.props.preferred_ride}
-          placeholder="Preferred Ride"
+          onChangeText={car_model => this.setState({ car_model })}
+          value={this.state.car_model}
+          placeholder="Car Model"
         />
         <TextInput
           style={styles.input}
           onChangeText={(language) => this.changeProperty('language', language)}
           value={this.props.language}
-          placeholder="Preferred Language"
+          placeholder="Pets"
+        />
+        <TextInput
+          style={styles.bioinput}
+          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
+          value={this.props.about_me}
+          placeholder="Mini Bio"
         />
         <TextInput
           style={styles.input}
           onChangeText={(music_preference) => this.changeProperty('music_preference', music_preference)}
           value={this.props.music_preference}
-          placeholder="Music Preferrence"
+          placeholder="Music Preference"
         />
-        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => {
+          this.clearFields()
+          //this.loadHomeScreen()
+        }} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Submit Profile</Text>
         </TouchableOpacity>
       </ScrollView>
