@@ -15,7 +15,7 @@ const Drawer = DrawerNavigator({
   JoinGroup: { screen: JoinGroup },
   CreateGroup: { screen: CreateGroup },
   ViewGroups: { screen: ViewGroups },
-  // CreateList: { screen: CreateList },
+  // Join: { screen: Join },
 },
   {
     drawerWidth: 200,
@@ -23,4 +23,4 @@ const Drawer = DrawerNavigator({
   },
 );
 
-export default Drawer
+export default Drawer;
