@@ -2,9 +2,6 @@ import React from 'react';
 import {
   AsyncStorage,
   Button,
-  Text,
-  View,
-  TouchableOpacity,
 } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
@@ -13,22 +10,32 @@ class GroupRow extends React.Component {
   constructor(props) {
     super(props);
     this.socket = SocketIOClient(CONFIG.URL);
-    this.giveGroupId = this.giveGroupId.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
+    this.leaveRoom = this.leaveRoom.bind(this);
   }
 
-  giveGroupId() {
+  joinRoom() {
     const roomId = this.props.roomId;
-    AsyncStorage.setItem('roomId', JSON.stringify(roomId))
-    .then(() => {
-      this.props.navigation.navigate('ChatterBox');
+    AsyncStorage.setItem('roomId', roomId);
+    this.socket.emit('userJoined', roomId);
+  }
+
+  leaveRoom() {
+    AsyncStorage.getItem('roomId', (err, roomId) => {
+      console.log('leaving id front', roomId);
+      this.socket.emit('userLeft', roomId);
     })
+    .then(() => {
+      this.joinRoom();
+      this.props.navigation.navigate('ChatterBox');
+    });
   }
 
   render() {
     return (
       <Button
         title="button"
-        onPress={this.giveGroupId}
+        onPress={this.leaveRoom}
       />
     );
   }

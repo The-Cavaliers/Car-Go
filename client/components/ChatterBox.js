@@ -30,30 +30,26 @@ class ChatterBox extends React.Component {
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     // Keeps listening to the server side message emission;
     this.socket = SocketIOClient(CONFIG.URL);
-    // this.checkUserId = this.checkUserId.bind(this);
     this.giveFirstMessage = this.giveFirstMessage.bind(this);
     this.getRoomId = this.getRoomId.bind(this);
+    this.socket.on('receive', this.onReceivedMessage);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.giveFirstMessage();
     this.getRoomId();
-    // this.checkUserId();
-    this.socket.on('receive', this.onReceivedMessage);
   }
 
   getRoomId() {
     AsyncStorage.getItem('roomId', (err, roomId) => {
       this.setState({ roomId });
-    })
-    .then((roomId) => {
       const message = {};
       message.roomId = roomId;
-      this.socket.emit('userJoined', roomId)
-    })
+      this.socket.emit('userJoined', roomId);
+    });
   }
 
-  onSend(messages) {
+  onSend(messages = []) {
     const newMessage = messages[0];
     newMessage.roomId = this.state.roomId;
     this.socket.emit('message', newMessage);
@@ -89,12 +85,6 @@ class ChatterBox extends React.Component {
       picture_url: this.props.picture_url,
     })
   }
-
-  // checkUserId() {
-  //   this.socket.on('connect', () => {
-  //     this.setState({ userId: this.socket.id });
-  //   });
-  // }
 
   render() {
     const user = {
