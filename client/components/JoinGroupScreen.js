@@ -31,8 +31,8 @@ class JoinGroup extends Component {
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: false,
-      user_img: 'person.png',
+      date: new Date(),
+      user_img: 'person.png'
     }
   }
   sendInputValues = () => {
@@ -149,13 +149,11 @@ class JoinGroup extends Component {
         {this.state.groupsView ? <ScrollView>
           {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
-          <Image style={styles.icon} source={require('../assets/person.png')} />
-            <Text>
-              Group: {item.name}&nbsp;
-              From: {item.leaving_from}&nbsp;
-              To: {item.going_to}
-            </Text>
-
+            <Image style={styles.icon} source={require('../assets/person.png')} />
+            <Text style={styles.name} >Group: {item.name}</Text>
+            <Text style={styles.from} >From: {item.leaving_from}</Text>
+            <Text style={styles.to}>To: {item.going_to}</Text>
+            <Text style={styles.date}>Date: {item.travelDate}</Text>
             <TouchableOpacity onPress={() => this.handleJoinClick(item.email)} key={idx} style={styles.joinButton}>
              <Text style={styles.joinbuttonText}>Join</Text>
             </TouchableOpacity>

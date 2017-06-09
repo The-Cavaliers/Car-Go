@@ -39,38 +39,39 @@ class Maps extends Component {
     };
   }
 
-  componentWillMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      var initialPosition = JSON.stringify(position);
-      this.setState({
-        region:  {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.3421,
-          loc: 0,
-        },
-        isMapVisible: true,
-      });
-    },
-    (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-    axios.get(`${CONFIG.URL}/getMapDetails`)
-    .then((response) => {
-      const coords = [];
-      response.data.forEach(function (item){
-        coords.push({ latitude: JSON.parse(item.from_coords)[0],
-          longitude: JSON.parse(item.from_coords)[1],
-        });
-      });
-      this.setState({listOfRegions: coords });
-      // console.log(this.state.listOfRegions);
-    })
-    .catch((error) =>{
-      console.log(error);
-    });
-  }
+  // componentWillMount() {
+
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     var initialPosition = JSON.stringify(position);
+  //     this.setState({
+  //       region:  {
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //         latitudeDelta: 0.0922,
+  //         longitudeDelta: 0.3421,
+  //         loc: 0,
+  //       },
+  //       isMapVisible: true,
+  //     });
+  //   },
+  //   (error) => alert(JSON.stringify(error)),
+  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+  //   );
+  //   axios.get(`${CONFIG.URL}/getMapDetails`)
+  //   .then((response) => {
+  //     const coords = [];
+  //     response.data.forEach(function (item){
+  //       coords.push({ latitude: JSON.parse(item.from_coords)[0],
+  //         longitude: JSON.parse(item.from_coords)[1],
+  //       });
+  //     });
+  //     this.setState({listOfRegions: coords });
+  //     // console.log(this.state.listOfRegions);
+  //   })
+  //   .catch((error) =>{
+  //     console.log(error);
+  //   });
+  // }
 
 
   render() {

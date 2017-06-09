@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   picture_url: '',
   token: '',
   social_provider: '',
+  user_id: '',
 
 };
 
@@ -19,6 +20,7 @@ function loginProfile(state = INITIAL_STATE, { type, data }) {
         picture_url: data.picture_url,
         token: data.token,
         social_provider: data.social_provider,
+        user_id: data.user_id,
       };
     default:
       return state;

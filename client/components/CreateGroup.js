@@ -1,3 +1,5 @@
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -13,7 +15,7 @@ import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
-export default class CreateGroup extends Component {
+class CreateGroup extends Component {
   static navigationOptions= ({navigation}) => ({
     title: 'Create Group',
     headerLeft: <DrawerButton navigation={navigation} />,
@@ -21,6 +23,7 @@ export default class CreateGroup extends Component {
   });
     constructor(props) {
     super(props)
+    console.log('this is the props', this.props)
     this.state = {
       showCityError: false,
       LeavingFrom: '',
@@ -54,7 +57,7 @@ export default class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    console.log('sending data')
+    console.log('the props', this.props)
     fetch('http://127.0.0.1:3000/newgroup', {
       method: 'POST',
       headers: {
@@ -62,10 +65,10 @@ export default class CreateGroup extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: this.state.username,
-        user_id: this.state.user_id,
-        email: this.state.email,
-        picture_url: this.state.picture_url,
+        username: this.props.username,
+        email: this.props.email,
+        picture_url: this.props.picture_url,
+        user_id: this.props.user_id,
         going_to: this.state.goingTo,
         leaving_from: this.state.LeavingFrom,
         travelDate: this.state.date,
@@ -138,3 +141,24 @@ export default class CreateGroup extends Component {
     )
   }
 }
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    user_id,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    user_id,
+  };
+};
+export default connect(mapStateToProps)(CreateGroup);

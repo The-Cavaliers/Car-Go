@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
+    padding: 5,
     flexGrow: 1,
     backgroundColor: '#fff',
   },
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   inputContainer: {
-    margin: 30,
+    margin: 5,
     marginBottom: 0,
     padding: 10,
     paddingBottom: 10,
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     width: null,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: '#E4F2FA',
     alignItems: 'center',
   },
   input: {
@@ -36,6 +35,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255,1)',
+    borderWidth: 1,
+    borderColor: '#D8D9DD'
   },
   buttonContainer: {
     alignSelf: 'stretch',
@@ -43,24 +44,22 @@ const styles = StyleSheet.create({
     padding: 20,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: '#2E4CE5',
   },
   buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#455A64',
+    color: '#fff',
   },
   group: {
-    borderRadius: 2,
     borderWidth: 1,
-    marginLeft: 30,
-    marginRight: 30,
-    borderColor: '#66bfff',
+    borderColor: '#D8D9DD',
     marginTop: 3,
     marginBottom: 3,
+    width: 300,
+    height: 60,
     padding: 20,
-    backgroundColor: 'rgba(255,255,255,1)',
   },
   joinButton: {
     height:28,
@@ -72,11 +71,30 @@ const styles = StyleSheet.create({
     right: 2,
   },
   joinbuttonText: {
-    fontSize: 10,
+    fontSize: 8,
     marginTop: 8,
-    marginLeft: 4,
+    marginLeft: 5,
     width: 22,
     color: '#fff',
+  },
+  chatbuttonText: {
+    fontSize: 8,
+    marginTop: 8,
+    marginLeft: 5,
+    width: 21,
+    color: '#fff',
+  },
+  messagebuttonText: {
+    fontSize: 8,
+    marginTop: 8,
+    marginLeft: 1,
+    width: 25,
+    color: '#fff',
+  },
+  removeBtnHolder: {
+    position: 'absolute',
+    bottom: 2,
+    right: 100,
   },
   removeButton: {
     height:28,
@@ -85,13 +103,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     position: 'absolute',
     bottom: 2,
-    left: 2,
+    left: 20,
   },
   removebuttonText: {
-    fontSize: 10,
+    fontSize: 8,
     marginTop: 8,
-    marginLeft: 4,
-    width: 22,
+    marginLeft: 1,
+    width: 25,
     color: '#fff',
   },
   error: {
@@ -102,8 +120,38 @@ const styles = StyleSheet.create({
     height:36,
     width: 36,
     borderRadius: 16,
+    position: 'absolute',
+    top: 2,
+    left: 2,
   },
-
+  name: {
+    fontSize: 12,
+    position: 'absolute',
+    bottom: 2,
+    left: 1,
+    color: 'gray'
+  },
+  from: {
+    fontSize: 12,
+    position: 'absolute',
+    top: 1,
+    left: 45,
+    color: 'gray'
+  },
+  to: {
+    fontSize: 12,
+    position: 'absolute',
+    top: 20,
+    left: 45,
+    color: 'gray'
+  },
+  date: {
+    fontSize: 12,
+    position: 'absolute',
+    top: 1,
+    right: 5,
+    color: 'gray'
+  }
 });
 
 export default styles;
