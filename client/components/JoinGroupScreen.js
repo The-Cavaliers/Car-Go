@@ -15,9 +15,9 @@ import DrawerButton from './DrawerButton';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
-    title: 'User Profile',
+    title: 'Find a Ride',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'User Profile',
+    drawerLabel: 'Find a Ride',
   });
   constructor(props) {
     super(props)

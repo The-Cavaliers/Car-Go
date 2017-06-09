@@ -57,7 +57,7 @@ const styles = {
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'User Profile',
+    title: 'Create Profile',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'User Profile',
   });

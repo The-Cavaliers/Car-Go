@@ -3,7 +3,6 @@ const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.checkUser = (req, res) => {
   const user = req.body;
-  console.log('USER FROM CREATION', user)
   knex('users').where('email', user.email)
   .then((response) => {
     if (response.length === 0) {
@@ -15,7 +14,6 @@ module.exports.checkUser = (req, res) => {
         social_provider: user.provider,
       }).returning('*').into('users')
       .then((userLogin) => {
-        // userLogin.id = id;
         res.end(JSON.stringify([false, userLogin]));
       })
       .catch((error) => {

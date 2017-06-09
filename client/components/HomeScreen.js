@@ -105,10 +105,11 @@ class Home extends Component {
         user_id: profile.userId,
       }
       console.log('NEW USER IS', newUser)
-      this.props.setLoginProfileAsync(newUser);
+      //this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
-        console.log('_____HERE IT IS______',data)
+        //console.log('_____HERE IT IS______',data.data[1][0])
+        this.props.setLoginProfileAsync(data.data[1][0]);
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
@@ -145,6 +146,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   } = loginProfile;
   return {
     username,
@@ -153,6 +155,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   };
 };
 

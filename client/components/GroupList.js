@@ -16,7 +16,9 @@ import DrawerButton from './DrawerButton';
 
 class CreateList extends Component {
   static navigationOptions = ({navigation}) => ({
+    title: 'Your Groups',
     headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Your Groups',
   });
   constructor(props) {
     super(props)
@@ -28,7 +30,7 @@ class CreateList extends Component {
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
-    this.getGroups(user.id)
+    this.getGroups(this.props.id)
     console.log('______________________',this.props)
     // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
     //   var user = JSON.parse(user_data)
@@ -57,7 +59,7 @@ class CreateList extends Component {
       },
       body: JSON.stringify({
         group_id: id,
-        user_id: this.props.user_id
+        user_id: this.props.id
       }),
     })
     .then(res => (res.json()))
@@ -72,7 +74,7 @@ class CreateList extends Component {
     });
   }
 
-  getGroups = (id) => {
+  getGroups = () => {
     fetch('http://127.0.0.1:3000/grouplist', {
       method: 'POST',
       headers: {
@@ -80,7 +82,7 @@ class CreateList extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: id
+        user_id: this.props.id
       }),
     })
     .then(res => (res.json()))
@@ -127,6 +129,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   } = loginProfile;
   return {
     username,
@@ -135,6 +138,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   };
 };
 export default connect(mapStateToProps)(CreateList);

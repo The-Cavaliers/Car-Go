@@ -68,7 +68,7 @@ class CreateGroup extends Component {
         username: this.props.username,
         email: this.props.email,
         picture_url: this.props.picture_url,
-        user_id: this.props.user_id,
+        user_id: this.props.id,
         going_to: this.state.goingTo,
         leaving_from: this.state.LeavingFrom,
         travelDate: this.state.date,
@@ -150,6 +150,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     user_id,
+    id,
   } = loginProfile;
   return {
     username,
@@ -159,6 +160,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     user_id,
+    id,
   };
 };
 export default connect(mapStateToProps)(CreateGroup);
