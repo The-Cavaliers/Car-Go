@@ -3,7 +3,7 @@ import { TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 const GroupsButton = props => (
-  <TouchableOpacity onPress={() => props.navigation.navigate('ViewGroups')}>
+  <TouchableOpacity onPress={() => props.navigation.navigate('GroupList')}>
     <Text>Groups</Text>
   </TouchableOpacity>
  );

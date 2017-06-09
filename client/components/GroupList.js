@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -13,14 +14,13 @@ import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
-export default class CreateGroup extends Component {
+class CreateGroup extends Component {
+  static navigationOptions = ({navigation}) => ({
+    headerLeft: <DrawerButton navigation={navigation} />,
+  });
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      user_id: '',
-      email: '',
-      picture_url: '',
       groups: [],
       group_id: ''
     }
@@ -28,16 +28,16 @@ export default class CreateGroup extends Component {
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
-    AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
-      var user = JSON.parse(user_data)
-      this.getGroups(user.id)
-      this.setState({
-        username: user.username,
-        user_id: user.id,
-        email: user.email,
-        picture_url: user.picture_url,
-      })
-    })
+    // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
+    //   var user = JSON.parse(user_data)
+    //   this.getGroups(user.id)
+    //   this.setState({
+    //     username: user.username,
+    //     user_id: user.id,
+    //     email: user.email,
+    //     picture_url: user.picture_url,
+    //   })
+    // })
   }
 
   handleChatClick() {
@@ -56,7 +56,7 @@ export default class CreateGroup extends Component {
       },
       body: JSON.stringify({
         group_id: id,
-        user_id: this.state.user_id
+        user_id: this.props.user_id
       }),
     })
     .then(res => (res.json()))
@@ -118,3 +118,22 @@ export default class CreateGroup extends Component {
     )
   }
 }
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+  };
+};
+export default connect(mapStateToProps)(CreateGroup);
