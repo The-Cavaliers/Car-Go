@@ -23,4 +23,4 @@ const Drawer = DrawerNavigator({
   },
 );
 
-export default Drawer;
+export default Drawer
