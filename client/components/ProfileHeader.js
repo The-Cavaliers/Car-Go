@@ -27,7 +27,7 @@ const styles = {
   },
   textStyle: {
     fontSize: 20,
-  }
+  },
 };
 
 //  Make a coponent available to the app

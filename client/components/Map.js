@@ -25,37 +25,23 @@ const mapStateToProps = (state) => {
 
 class Maps extends Component {
 
-  // static navigationOptions= ({navigation}) => ({
-  //   title: 'Home Screen',
-  //   headerLeft: <DrawerButton navigation={navigation} />,
-  //   drawerLabel: 'Home',
-  //   drawerIcon: ({ tintColor }) => (
-  //     <Image
-  //       source={require('../assets/menu.jpg')}
-  //       style={[styles.icon, {tintColor: tintColor}]}
-  //     />
-  //   ),
-  // });
-
   constructor(props) {
     super(props);
-      this.state ={
-        region: {
-          latitude: 37.775037,
-          longitude: -122.229411,
-          latitudeDelta: 0.0322,
-          longitudeDelta: 0.6421,
-        },
-          isMapVisible: false,
-          listOfRegions: [],
-      }
+    this.state ={
+      region: {
+        latitude: 37.775037,
+        longitude: -122.229411,
+        latitudeDelta: 0.0322,
+        longitudeDelta: 0.6421,
+      },
+      isMapVisible: false,
+      listOfRegions: [],
     };
+  }
 
- componentWillMount () {
+  componentWillMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
-    //   console.log('JSON', initialPosition);
-    //   console.log('POSITION', position);
       this.setState({
         region:  {
           latitude: position.coords.latitude,
@@ -65,7 +51,7 @@ class Maps extends Component {
           loc: 0,
         },
         isMapVisible: true,
-      })
+      });
     },
     (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -74,8 +60,8 @@ class Maps extends Component {
     .then((response) => {
       const coords = [];
       response.data.forEach(function (item){
-       coords.push( {latitude: JSON.parse(item.from_coords)[0],
-         longitude: JSON.parse(item.from_coords)[1]
+        coords.push({ latitude: JSON.parse(item.from_coords)[0],
+          longitude: JSON.parse(item.from_coords)[1],
         });
       });
       this.setState({listOfRegions: coords });
@@ -83,7 +69,7 @@ class Maps extends Component {
     })
     .catch((error) =>{
       console.log(error);
-    })
+    });
   }
 
 
