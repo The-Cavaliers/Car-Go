@@ -40,6 +40,7 @@ class Maps extends Component {
   }
 
   componentWillMount() {
+
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       this.setState({
