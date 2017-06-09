@@ -14,7 +14,7 @@ import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 
-class CreateGroup extends Component {
+class CreateList extends Component {
   static navigationOptions = ({navigation}) => ({
     headerLeft: <DrawerButton navigation={navigation} />,
   });
@@ -28,9 +28,10 @@ class CreateGroup extends Component {
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
+    this.getGroups(user.id)
+    console.log('______________________',this.props)
     // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
     //   var user = JSON.parse(user_data)
-    //   this.getGroups(user.id)
     //   this.setState({
     //     username: user.username,
     //     user_id: user.id,
@@ -136,4 +137,4 @@ const mapStateToProps = ({ loginProfile }) => {
     created_at,
   };
 };
-export default connect(mapStateToProps)(CreateGroup);
+export default connect(mapStateToProps)(CreateList);
