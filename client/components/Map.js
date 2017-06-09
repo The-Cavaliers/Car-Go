@@ -31,7 +31,7 @@ class Maps extends Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
-      const initialPosition = JSON.stringify(position);
+      //const initialPosition = JSON.stringify(position);
     //   console.log('JSON', initialPosition);
     //   console.log('POSITION', position);
       this.setState({
@@ -57,10 +57,10 @@ class Maps extends Component {
         });
       });
       this.setState({ listOfRegions: coords });
-      console.log(this.state.listOfRegions);
+      //console.log(this.state.listOfRegions);
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
     });
     },
     error => alert(JSON.stringify(error)),
