@@ -12,7 +12,7 @@ const avatar = require('../assets/carpool.png');
 
 class ChatterBox extends React.Component {
 
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     title: 'Chatter Box',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'ChatterBox',
@@ -23,7 +23,7 @@ class ChatterBox extends React.Component {
       messages: [],
       username: '',
       picture_url: '',
-      userId: null,
+      // userId: null,
       roomId: null,
     };
     this.onSend = this.onSend.bind(this);
@@ -31,7 +31,7 @@ class ChatterBox extends React.Component {
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     // Keeps listening to the server side message emission;
     this.socket = SocketIOClient(CONFIG.URL);
-    this.checkUserId = this.checkUserId.bind(this);
+    // this.checkUserId = this.checkUserId.bind(this);
     this.giveFirstMessage = this.giveFirstMessage.bind(this);
     this.getRoomId = this.getRoomId.bind(this);
   }
@@ -39,7 +39,7 @@ class ChatterBox extends React.Component {
   componentDidMount() {
     this.giveFirstMessage();
     this.getRoomId();
-    this.checkUserId();
+    // this.checkUserId();
     this.socket.on('receive', this.onReceivedMessage);
   }
 
@@ -92,15 +92,15 @@ class ChatterBox extends React.Component {
     })
   }
 
-  checkUserId() {
-    this.socket.on('connect', () => {
-      this.setState({ userId: this.socket.id });
-    });
-  }
+  // checkUserId() {
+  //   this.socket.on('connect', () => {
+  //     this.setState({ userId: this.socket.id });
+  //   });
+  // }
 
   render() {
     const user = {
-      _id: this.props.userId || -1,
+      _id: this.socket.id || -1,
       name: this.props.username,
       avatar: this.props.picture_url,
     };

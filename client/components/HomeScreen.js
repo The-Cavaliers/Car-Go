@@ -33,6 +33,18 @@ const lock = new Auth0Lock({
 
 
 class Home extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'CarGo',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Log Out',
+    headerRight: <GroupsButton navigation={navigation} />,
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('../assets/menu.jpg')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  });
   constructor(props) {
     super(props);
       this.state ={
@@ -49,29 +61,15 @@ class Home extends Component {
     this._login = this._login.bind(this);
   };
 
-  componentWillMount() {
-      //  this._login();
-    AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
-       var user = JSON.parse(user_data)
-       console.log(user);
-       if(!user.id) {
-       }
-     })
-  }
-
-  static navigationOptions = ({ navigation }) => ({
-    title: 'CarGo',
-    headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Log Out',
-    headerRight: <GroupsButton navigation={navigation} />,
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('../assets/menu.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  });
-
+  // componentWillMount() {
+  //     //  this._login();
+  //   AsyncStorage.getItem('AsyncProfile', function (err, user_data) {
+  //      var user = JSON.parse(user_data)
+  //      console.log(user);
+  //      if(!user.id) {
+  //      }
+  //    })
+  // }
 
   componentDidMount () {
     this._login();
@@ -101,26 +99,23 @@ class Home extends Component {
 
   _login() {
     lock.show({}, (err, profile, token) => {
+      console.log('profile', profile)
       if (err) {
         console.log(err);
         return;
       }
-      axios.post(`${CONFIG.URL}/sign-login`, {
-        username: profile.name,
-        token: token.accessToken,
+      const social_provider = profile.identities[0].provider;
+      const username = social_provider === 'auth0' ? profile.nickname : profile.name;
+      const newUser = {
+        username,
         email: profile.email,
         picture_url: profile.picture,
-        provider: profile.identities[0].provider,
-      })
-      .then((response) => {
-        // response from server, will need to add to global state
-        // response.data[0] object will be boolean check
-        console.log('response from /sign-up server', response.data[1][0]);
-        console.log(response.data[0]);
-        this.props.setLoginProfileAsync(response.data[1][0]);
-        console.log('Props from login:', this.props);
-        console.log(this.props.navigation)
-      })
+        token: token.accessToken,
+        social_provider,
+      }
+      console.log('NEW USER IS', newUser)
+      this.props.setLoginProfileAsync(newUser);
+      axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .catch((error) => {
         console.log('error from /sign-up', error);
       });
