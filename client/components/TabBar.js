@@ -1,11 +1,8 @@
-import React from 'react';
 import { TabNavigator } from 'react-navigation';
 
-import JoinGroup from './JoinGroup';
 import CreateGroup from './CreateGroup';
 
 const RouteConfigs = {
-  TabOne: { screen: JoinGroup },
   TabTwo: { screen: CreateGroup },
 };
 

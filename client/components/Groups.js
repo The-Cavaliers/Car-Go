@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-  AsyncStorage,
-  Button,
-  Text,
   View,
-  TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
-import { connect } from 'react-redux'; // inject data where we need
 import CONFIG from '../../config/development.json';
 
 import GroupRow from './GroupRow';

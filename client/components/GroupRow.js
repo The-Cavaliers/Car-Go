@@ -13,7 +13,6 @@ class GroupRow extends React.Component {
   constructor(props) {
     super(props);
     this.socket = SocketIOClient(CONFIG.URL);
-    // this.socket.on('userJoined', this.giveGroupId);
     this.giveGroupId = this.giveGroupId.bind(this);
   }
 
@@ -26,12 +25,12 @@ class GroupRow extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <Button
         title="button"
         onPress={this.giveGroupId}
       />
-    )
+    );
   }
 }
 

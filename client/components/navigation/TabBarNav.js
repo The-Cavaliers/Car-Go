@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
   navigationState: state.tabBar,
 });
 
-class TabBarNavigation extends React.Component {
+TabBarNavigation() {
   render() {
     const { dispatch, navigationState } = this.props;
     return (
