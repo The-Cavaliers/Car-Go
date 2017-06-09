@@ -59,8 +59,9 @@ class clientPubNub extends Component {
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
-      if (this.state.channelUserRole === 'driver') {
-        this.addPubNubPublisher();
+      if (this.state.channelUserRole === 'Driver') {
+        console.log('from carpool driver');
+        this.watchUserPostion();
       } else {
         this.addPubNubListener();
       }
@@ -81,6 +82,7 @@ class clientPubNub extends Component {
       },
       message(message) {
         console.log('message', message);
+        //alert(message);
       },
     });
     pubnub.subscribe({
@@ -88,13 +90,12 @@ class clientPubNub extends Component {
     });
   }
 
-  addPubNubPublisher() {
-    console.log("from pub");
-    this.watchUserPostion();
+  addPubNubPublisher(positionLatLngs) {
+    console.log('from pub');
     pubnub.publish({
       message: {
         player: this.state.channelUserRole,
-        position: '[37.775037, -122.229411]',
+        position: positionLatLngs,
       },
       channel: this.state.channelName,
     },
@@ -112,8 +113,8 @@ class clientPubNub extends Component {
       const newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
       this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
-
-      console.log(positionLatLngs);
+      //alert(positionLatLngs);
+      this.addPubNubPublisher(positionLatLngs);
     });
   }
 
