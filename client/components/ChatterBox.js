@@ -5,7 +5,6 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
 import { loginProfile } from '../reducers/index';
-
 import DrawerButton from './DrawerButton';
 
 const avatar = require('../assets/carpool.png');
@@ -50,7 +49,6 @@ class ChatterBox extends React.Component {
     .then((roomId) => {
       const message = {};
       message.roomId = roomId;
-      console.log('ROOM ID', roomId)
       this.socket.emit('userJoined', roomId)
     })
   }

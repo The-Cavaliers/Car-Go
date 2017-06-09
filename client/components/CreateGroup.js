@@ -23,7 +23,6 @@ class CreateGroup extends Component {
   });
     constructor(props) {
     super(props)
-    console.log('this is the props', this.props)
     this.state = {
       showCityError: false,
       LeavingFrom: '',
@@ -38,7 +37,7 @@ class CreateGroup extends Component {
   }
 
   handleAddGroupClick = () => {
-    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true};
+    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true, 'Fremont': true, 'San Jose': true, 'San Mateo': true, 'Santa Clara': true};
       if(cities[this.state.LeavingFrom] && cities[this.state.goingTo]) {
         this.addGroup();
         this.setState({

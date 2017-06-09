@@ -32,11 +32,11 @@ const lock = new Auth0Lock({
 });
 
 
-class Home extends Component {
+class Login extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Home',
+    drawerLabel: 'Log Out',
     headerRight: <GroupsButton navigation={navigation} />,
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -62,10 +62,7 @@ class Home extends Component {
   };
 
   componentDidMount () {
-    console.log('HHHHHHHHHHH', this.props)
-    if(this.props.username === '') {
-      this._login();
-    }
+    this._login();
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       // console.log('JSON', initialPosition);
@@ -117,16 +114,7 @@ class Home extends Component {
   }
   render() {
     return (
-
-      <TabView tabBarPosition={'bottom'} initialPage={1}>
-
-        <JoinGroupScreen tabLabel='Find a Ride' />
-
-        <Map tabLabel='View Map' />
-
-        <CreateGroup tabLabel='Create Group' />
-
-      </TabView>
+     null
     )
   }
 }

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 };
 
 function loginProfile(state = INITIAL_STATE, { type, data }) {
-  console.log('this is the data in the reducer', data)
+  //console.log('this is the data in the reducer', data)
   switch (type) {
     case LOGIN_PROFILE:
       return {
