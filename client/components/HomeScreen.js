@@ -45,6 +45,7 @@ class Home extends Component {
       />
     ),
   });
+
   constructor(props) {
     super(props);
       this.state ={
@@ -92,6 +93,7 @@ class Home extends Component {
 
   _login() {
     lock.show({}, (err, profile, token) => {
+      console.log("PROFILE PROFILE PROFILE", profile)
       if (err) {
         console.log(err);
         return;
@@ -106,6 +108,7 @@ class Home extends Component {
         social_provider,
         user_id: profile.userId,
       }
+      console.log('NEW USER IS', newUser)
       this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((response) => {
@@ -147,6 +150,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     id,
+    user_id,
   } = loginProfile;
   return {
     username,
@@ -156,6 +160,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     id,
+    user_id,
   };
 };
 
