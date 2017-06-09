@@ -151,7 +151,11 @@ const styles = StyleSheet.create({
     top: 1,
     right: 5,
     color: 'gray'
-  }
+  },
+  scrollContainer: {
+    backgroundColor: '#fff',
+    padding: 10,
+  },
 });
 
 export default styles;

@@ -56,7 +56,6 @@ class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    console.log('the props', this.props)
     fetch('http://127.0.0.1:3000/newgroup', {
       method: 'POST',
       headers: {

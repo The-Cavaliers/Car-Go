@@ -31,16 +31,6 @@ class CreateList extends Component {
   }
   componentDidMount() {
     this.getGroups(this.props.id)
-    console.log('______________________',this.props)
-    // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
-    //   var user = JSON.parse(user_data)
-    //   this.setState({
-    //     username: user.username,
-    //     user_id: user.id,
-    //     email: user.email,
-    //     picture_url: user.picture_url,
-    //   })
-    // })
   }
 
   handleChatClick() {
@@ -50,7 +40,7 @@ class CreateList extends Component {
     this.setState({
       group_id: id,
     })
-    //console.log(this.state.user_id);
+
     fetch('http://127.0.0.1:3000/removegroup', {
       method: 'POST',
       headers: {
