@@ -22,7 +22,6 @@ import Map from './Map';
 import CONFIG from '../../config/development.json';
 import * as actions from '../actions';
 
-// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
 const Auth0Lock = require('react-native-lock');
 

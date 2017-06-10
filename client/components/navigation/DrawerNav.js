@@ -16,10 +16,6 @@ const Drawer = DrawerNavigator({
   JoinGroup: { screen: JoinGroup },
   CreateGroup: { screen: CreateGroup },
   ViewGroups: { screen: ViewGroups },
-<<<<<<< HEAD
-=======
-  // Join: { screen: Join },
->>>>>>> Rebasing Ali's changes
 },
   {
     drawerWidth: 200,
