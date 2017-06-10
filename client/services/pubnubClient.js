@@ -1,13 +1,14 @@
 import PubNub from 'pubnub';
+import CONFIG from '../../config/development.json';
 
 const pubnub = new PubNub({
-  subscribe_key: 'sub-c-432580da-4d74-11e7-a368-0619f8945a4f',
-  publish_key: 'pub-c-e90ade72-ceb0-46e8-a2e5-d5bd48ca6e8d',
+  subscribe_key: CONFIG.pubnub.subscribeKey,
+  publish_key: CONFIG.pubnub.publishKey,
 
 });
 
 export const addPubNubListener = (channelName) => {
-  console.log("from listener", channelName);
+  console.log('from listener', channelName);
   pubnub.addListener({
     status(statusEvent) {
       if (statusEvent.category === 'PNConnectedCategory') {
@@ -31,7 +32,6 @@ export const addPubNubListener = (channelName) => {
 };
 
 export const addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
-  console.log('from pub');
   pubnub.publish({
     message: {
       player: userRole,
@@ -43,14 +43,23 @@ export const addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
       if (status.error) {
         console.log(status.errorData);
       } else {
-        console.log('message Published w/ timetoken', response.timetoken);
+        console.log('message Published w/ timetoken', response.timetoken, channelName);
       }
     });
 };
 
 export const unSubscribe = (channelName) => {
-  console.log("from unmount");
-  pubnub.subscribe({
+  pubnub.unsubscribe({
     channels: [channelName],
   });
+};
+
+export const unSubscribeAll = () => {
+  console.log('from channel unsubscribeAll');
+  pubnub.unsubscribeAll();
+};
+
+export const pubnubStop = () => {
+  console.log('stoppp');
+  pubnub.stop();  
 };

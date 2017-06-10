@@ -4,6 +4,7 @@ View,
 Button,
 AsyncStorage,
 } from 'react-native';
+import { pubnubStop, unSubscribeAll, unSubscribe } from '../services/pubnubClient';
 
 class SelectGroup extends Component {
 
@@ -22,30 +23,26 @@ class SelectGroup extends Component {
   onPressGroup1() {
     const that = this;
     AsyncStorage.setItem('MapGroup', JSON.stringify({ group: 'group_1', role: that.state.setRole }));
+    unSubscribe('group_1');
     this.props.navigation.navigate('CarpoolMap');
   }
   onPressGroup2() {
     const that = this;
     AsyncStorage.setItem('MapGroup', JSON.stringify({ group: 'group_2', role: that.state.setRole }));
+    unSubscribe('group_2');
     this.props.navigation.navigate('CarpoolMap');
   }
   onPressRider() {
     this.setState({
       setRole: 'Rider',
     });
-    // AsyncStorage.setItem('Role', 'rider');
-    // AsyncStorage.getItem('MapGroup', (err, group_data) => {
-    //   this.setState({
-    //     selecedDetails: (`${group_data}riderId`),
-    //   });
-    // });
-  
+    unSubscribeAll();
   }
   onPressDriver() {
-    // AsyncStorage.setItem('Role', 'driver');
     this.setState({
       setRole: 'Driver',
     });
+    unSubscribeAll();
   }
 
   render() {
