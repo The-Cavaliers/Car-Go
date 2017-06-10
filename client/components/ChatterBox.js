@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, AsyncStorage } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
-import socket from './services/socket.io';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { loginProfile } from '../reducers/index';
 import DrawerButton from './DrawerButton';
 
-const avatar = require('../assets/carpool.png');
+import SocketIOClient from 'socket.io-client';
+import CONFIG from '../../config/development.json';
 
 class ChatterBox extends React.Component {
 
@@ -25,9 +25,10 @@ class ChatterBox extends React.Component {
     this.onSend = this.onSend.bind(this);
     this.storeMessages = this.storeMessages.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
-    // Keeps listening to the server side message emission;
     this.getRoomId = this.getRoomId.bind(this);
-    socket.on('receive', this.onReceivedMessage);
+    this.renderBubble = this.renderBubble.bind(this);
+    this.socket = SocketIOClient(CONFIG.URL);
+    this.socket.on('receive', this.onReceivedMessage);
     this.getRoomId();
   }
 
@@ -38,7 +39,7 @@ class ChatterBox extends React.Component {
         username: this.props.username,
       }
       console.log('user joined on ', user)
-      socket.emit('userJoined', user)
+      this.socket.emit('userJoined', user)
       this.setState({ roomId });
       // const message = {};
       // message.roomId = roomId;
@@ -49,12 +50,11 @@ class ChatterBox extends React.Component {
   onSend(messages = []) {
     const newMessage = messages[0];
     newMessage.roomId = this.state.roomId;
-    socket.emit('message', messages[0], this.state.roomId);
+    this.socket.emit('message', messages[0], this.state.roomId);
     this.storeMessages(messages);
   }
 
   onReceivedMessage(messages) {
-    console.log('message receive on client', messages)
     this.storeMessages(messages);
   }
 
@@ -64,15 +64,31 @@ class ChatterBox extends React.Component {
     }));
   }
 
-  componentWillUnmount() {
-    console.log('unmounting ChatterBox')
-    this.setState(this.baseState);
-    socket.emit('userLeft', this.state.roomId)
+
+  renderBubble(props) {
+    return (props.currentMessage.user.name === this.props.username) ?
+    (
+      <Bubble
+        {...props}
+      />
+    ) : (
+      <View>
+        <Text>{props.currentMessage.user.name}</Text>
+        <Bubble
+          {...props}
+        />
+      </View>
+    )
   }
 
+  componentWillUnmount() {
+    this.setState(this.baseState);
+    this.socket.emit('userLeft', this.state.roomId)
+  }
+  
   render() {
     const user = {
-      _id: socket.id,
+      _id: this.socket.id,
       name: this.props.username,
       avatar: this.props.picture_url,
     };
@@ -81,6 +97,7 @@ class ChatterBox extends React.Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={user}
+        renderBubble={this.renderBubble}
       />
     );
   }

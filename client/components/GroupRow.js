@@ -14,7 +14,6 @@ class GroupRow extends React.Component {
 
   joinRoom() {
     const newRoomId = this.props.roomId;
-    console.log('new room ID', newRoomId);
     console.log('props navigation', this.props.navigation)
     AsyncStorage.setItem('roomId', newRoomId, () => {
       this.props.navigation.navigate('ChatterBox');

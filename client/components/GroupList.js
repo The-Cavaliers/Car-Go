@@ -36,8 +36,15 @@ class CreateList extends Component {
     this.getGroups(this.props.id)
   }
 
-  handleChatClick() {
-
+  handleChatClick(id) {
+    // id is group id
+    // const newRoomId = this.props.roomId;
+    // console.log('new room ID', newRoomId);
+    // console.log('props navigation', this.props.navigation)
+    console.log('click Id', id)
+    AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
+      this.props.navigation.navigate('ChatterBox');
+    });
   }
   removeGroup(id) {
     this.setState({
@@ -106,7 +113,7 @@ class CreateList extends Component {
         : null}
         {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
-            <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
+            <TouchableOpacity onPress={() => this.handleChatClick(item.id)} key={idx} style={styles.joinButton}>
               <Text style={styles.chatbuttonText}>chat</Text>
             </TouchableOpacity>
             <Image style={styles.icon} source={{uri: item.img_url}} />

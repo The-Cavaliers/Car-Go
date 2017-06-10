@@ -58,6 +58,11 @@ exports.up = function (knex, Promise) {
       table.timestamps(true, true);
     }),
 
+    knex.schema.createTable('user_groups', (table) => {
+      table.integer('user_id', 100);
+      table.integer('group_id', 100);
+    }),
+
     knex.schema.createTable('messages', (table) => {
       table.increments('id').primary();
       table.string('text', 1000);

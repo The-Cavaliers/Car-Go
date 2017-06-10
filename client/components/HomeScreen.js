@@ -62,7 +62,7 @@ class Home extends Component {
   };
 
   componentDidMount () {
-    if(this.props.username === '') {
+    if (this.props.username === '') {
       this._login();
     }
     navigator.geolocation.getCurrentPosition((position) => {
