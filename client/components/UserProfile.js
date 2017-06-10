@@ -12,11 +12,14 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 import { setProfile, loginProfile } from '../actions';
 import DrawerButton from './DrawerButton';
 import styles from '../css/style';
-var radio_props = [
+import CONFIG from '../../config/development.json';
+
+
+
+const radio_props = [
   {label: 'Driver', value: null },
   {label: 'Rider', value: 1 }
 ];
-
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -31,7 +34,6 @@ class UserProfile extends Component {
     this.changeProperty = this.changeProperty.bind(this);
     this.setPhoneNumber = this.setPhoneNumber.bind(this);
   }
-
   changeProperty(property, name) {
     console.log("this is name---------------- ",name)
     const newProperty = {};
@@ -81,21 +83,6 @@ class UserProfile extends Component {
       profile: { ...this.state },
     });
     this.props.navigation.navigate('Drawer');
-  }
-  setPhoneNumber(property, number){
-    var hasNumber = /\d/;
-    var checkNumbers = true;
-    for (var i = 0; i < number.length; i++) {
-      var testNumber = number[i] * 1
-      if (!hasNumber.test(testNumber)) {
-        checkNumbers = false;
-        alert('please enter a number');
-      }
-    }
-    console.log('THIS IS THE NUMBER', property)
-    if (checkNumbers) {
-      this.changeProperty(property, number);
-    }
   }
 
   setPhoneNumber(property, number){
