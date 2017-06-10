@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, AsyncStorage } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
-import SocketIOClient from 'socket.io-client';
-import CONFIG from '../../config/development.json';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { loginProfile } from '../reducers/index';
 import DrawerButton from './DrawerButton';
 
-const avatar = require('../assets/carpool.png');
+import SocketIOClient from 'socket.io-client';
+import CONFIG from '../../config/development.json';
 
 class ChatterBox extends React.Component {
 
@@ -20,48 +19,42 @@ class ChatterBox extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      username: '',
-      picture_url: '',
-      // userId: null,
-      roomId: null,
+      roomId: 'default',
     };
+    this.baseState = this.state;
     this.onSend = this.onSend.bind(this);
     this.storeMessages = this.storeMessages.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
-    // Keeps listening to the server side message emission;
-    this.socket = SocketIOClient(CONFIG.URL);
-    // this.checkUserId = this.checkUserId.bind(this);
-    this.giveFirstMessage = this.giveFirstMessage.bind(this);
     this.getRoomId = this.getRoomId.bind(this);
-  }
-
-  componentDidMount() {
-    this.giveFirstMessage();
-    this.getRoomId();
-    // this.checkUserId();
+    this.renderBubble = this.renderBubble.bind(this);
+    this.socket = SocketIOClient(CONFIG.URL);
     this.socket.on('receive', this.onReceivedMessage);
+    this.getRoomId();
   }
 
   getRoomId() {
     AsyncStorage.getItem('roomId', (err, roomId) => {
+      const user = {
+        roomId,
+        username: this.props.username,
+      }
+      console.log('user joined on ', user)
+      this.socket.emit('userJoined', user)
       this.setState({ roomId });
-    })
-    .then((roomId) => {
-      const message = {};
-      message.roomId = roomId;
-      this.socket.emit('userJoined', roomId)
-    })
+      // const message = {};
+      // message.roomId = roomId;
+      // socket.emit('userJoined', roomId);
+    });
   }
 
-  onSend(messages) {
+  onSend(messages = []) {
     const newMessage = messages[0];
     newMessage.roomId = this.state.roomId;
-    this.socket.emit('message', newMessage);
+    this.socket.emit('message', messages[0], this.state.roomId);
     this.storeMessages(messages);
   }
 
   onReceivedMessage(messages) {
-    console.log('message receive on client', messages)
     this.storeMessages(messages);
   }
 
@@ -71,34 +64,31 @@ class ChatterBox extends React.Component {
     }));
   }
 
-  giveFirstMessage() {
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: `Hi ${this.props.username}!`, // input global state name here
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://static.vecteezy.com/system/resources/previews/000/147/625/original/carpool-vector.jpg',
-          },
-        },
-      ],
-      username: this.props.username,
-      picture_url: this.props.picture_url,
-    })
+
+  renderBubble(props) {
+    return (props.currentMessage.user.name === this.props.username) ?
+    (
+      <Bubble
+        {...props}
+      />
+    ) : (
+      <View>
+        <Text>{props.currentMessage.user.name}</Text>
+        <Bubble
+          {...props}
+        />
+      </View>
+    )
   }
 
-  // checkUserId() {
-  //   this.socket.on('connect', () => {
-  //     this.setState({ userId: this.socket.id });
-  //   });
-  // }
-
+  componentWillUnmount() {
+    this.setState(this.baseState);
+    this.socket.emit('userLeft', this.state.roomId)
+  }
+  
   render() {
     const user = {
-      _id: this.socket.id || -1,
+      _id: this.socket.id,
       name: this.props.username,
       avatar: this.props.picture_url,
     };
@@ -107,6 +97,7 @@ class ChatterBox extends React.Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={user}
+        renderBubble={this.renderBubble}
       />
     );
   }
