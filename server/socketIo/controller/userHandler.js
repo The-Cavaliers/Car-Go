@@ -1,7 +1,7 @@
 module.exports = (io, socket) => {
   socket.on('userJoined', (user) => {
     socket.roomId = user.roomId;
-    console.log('user joined on ', socket.roomId)
+    console.log('user joined on ', socket.roomId);
     socket.join(user.roomId);
     const newMessage = {
       _id: Math.floor(Math.random() * 1000000),
