@@ -7,10 +7,7 @@ const INITIAL_STATE = {
   token: '',
   social_provider: '',
   user_id: '',
-<<<<<<< HEAD
   id: '',
-=======
->>>>>>> 4e37afbb72d50e34f270fe82775e5e253c10764b
 };
 
 function loginProfile(state = INITIAL_STATE, { type, data }) {
