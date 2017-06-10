@@ -139,6 +139,7 @@ class CreateGroup extends Component {
     )
   }
 }
+
 const mapStateToProps = ({ loginProfile }) => {
   const {
     username,
@@ -161,4 +162,5 @@ const mapStateToProps = ({ loginProfile }) => {
     id,
   };
 };
+
 export default connect(mapStateToProps)(CreateGroup);

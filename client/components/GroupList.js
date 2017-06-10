@@ -31,8 +31,8 @@ class CreateList extends Component {
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
-    console.log('_______________',this.props)
-    this.getGroups(this.props.id)
+    this.getGroups(this.props.user_id)
+    console.log('______________________',this.props)
   }
 
   handleChatClick() {

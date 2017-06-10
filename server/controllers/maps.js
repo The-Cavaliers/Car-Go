@@ -10,7 +10,7 @@ module.exports.getMapPins = (req, res) => {
     res.send(response);
   })
   .catch((error) => {
-    //console.log(error);
+    console.log(error);
     res.send(error);
   });
 
