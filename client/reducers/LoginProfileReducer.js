@@ -8,11 +8,9 @@ const INITIAL_STATE = {
   social_provider: '',
   user_id: '',
   id: '',
-
 };
 
 function loginProfile(state = INITIAL_STATE, { type, data }) {
-  //console.log('this is the data in the reducer', data)
   switch (type) {
     case LOGIN_PROFILE:
       return {
@@ -23,7 +21,7 @@ function loginProfile(state = INITIAL_STATE, { type, data }) {
         token: data.token,
         social_provider: data.social_provider,
         user_id: data.user_id,
-        id: data.id
+        id: data.id,
       };
     default:
       return state;

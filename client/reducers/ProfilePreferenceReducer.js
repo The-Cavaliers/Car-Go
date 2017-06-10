@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   preferred_ride: '',
   language: '',
   music_preference: '',
+  phone_number: '',
 };
 
 const preferences = (state = INITIAL_STATE, { type, data }) => {

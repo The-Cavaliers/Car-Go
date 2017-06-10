@@ -22,7 +22,6 @@ import Map from './Map';
 import CONFIG from '../../config/development.json';
 import * as actions from '../actions';
 
-// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
 const Auth0Lock = require('react-native-lock');
 
@@ -45,6 +44,7 @@ class Home extends Component {
       />
     ),
   });
+
   constructor(props) {
     super(props);
       this.state ={
@@ -92,6 +92,7 @@ class Home extends Component {
 
   _login() {
     lock.show({}, (err, profile, token) => {
+      console.log("PROFILE PROFILE PROFILE", profile)
       if (err) {
         console.log(err);
         return;
@@ -106,9 +107,11 @@ class Home extends Component {
         social_provider,
         user_id: profile.userId,
       }
+      console.log('NEW USER IS', newUser)
+      this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
-      .then((data) => {
-        this.props.setLoginProfileAsync(data.data[1][0]);
+      .then((response) => {
+        console.log('response from /sign-up server', response.data[1][0]);
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
@@ -146,6 +149,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     id,
+    user_id,
   } = loginProfile;
   return {
     username,
@@ -155,6 +159,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     id,
+    user_id,
   };
 };
 
