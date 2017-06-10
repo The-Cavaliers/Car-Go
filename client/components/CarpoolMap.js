@@ -10,6 +10,7 @@ import PubNub from 'pubnub';
 import pick from 'lodash/pick';
 import MapView from 'react-native-maps';
 import DrawerButton from './DrawerButton';
+import axios from 'axios';
 
 const pubnub = new PubNub({
   subscribe_key: 'sub-c-44e30d18-4c19-11e7-b7ac-02ee2ddab7fe',
