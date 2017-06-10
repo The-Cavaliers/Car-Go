@@ -24,20 +24,10 @@ class UserProfile extends Component {
   });
   constructor(props) {
     super(props);
-    this.state = {
-      first: '',
-      last: '',
-      gender: '',
-      phone: '',
-      car: '',
-      pets: '',
-      mini_bio: '',
-      music: '',
-    };
     this.loadHomeScreen = this.loadHomeScreen.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
-    this.numberChecker = this.numberChecker.bind(this);
-    this.clearFields = this.clearFields.bind(this);
+    this.setPhoneNumber = this.setPhoneNumber.bind(this);
+    // this.clearFields = this.clearFields.bind(this);
   }
 
   changeProperty(property, name) {
@@ -45,7 +35,6 @@ class UserProfile extends Component {
     newProperty[property] = name;
     this.props.setProfile(newProperty);
     console.log(this.props);
-    // console.log(this.props);
   }
 
   loadHomeScreen() {
@@ -54,34 +43,33 @@ class UserProfile extends Component {
     });
     this.props.navigation.navigate('Drawer');
   }
-  numberChecker(text){
-  let newText = '';
-  let numbers = '0123456789';
-    for (var i=0; i < text.length; i++) {
-         if(numbers.indexOf(text[i]) > -1 ) {
-              newText = newText + text[i];
-         }
-         else {
-               // your call back function
-               alert("please enter numbers only");
-          }
-         this.setState({
-          phone: newText
-        });
-     }
+  setPhoneNumber(property, number){
+    var hasNumber = /\d/;
+    var checkNumbers = true;
+    for (var i = 0; i < number.length; i++) {
+      var testNumber = number[i] * 1
+      if (!hasNumber.test(testNumber)) {
+        checkNumbers = false;
+        alert('please enter a number');
+      }
+    }
+    console.log('THIS IS THE NUMBER', property)
+    if (checkNumbers) {
+      this.changeProperty(property, number);
+    }
   }
-  clearFields() {
-    this.setState({
-      first: '',
-      last: '',
-      gender: '',
-      phone: '',
-      car: '',
-      pets: '',
-      mini_bio: '',
-      music: '',
-    })
-  }
+  // clearFields() {
+  //   this.setState({
+  //     first: '',
+  //     last: '',
+  //     gender: '',
+  //     phone: '',
+  //     car: '',
+  //     pets: '',
+  //     mini_bio: '',
+  //     music: '',
+  //   })
+  // }
 
 
   render() {
@@ -90,38 +78,34 @@ class UserProfile extends Component {
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={first => this.setState({ first })}
-          value={this.state.first}
+          onChangeText={firstName => this.changeProperty('firstName', firstName)}
+          value={this.props.first_name}
           placeholder="First Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={last => this.setState({ last })}
-          value={this.state.last}
+          onChangeText={lastName => this.changeProperty('last_name', lastName)}
+          value={this.props.last_name}
           placeholder="Last Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={gender => this.setState({ gender })}
-          value={this.state.gender}
+          onChangeText={gender => this.changeProperty('gender', gender)}
+          value={this.props.gender}
           placeholder="Gender"
         />
         <TextInput
           style={styles.input}
-          onChangeText = {(text)=> this.numberChecker(text)}
-          keyboardType = 'numeric'
-          value = {this.state.phone}
+          onChangeText = {digits => this.setPhoneNumber('phone_number', digits)}
+          value = {this.props.phone_number}
           maxLength = {10}
           placeholder="Phone Number"
         />
         <TextInput
           style={styles.input}
-          onChangeText={car_model => this.setState({ car_model })}
+          onChangeText={preferred_ride => this.setState({ car_model })}
           value={this.state.car_model}
           placeholder="Car Model"
         />
@@ -156,19 +140,23 @@ class UserProfile extends Component {
 
 const mapStateToProps = ({ preferences }) => {
   const {
-    name,
+    first_name,
+    last_name,
     about_me,
     preferred_ride,
     language,
     music_preference,
+    phone_number,
   } = preferences;
 
   return {
-    name,
+    first_name,
+    last_name,
     about_me,
     preferred_ride,
     language,
     music_preference,
+    phone_number,
   };
 };
 
