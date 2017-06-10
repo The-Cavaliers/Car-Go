@@ -43,7 +43,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ```
 brew install yarn
-brew install redis
 brew install postgresql
 ```
 
@@ -77,6 +76,8 @@ In terminal, from the root directory:
 
 `knex seed:run --env NODE_ENV`
 
+`yarn run seed`
+
 Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrate:latest` will run all migrations in the development environment, while `knex migrate:latest --env test` will migrate in the test environment.
 
 ## Running the App
@@ -86,7 +87,5 @@ To run webpack build: `yarn run build`
 To run server: `yarn run start`
 
 To run tests: `yarn run test`
-
-To run your redis server for the session store `redis-server`
 
 
