@@ -5,5 +5,5 @@ module.exports.Addgroup = require('./addGroup');
 module.exports.Maps = require('./maps');
 module.exports.GetGroups = require('./getGroups')
 module.exports.RemoveGroup = require('./removeGroup')
-
 module.exports.Selectgroup = require('./selectgroup');
+module.exports.SaveProfile = require('./saveProfile');

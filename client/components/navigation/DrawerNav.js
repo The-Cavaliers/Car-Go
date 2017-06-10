@@ -10,11 +10,11 @@ import GroupList from '../GroupList';
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
   UserProfile: { screen: UserProfile },
-  ChatterBox: { screen: ChatterBox },
-  'Find Ride': { screen: JoinGroup },
-  'Create Group': { screen: CreateGroup },
-  'GroupList': {screen: GroupList},
-  Join: { screen: Join },
+  // ChatterBox: { screen: ChatterBox },
+  // 'Find Ride': { screen: JoinGroup },
+  // 'Create Group': { screen: CreateGroup },
+  // 'GroupList': {screen: GroupList},
+  // Join: { screen: Join },
 },
   {
     drawerWidth: 200,
