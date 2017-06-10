@@ -136,11 +136,6 @@ class UserProfile extends Component {
           value={this.props.preferred_ride}
           placeholder="Vehicle Make & Model"
         />
-         <RadioForm
-          radio_props={radio_props}
-          initial={0}
-          onPress={(driver) => {this.changeProperty('driver', !this.props.driver)}}
-        />
         <TextInput
           style={styles.input}
           onChangeText={(language) => this.changeProperty('language', language)}

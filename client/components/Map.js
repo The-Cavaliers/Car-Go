@@ -87,7 +87,7 @@ class Maps extends Component {
           {this.state.listOfRegions.map((marker, id) => {
             return (
               <MapView.Marker key={id}
-                coordinate= {marker}
+                coordinate={marker}
                />
             )
           })}

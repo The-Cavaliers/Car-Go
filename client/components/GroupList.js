@@ -32,7 +32,6 @@ class CreateList extends Component {
     this.changeToMap = this.changeToMap.bind(this);
   }
   componentDidMount() {
-    //console.log('_______________',this.props)
     this.getGroups(this.props.id)
   }
 
@@ -42,7 +41,7 @@ class CreateList extends Component {
       this.props.navigation.navigate('ChatterBox');
     });
   }
-  
+
   removeGroup(id) {
     this.setState({
       group_id: id,

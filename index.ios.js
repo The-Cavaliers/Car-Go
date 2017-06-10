@@ -9,7 +9,6 @@ import ReduxThunk from 'redux-thunk';
 const router = () => (
   <Provider store={store}>
     <AppNavigator />
-    {/* <AppWithNavigationState /> */}
   </Provider>
 );
 
