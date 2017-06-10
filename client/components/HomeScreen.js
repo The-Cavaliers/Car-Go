@@ -11,9 +11,13 @@ import {
   AsyncStorage,
 
 } from 'react-native';
-
-import { connect } from 'react-redux'; // inject data where we need
+import TabView from 'react-native-scrollable-tab-view';
+import JoinGroupScreen from './JoinGroupScreen';
+import CreateGroup from './CreateGroup';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import DrawerButton from './DrawerButton';
+import GroupsButton from './GroupsButton';
 import Map from './Map';
 import UserProfile from './UserProfile';
 import CONFIG from '../../config/development.json';
@@ -25,6 +29,7 @@ const lock = new Auth0Lock({
   clientId: CONFIG.auth0.clientId,
   domain: CONFIG.auth0.domain,
 });
+
 
 class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -55,6 +60,7 @@ class Home extends Component {
       }
     this._login = this._login.bind(this);
   };
+
   componentDidMount () {
     if (this.props.username === '') {
       this._login();
@@ -141,6 +147,7 @@ class Home extends Component {
     } else {
       
       return (
+
         <UserProfile />
 
       )
@@ -185,4 +192,3 @@ const mapStateToProps = ({ loginProfile, preferences }) => {
 };
 
 export default connect(mapStateToProps, { setProfileAsync, setLoginProfileAsync })(Home);
-
