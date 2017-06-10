@@ -121,6 +121,27 @@ const styles = StyleSheet.create({
     width: 25,
     color: '#fff',
   },
+  mapBtnHolder: {
+    position: 'absolute',
+    bottom: 2,
+    right: 110,
+  },
+  mapButton: {
+    height:28,
+    width: 28,
+    borderRadius: 14,
+    backgroundColor: 'green',
+    position: 'absolute',
+    bottom: 2,
+    right: 2,
+  },
+  mapbuttonText: {
+    fontSize: 8,
+    marginTop: 8,
+    marginLeft: 5,
+    width: 20,
+    color: '#fff',
+  },
   error: {
     marginBottom: 4,
     color: 'red'
@@ -168,6 +189,9 @@ const styles = StyleSheet.create({
   scrollContainer: {
     backgroundColor: '#fff',
     padding: 10,
+  },
+  piker: {
+    width: 50,
   },
 });
 

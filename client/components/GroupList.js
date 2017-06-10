@@ -29,9 +29,10 @@ class CreateList extends Component {
     }
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
+    this.changeToMap = this.changeToMap.bind(this);
   }
   componentDidMount() {
-    console.log('_______________',this.props)
+    //console.log('_______________',this.props)
     this.getGroups(this.props.id)
   }
 
@@ -92,6 +93,9 @@ class CreateList extends Component {
        console.log('cant find match', err);
     });
   }
+  changeToMap() {
+
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -113,6 +117,11 @@ class CreateList extends Component {
             <View style={styles.removeBtnHolder}>
               <TouchableOpacity onPress={() => this.removeGroup(item.id)} key={idx} style={styles.removeButton}>
                 <Text style={styles.removebuttonText}>delete</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.mapBtnHolder}>
+              <TouchableOpacity onPress={() => this.changeToMap()} key={idx} style={styles.mapButton}>
+                <Text style={styles.mapbuttonText}>Map</Text>
               </TouchableOpacity>
             </View>
           </View>
