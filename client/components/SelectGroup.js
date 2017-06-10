@@ -24,12 +24,33 @@ class SelectGroup extends Component {
     const that = this;
     AsyncStorage.setItem('MapGroup', JSON.stringify({ group: 'group_1', role: that.state.setRole }));
     unSubscribe('group_1');
+    AsyncStorage.getItem('MapWatchId', (err, group_data) => {
+      // if (JSON.parse(group_data).watchID !== undefined) {
+      //     navigator.geolocation.clearWatch(this.watchId);
+      // }
+      if (!err) {
+        console.log('no error',JSON.parse(group_data).watchID );
+        navigator.geolocation.clearWatch(JSON.parse(group_data).watchID);
+      } else {
+        console.log(err);
+      }
+    });
     this.props.navigation.navigate('CarpoolMap');
   }
   onPressGroup2() {
     const that = this;
     AsyncStorage.setItem('MapGroup', JSON.stringify({ group: 'group_2', role: that.state.setRole }));
     unSubscribe('group_2');
+    AsyncStorage.getItem('MapWatchId', (err, group_data) => {
+      // if (JSON.parse(group_data).watchID !== undefined) {
+      //     navigator.geolocation.clearWatch(this.watchId);
+      // }
+      if (!err) {
+        console.log('no error',JSON.parse(group_data).watchID );
+      } else {
+        console.log(err);
+      }
+    });
     this.props.navigation.navigate('CarpoolMap');
   }
   onPressRider() {

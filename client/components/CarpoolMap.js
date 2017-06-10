@@ -32,6 +32,7 @@ class clientPubNub extends Component {
       isMapVisible: false,
       routeCoordinates: [],
     };
+    navigator.geolocation.clearWatch(this.watchId);
   }
 
   componentDidMount() {
@@ -52,7 +53,6 @@ class clientPubNub extends Component {
   }
 
   watchUserPostion() {
-   pubnubStop();
     this.watchID = navigator.geolocation.watchPosition((position) => {
       const { routeCoordinates } = this.state;
       const newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
@@ -60,16 +60,15 @@ class clientPubNub extends Component {
       //this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
       // alert(positionLatLngs);
       //this.addPubNubPublisher(positionLatLngs);
+      const watchID = this.watchID;
+      AsyncStorage.setItem('MapWatchId', JSON.stringify({ watchID: watchID}));
       addPubNubPublisher( positionLatLngs, this.state.channelName, this.state.channelUserRole )
-    });
+    },
+    (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
-  componentWillUnMount() {
-    console.log('component unmount');
-    pubnub.unsubscribe({
-      channels: [this.state.channelName],
-    });
-  }
 
   render() {
     return (
