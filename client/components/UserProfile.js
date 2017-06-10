@@ -53,14 +53,14 @@ class UserProfile extends Component {
         last_name: this.props.last_name,
         age: this.props.age,
         gender: this.props.age,
-        about_me: this.props.about_me,
+        phone_number: this.props.phone_number,
+        preferred_ride: this.props.preferred_ride,
+        driver: this.props.driver,
+        language: this.props.language,
         pets: this.props.pets,
         smoking: this.props.smoking,
-        driver: this.props.driver,
-        preferred_ride: this.props.preferred_ride,
-        language: this.props.language,
+        about_me: this.props.about_me,
         music_preference: this.props.music_preference,
-        phone_number: this.props.phone_number,
         user_id: this.props.id,
       })
     })
@@ -112,6 +112,13 @@ class UserProfile extends Component {
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
+          onChangeText={age => this.changeProperty('age', age)}
+          value={this.props.age}
+          placeholder="Last Name"
+        />
+        <TextInput
+          underlineColorIos="transparent"
+          style={styles.input}
           onChangeText={gender => this.changeProperty('gender', gender)}
           value={this.props.gender}
           placeholder="Gender"
@@ -143,14 +150,22 @@ class UserProfile extends Component {
         <TextInput
           style={styles.input}
           onChangeText={pets => this.changeProperty('pets', pets)}
-          value={this.props.language}
+          value={this.props.pets}
           placeholder="Pets"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={smoking => this.changeProperty('smoking', smoking)}
+          value={this.props.smoking}
+          placeholder="Smoke"
         />
         <TextInput
           style={styles.bioinput}
           onChangeText={about_me => this.changeProperty('about_me', about_me)}
           value={this.props.about_me}
           placeholder="About Me"
+          multiline={true}
+          numberOfLines={4}
         />
         <TextInput
           style={styles.input}

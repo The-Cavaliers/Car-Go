@@ -4,7 +4,7 @@ const knex = require('knex')(dbConfig);
 
 
 module.exports.saveProfile = function (req, res) {
-	console.log('this is',res.body)
+	console.log('this is',req.body)
   new models.Profile({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
