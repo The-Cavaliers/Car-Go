@@ -15,9 +15,9 @@ import DrawerButton from './DrawerButton';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
-    title: 'User Profile',
+    title: 'Find a Ride',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'User Profile',
+    drawerLabel: 'Find a Ride',
   });
   constructor(props) {
     super(props)
@@ -122,9 +122,9 @@ class JoinGroup extends Component {
             date={this.state.date}
             mode="date"
             placeholder="Select Date"
-            format="YYYY-MM-DD"
-            minDate="2017-06-01"
-            maxDate="2021-06-01"
+            format="MM-DD-YYYY"
+            minDate="06-01-2017"
+            maxDate="01-10-2021"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{

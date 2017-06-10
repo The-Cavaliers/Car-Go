@@ -1,11 +1,9 @@
 import { DrawerNavigator } from 'react-navigation';
-
 import Join from '../Groups';
 import JoinGroup from '../JoinGroupScreen';
 import Home from '../HomeScreen';
 import CreateGroup from '../CreateGroup';
 import ChatterBox from '../ChatterBox';
-import ViewGroups from '../ViewGroups';
 import UserProfile from '../UserProfile';
 import GroupList from '../GroupList';
 
@@ -16,7 +14,6 @@ const Drawer = DrawerNavigator({
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
   'GroupList': {screen: GroupList},
-  // ViewGroups: { screen: ViewGroups },
   Join: { screen: Join },
 },
   {

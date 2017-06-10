@@ -23,7 +23,6 @@ class CreateGroup extends Component {
   });
     constructor(props) {
     super(props)
-    console.log('this is the props', this.props)
     this.state = {
       showCityError: false,
       LeavingFrom: '',
@@ -38,7 +37,7 @@ class CreateGroup extends Component {
   }
 
   handleAddGroupClick = () => {
-    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true};
+    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true, 'Fremont': true, 'San Jose': true, 'San Mateo': true, 'Santa Clara': true};
       if(cities[this.state.LeavingFrom] && cities[this.state.goingTo]) {
         this.addGroup();
         this.setState({
@@ -57,7 +56,6 @@ class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    console.log('the props', this.props)
     fetch('http://127.0.0.1:3000/newgroup', {
       method: 'POST',
       headers: {
@@ -68,7 +66,7 @@ class CreateGroup extends Component {
         username: this.props.username,
         email: this.props.email,
         picture_url: this.props.picture_url,
-        user_id: this.props.user_id,
+        user_id: this.props.id,
         going_to: this.state.goingTo,
         leaving_from: this.state.LeavingFrom,
         travelDate: this.state.date,
@@ -113,9 +111,9 @@ class CreateGroup extends Component {
             date={this.state.date}
             mode="date"
             placeholder="Select Date"
-            format="YYYY-MM-DD"
-            minDate="2017-06-01"
-            maxDate="2021-06-01"
+            format="MM-DD-YYYY"
+            minDate="06-01-2017"
+            maxDate="01-10-2021"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
@@ -150,6 +148,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     user_id,
+    id,
   } = loginProfile;
   return {
     username,
@@ -159,6 +158,7 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     user_id,
+    id,
   };
 };
 export default connect(mapStateToProps)(CreateGroup);

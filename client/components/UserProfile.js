@@ -13,71 +13,36 @@ import {
 
 import { setProfile } from '../actions';
 import DrawerButton from './DrawerButton';
-
-
-const styles = {
-  profilePageStyle: {
-    backgroundColor: '#6bffff',
-    padding: 10,
-  },
-  userInput: {
-    height: 30,
-    margin: 10,
-    paddingLeft: 30,
-    borderRadius: 5,
-    borderWidth: 3,
-    borderColor: 'black',
-  },
-  aboutMe: {
-    height: 100,
-    margin: 10,
-    paddingLeft: 30,
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    borderRadius: 5,
-    borderWidth: 3,
-    borderColor: 'black',
-  },
-  details: {
-    fontWeight: '900',
-    alignSelf: 'center',
-  },
-  navigationButton: {
-    borderRadius: 7,
-    borderWidth: 6,
-    borderColor: 'black',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 30,
-  },
-};
+import styles from '../css/style';
 
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'User Profile',
+    title: 'Create Profile',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'User Profile',
   });
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      about_me: '',
-      preferred_ride: '',
-      language: '',
-      music_preference: '',
+      first: '',
+      last: '',
+      gender: '',
+      phone: '',
+      car: '',
+      pets: '',
+      mini_bio: '',
+      music: '',
     };
     this.loadHomeScreen = this.loadHomeScreen.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
+    this.numberChecker = this.numberChecker.bind(this);
+    this.clearFields = this.clearFields.bind(this);
   }
 
   changeProperty(property, name) {
     const newProperty = {};
     newProperty[property] = name;
-    // console.log('This is the new property: ', newProperty);
     this.props.setProfile(newProperty);
     console.log(this.props);
     // console.log(this.props);
@@ -89,47 +54,100 @@ class UserProfile extends Component {
     });
     this.props.navigation.navigate('Drawer');
   }
+  numberChecker(text){
+  let newText = '';
+  let numbers = '0123456789';
+    for (var i=0; i < text.length; i++) {
+         if(numbers.indexOf(text[i]) > -1 ) {
+              newText = newText + text[i];
+         }
+         else {
+               // your call back function
+               alert("please enter numbers only");
+          }
+         this.setState({
+          phone: newText
+        });
+     }
+  }
+  clearFields() {
+    this.setState({
+      first: '',
+      last: '',
+      gender: '',
+      phone: '',
+      car: '',
+      pets: '',
+      mini_bio: '',
+      music: '',
+    })
+  }
+
 
   render() {
     return (
-      <ScrollView style={styles.profilePageStyle}>
-        <Text style={styles.details}>Your Name</Text>
+      <ScrollView style={styles.scrollContainer}>
         <TextInput
-          style={styles.userInput}
-          onChangeText={(name) => this.changeProperty('name', name)}
-          value={this.props.name}
-          placeholder="Name"
+          underlineColorIos="transparent"
+          style={styles.input}
+          placeholder="Leaving From"
+          onChangeText={first => this.setState({ first })}
+          value={this.state.first}
+          placeholder="First Name"
         />
-        <Text style={styles.details}>About Me</Text>
         <TextInput
-          style={styles.aboutMe}
-          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
-          value={this.props.about_me}
-          placeholder="About me"
+          underlineColorIos="transparent"
+          style={styles.input}
+          placeholder="Leaving From"
+          onChangeText={last => this.setState({ last })}
+          value={this.state.last}
+          placeholder="Last Name"
         />
-        <Text style={styles.details}>Preferred Ride</Text>
         <TextInput
-          style={styles.userInput}
-            onChangeText={(preferred_ride) => {this.changeProperty('preferred_ride', preferred_ride)}}
-          value={this.props.preferred_ride}
-          placeholder="Preferred Ride"
+          underlineColorIos="transparent"
+          style={styles.input}
+          placeholder="Leaving From"
+          onChangeText={gender => this.setState({ gender })}
+          value={this.state.gender}
+          placeholder="Gender"
         />
-        <Text style={styles.details}>Preferred Language</Text>
         <TextInput
-          style={styles.userInput}
+          style={styles.input}
+          onChangeText = {(text)=> this.numberChecker(text)}
+          keyboardType = 'numeric'
+          value = {this.state.phone}
+          maxLength = {10}
+          placeholder="Phone Number"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={car_model => this.setState({ car_model })}
+          value={this.state.car_model}
+          placeholder="Car Model"
+        />
+        <TextInput
+          style={styles.input}
           onChangeText={(language) => this.changeProperty('language', language)}
           value={this.props.language}
-          placeholder="Preferred Language"
+          placeholder="Pets"
         />
-        <Text style={styles.details}>Music Preferrence</Text>
         <TextInput
-          style={styles.userInput}
+          style={styles.bioinput}
+          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
+          value={this.props.about_me}
+          placeholder="Mini Bio"
+        />
+        <TextInput
+          style={styles.input}
           onChangeText={(music_preference) => this.changeProperty('music_preference', music_preference)}
           value={this.props.music_preference}
-          placeholder="Music Preferrence"
+          placeholder="Music Preference"
         />
-        <TouchableOpacity onPress={this.loadHomeScreen} style={styles.navigationButton}>
-          <Text>Submit Profile</Text>
+        <TouchableOpacity onPress={() => {
+          this.clearFields()
+          //this.loadHomeScreen()
+        }} style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Submit Profile</Text>
         </TouchableOpacity>
       </ScrollView>
     );

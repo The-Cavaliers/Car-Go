@@ -16,29 +16,23 @@ import DrawerButton from './DrawerButton';
 
 class CreateList extends Component {
   static navigationOptions = ({navigation}) => ({
+    title: 'Your Groups',
     headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Your Groups',
   });
   constructor(props) {
     super(props)
     this.state = {
       groups: [],
-      group_id: ''
+      group_id: '',
+      showLoading: false
     }
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
-    this.getGroups(user.id)
-    console.log('______________________',this.props)
-    // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
-    //   var user = JSON.parse(user_data)
-    //   this.setState({
-    //     username: user.username,
-    //     user_id: user.id,
-    //     email: user.email,
-    //     picture_url: user.picture_url,
-    //   })
-    // })
+    console.log('_______________',this.props)
+    this.getGroups(this.props.id)
   }
 
   handleChatClick() {
@@ -48,7 +42,7 @@ class CreateList extends Component {
     this.setState({
       group_id: id,
     })
-    //console.log(this.state.user_id);
+
     fetch('http://127.0.0.1:3000/removegroup', {
       method: 'POST',
       headers: {
@@ -57,7 +51,7 @@ class CreateList extends Component {
       },
       body: JSON.stringify({
         group_id: id,
-        user_id: this.props.user_id
+        user_id: this.props.id
       }),
     })
     .then(res => (res.json()))
@@ -72,7 +66,10 @@ class CreateList extends Component {
     });
   }
 
-  getGroups = (id) => {
+  getGroups = () => {
+    this.setState({
+      showLoading: true
+    })
     fetch('http://127.0.0.1:3000/grouplist', {
       method: 'POST',
       headers: {
@@ -80,14 +77,15 @@ class CreateList extends Component {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: id
+        user_id: this.props.id
       }),
     })
     .then(res => (res.json()))
     .then((res) => {
-      //console.log('this is the response',res)
+      console.log('this is the response',res)
       this.setState({
-        groups: res
+        groups: res,
+        showLoading: false
       })
     })
     .catch((err) => {
@@ -97,13 +95,17 @@ class CreateList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.groups.length === 0 ? <Text style={styles.error}>You have no groups</Text> : null}
+        {this.state.showLoading ? <Image style={styles.loading} source={require('../assets/loading.gif')} />
+        : null}
+        {this.state.groups.length === 0 ?
+          <Text style={styles.error}>You have no groups</Text>
+        : null}
         {this.state.groups.map((item, idx) =>
           <View key={idx} style={styles.group}>
             <TouchableOpacity onPress={() => this.handleChatClick()} key={idx} style={styles.joinButton}>
               <Text style={styles.chatbuttonText}>chat</Text>
             </TouchableOpacity>
-            <Image style={styles.icon} source={require('../assets/person.png')} />
+            <Image style={styles.icon} source={{uri: item.img_url}} />
             <Text style={styles.name} >Group: {item.name}</Text>
             <Text style={styles.from} >From: {item.leaving_from}</Text>
             <Text style={styles.to}>To: {item.going_to}</Text>
@@ -127,6 +129,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   } = loginProfile;
   return {
     username,
@@ -135,6 +138,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   };
 };
 export default connect(mapStateToProps)(CreateList);

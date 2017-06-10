@@ -38,6 +38,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#D8D9DD'
   },
+  bioinput: {
+    fontSize: 16,
+    height: 80,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: 'rgba(255,255,255,1)',
+    borderWidth: 1,
+    borderColor: '#D8D9DD'
+  },
   buttonContainer: {
     alignSelf: 'stretch',
     margin: 20,
@@ -116,6 +125,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: 'red'
   },
+  loading: {
+    height:50,
+    width: 50,
+  },
   icon: {
     height:36,
     width: 36,
@@ -151,7 +164,11 @@ const styles = StyleSheet.create({
     top: 1,
     right: 5,
     color: 'gray'
-  }
+  },
+  scrollContainer: {
+    backgroundColor: '#fff',
+    padding: 10,
+  },
 });
 
 export default styles;
