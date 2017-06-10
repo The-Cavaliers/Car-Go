@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
-  // View,
   TouchableOpacity,
-  // Image,
-  // AsyncStorage,
+  Picker,
   TextInput,
-  // AppRegistry,
   ScrollView,
 } from 'react-native';
 
@@ -33,11 +30,15 @@ class UserProfile extends Component {
       pets: '',
       mini_bio: '',
       music: '',
+      about_me: '',
+      car_model: '',
+      music_preference: ''
     };
     this.loadHomeScreen = this.loadHomeScreen.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
     this.numberChecker = this.numberChecker.bind(this);
     this.clearFields = this.clearFields.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   changeProperty(property, name) {
@@ -80,9 +81,17 @@ class UserProfile extends Component {
       pets: '',
       mini_bio: '',
       music: '',
+      about_me: '',
+      car_model: '',
+      music_preference: ''
     })
   }
 
+   updateUser(input) {
+    this.setState({
+      gender: input
+    })
+   }
 
   render() {
     return (
@@ -111,6 +120,10 @@ class UserProfile extends Component {
           value={this.state.gender}
           placeholder="Gender"
         />
+        <Picker style={styles.picker} selectedValue = {this.state.gender} onValueChange = {this.updateUser}>
+            <Picker.Item label = "Male" value = "Male" />
+            <Picker.Item label = "Female" value = "Female" />
+        </Picker>
         <TextInput
           style={styles.input}
           onChangeText = {(text)=> this.numberChecker(text)}
@@ -133,14 +146,16 @@ class UserProfile extends Component {
         />
         <TextInput
           style={styles.bioinput}
+          multiline = {true}
+          numberOfLines = {4}
           onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
-          value={this.props.about_me}
+          value={this.state.about_me}
           placeholder="Mini Bio"
         />
         <TextInput
           style={styles.input}
           onChangeText={(music_preference) => this.changeProperty('music_preference', music_preference)}
-          value={this.props.music_preference}
+          value={this.state.music_preference}
           placeholder="Music Preference"
         />
         <TouchableOpacity onPress={() => {
