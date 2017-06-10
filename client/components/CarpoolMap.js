@@ -6,11 +6,10 @@ AsyncStorage,
 Mapview,
 StyleSheet,
 } from 'react-native';
-// import SocketIOClient from 'socket.io-client';
-// import CONFIG from '../../config/development.json';
 import PubNub from 'pubnub';
 import pick from 'lodash/pick';
 import MapView from 'react-native-maps';
+import DrawerButton from './DrawerButton';
 
 const pubnub = new PubNub({
   subscribe_key: 'sub-c-44e30d18-4c19-11e7-b7ac-02ee2ddab7fe',
@@ -18,6 +17,11 @@ const pubnub = new PubNub({
 
 });
 class clientPubNub extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Chatter Box',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'ChatterBox',
+  });
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +39,10 @@ class clientPubNub extends Component {
   }
 
   componentDidMount() {
+    console.log('Hello', AsyncStorage);
     // Map
     navigator.geolocation.getCurrentPosition((position) => {
       const initialPosition = JSON.stringify(position);
-
       this.setState({
         region: {
           latitude: position.coords.latitude,
@@ -53,9 +57,8 @@ class clientPubNub extends Component {
     error => alert(JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-
-
     // PubNub
+    console.log(AsyncStorage);
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
@@ -82,10 +85,11 @@ class clientPubNub extends Component {
       },
       message(message) {
         console.log('message', message);
-        //alert(message);
+        // alert(message);
       },
     });
     pubnub.subscribe({
+
       channels: [this.state.channelName],
     });
   }
@@ -112,39 +116,34 @@ class clientPubNub extends Component {
       const { routeCoordinates } = this.state;
       const newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-      this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
-      //alert(positionLatLngs);
+      //this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
+      // alert(positionLatLngs);
       this.addPubNubPublisher(positionLatLngs);
     });
   }
 
   componentWillUnMount() {
-    pubnub.subscribe({
+    console.log('component unmount');
+    pubnub.unsubscribe({
       channels: [this.state.channelName],
     });
   }
 
   render() {
-    return (this.state.isMapVisible ?
-      (
-        <MapView
-          style={styles.map}
-          showsUserLocation
-          followUserLocation
-          showsCompass
-          showsPointsOfInterest
-          overlays={[{
-            coordinates: this.state.routeCoordinates,
-            strokeColor: ['#f007'],
-            lineWidth: 10,
-          }]}
-        />
-      ) :
-      (
-        <View>
-          <Text> loading ...</Text>
-        </View>
-      ));
+    return (
+      <MapView
+        style={styles.map}
+        showsUserLocation
+        followUserLocation
+        showsCompass
+        showsPointsOfInterest
+        overlays={[{
+          coordinates: this.state.routeCoordinates,
+          strokeColor: ['#f007'],
+          lineWidth: 10,
+        }]}
+      />
+    );
   }
 }
 
