@@ -1,18 +1,18 @@
 import { SET_PROFILE } from '../actions/type';
 
 const INITIAL_STATE = {
-    first_name: '',
-    last_name: '',
-    age: '',
-    about_me: '',
-    pets: '',
-    smoking: '',
-    preferred_ride: '',
-    language: '',
-    music_preference: '',
-    phone_number: '',
-    user_id: '',
-    driver: false,
+  first_name: '',
+  last_name: '',
+  age: '',
+  about_me: '',
+  pets: '',
+  smoking: '',
+  preferred_ride: '',
+  language: '',
+  music_preference: '',
+  phone_number: '',
+  user_id: '',
+  driver: false,
 };
 
 const preferences = (state = INITIAL_STATE, { type, data }) => {

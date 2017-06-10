@@ -9,17 +9,13 @@ import CreateGroup from '../CreateGroup';
 import ViewGroups from '../ViewGroups';
 
 const Drawer = DrawerNavigator({
-  Home: { screen: Home },
+  // Home: { screen: Home },
   UserProfile: { screen: UserProfile },
   ChatterBox: { screen: ChatterBox },
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
   GroupList: { screen: GroupList },
   ViewGroups: { screen: ViewGroups },
-<<<<<<< HEAD
-=======
-  // Join: { screen: Join },
->>>>>>> Rebasing Ali's changes
 },
   {
     drawerWidth: 200,

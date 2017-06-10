@@ -38,7 +38,6 @@ class UserProfile extends Component {
     newProperty[property] = name;
     this.props.setProfile(newProperty);
     console.log(this.props);
-    // console.log(this.props);
   }
 
  sendProfile() {
@@ -76,6 +75,28 @@ class UserProfile extends Component {
       //  console.log('cant find match', );
     });
 }
+
+  loadHomeScreen() {
+    this.setState({
+      profile: { ...this.state },
+    });
+    this.props.navigation.navigate('Drawer');
+  }
+  setPhoneNumber(property, number){
+    var hasNumber = /\d/;
+    var checkNumbers = true;
+    for (var i = 0; i < number.length; i++) {
+      var testNumber = number[i] * 1
+      if (!hasNumber.test(testNumber)) {
+        checkNumbers = false;
+        alert('please enter a number');
+      }
+    }
+    console.log('THIS IS THE NUMBER', property)
+    if (checkNumbers) {
+      this.changeProperty(property, number);
+    }
+  }
 
   setPhoneNumber(property, number){
     var hasNumber = /\d/;
