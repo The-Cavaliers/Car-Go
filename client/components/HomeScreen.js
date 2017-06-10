@@ -62,7 +62,6 @@ class Home extends Component {
   };
 
   componentDidMount () {
-    console.log('HHHHHHHHHHH', this.props)
     if(this.props.username === '') {
       this._login();
     }
@@ -109,6 +108,7 @@ class Home extends Component {
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
         this.props.setLoginProfileAsync(data.data[1][0]);
+        //console.log(this.props)
       })
       .catch((error) => {
         console.log('error from /sign-up', error);

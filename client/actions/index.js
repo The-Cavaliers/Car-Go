@@ -28,7 +28,7 @@ const setLoginProfile = (data) => {
 };
 
 export const setLoginProfileAsync = (data) => {
-  console.log('DATA FROM SETLOGINASYNC: ', data);
+  //console.log('DATA FROM SETLOGINASYNC: ', data);
   return function (dispatch) {
     dispatch(setLoginProfile(data));
   };

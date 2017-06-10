@@ -7,10 +7,15 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
-import { setProfile } from '../actions';
+import { setProfile, loginProfile } from '../actions';
 import DrawerButton from './DrawerButton';
 import styles from '../css/style';
+var radio_props = [
+  {label: 'Driver', value: null },
+  {label: 'Rider', value: 1 }
+];
 
 
 class UserProfile extends Component {
@@ -21,27 +26,14 @@ class UserProfile extends Component {
   });
   constructor(props) {
     super(props);
-    this.state = {
-      first: '',
-      last: '',
-      gender: '',
-      phone: '',
-      car: '',
-      pets: '',
-      mini_bio: '',
-      music: '',
-      about_me: '',
-      car_model: '',
-      music_preference: ''
-    };
-    this.loadHomeScreen = this.loadHomeScreen.bind(this);
+    console.log('htis is our id_____________', this.props)
+    this.sendProfile = this.sendProfile.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
-    this.numberChecker = this.numberChecker.bind(this);
-    this.clearFields = this.clearFields.bind(this);
-    this.updateUser = this.updateUser.bind(this);
+    this.setPhoneNumber = this.setPhoneNumber.bind(this);
   }
 
   changeProperty(property, name) {
+    console.log("this is name---------------- ",name)
     const newProperty = {};
     newProperty[property] = name;
     this.props.setProfile(newProperty);
@@ -49,49 +41,56 @@ class UserProfile extends Component {
     // console.log(this.props);
   }
 
-  loadHomeScreen() {
-    this.setState({
-      profile: { ...this.state },
+ sendProfile() {
+  fetch('http://127.0.0.1:3000/saveprofile', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: this.props.first_name,
+        last_name: this.props.last_name,
+        age: this.props.age,
+        gender: this.props.age,
+        phone_number: this.props.phone_number,
+        preferred_ride: this.props.preferred_ride,
+        driver: this.props.driver,
+        language: this.props.language,
+        pets: this.props.pets,
+        smoking: this.props.smoking,
+        about_me: this.props.about_me,
+        music_preference: this.props.music_preference,
+        user_id: this.props.id,
+      })
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+      this.props.navigation.navigate('Drawer');
+      // console.log('this is the response',res)
+    })
+    .catch((err) => {
+      this.setState({
+        showSearchError: true
+      })
+      //  console.log('cant find match', );
     });
-    this.props.navigation.navigate('Drawer');
-  }
-  numberChecker(text){
-  let newText = '';
-  let numbers = '0123456789';
-    for (var i=0; i < text.length; i++) {
-         if(numbers.indexOf(text[i]) > -1 ) {
-              newText = newText + text[i];
-         }
-         else {
-               // your call back function
-               alert("please enter numbers only");
-          }
-         this.setState({
-          phone: newText
-        });
-     }
-  }
-  clearFields() {
-    this.setState({
-      first: '',
-      last: '',
-      gender: '',
-      phone: '',
-      car: '',
-      pets: '',
-      mini_bio: '',
-      music: '',
-      about_me: '',
-      car_model: '',
-      music_preference: ''
-    })
-  }
+}
 
-   updateUser(input) {
-    this.setState({
-      gender: input
-    })
-   }
+  setPhoneNumber(property, number){
+    var hasNumber = /\d/;
+    var checkNumbers = true;
+    for (var i = 0; i < number.length; i++) {
+      var testNumber = number[i] * 1
+      if (!hasNumber.test(testNumber)) {
+        checkNumbers = false;
+        alert('please enter a number');
+      }
+    }
+    if (checkNumbers) {
+      this.changeProperty(property, number);
+    }
+  }
 
   render() {
     return (
@@ -99,68 +98,83 @@ class UserProfile extends Component {
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={first => this.setState({ first })}
-          value={this.state.first}
+          onChangeText={firstName => this.changeProperty('first_name', firstName)}
+          value={this.props.first_name}
           placeholder="First Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={last => this.setState({ last })}
-          value={this.state.last}
+          onChangeText={lastName => this.changeProperty('last_name', lastName)}
+          value={this.props.last_name}
           placeholder="Last Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          placeholder="Leaving From"
-          onChangeText={gender => this.setState({ gender })}
-          value={this.state.gender}
+          onChangeText={age => this.changeProperty('age', age)}
+          value={this.props.age}
+          placeholder="Last Name"
+        />
+        <TextInput
+          underlineColorIos="transparent"
+          style={styles.input}
+          onChangeText={gender => this.changeProperty('gender', gender)}
+          value={this.props.gender}
           placeholder="Gender"
         />
-        <Picker style={styles.picker} selectedValue = {this.state.gender} onValueChange = {this.updateUser}>
-            <Picker.Item label = "Male" value = "Male" />
-            <Picker.Item label = "Female" value = "Female" />
-        </Picker>
         <TextInput
           style={styles.input}
-          onChangeText = {(text)=> this.numberChecker(text)}
-          keyboardType = 'numeric'
-          value = {this.state.phone}
+          onChangeText = {digits => this.setPhoneNumber('phone_number', digits)}
+          value = {this.props.phone_number}
           maxLength = {10}
           placeholder="Phone Number"
         />
         <TextInput
           style={styles.input}
-          onChangeText={car_model => this.setState({ car_model })}
-          value={this.state.car_model}
-          placeholder="Car Model"
+          onChangeText={preferred_ride => this.changeProperty('preferred_ride', preferred_ride)}
+          value={this.props.preferred_ride}
+          placeholder="Vehicle Make & Model"
+        />
+         <RadioForm
+          radio_props={radio_props}
+          initial={0}
+          onPress={(driver) => {this.changeProperty('driver', !this.props.driver)}}
         />
         <TextInput
           style={styles.input}
           onChangeText={(language) => this.changeProperty('language', language)}
           value={this.props.language}
-          placeholder="Pets"
-        />
-        <TextInput
-          style={styles.bioinput}
-          multiline = {true}
-          numberOfLines = {4}
-          onChangeText={(about_me) => this.changeProperty('about_me', about_me)}
-          value={this.state.about_me}
-          placeholder="Mini Bio"
+          placeholder="Language"
         />
         <TextInput
           style={styles.input}
-          onChangeText={(music_preference) => this.changeProperty('music_preference', music_preference)}
-          value={this.state.music_preference}
+          onChangeText={pets => this.changeProperty('pets', pets)}
+          value={this.props.pets}
+          placeholder="Pets"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={smoking => this.changeProperty('smoking', smoking)}
+          value={this.props.smoking}
+          placeholder="Smoke"
+        />
+        <TextInput
+          style={styles.bioinput}
+          onChangeText={about_me => this.changeProperty('about_me', about_me)}
+          value={this.props.about_me}
+          placeholder="About Me"
+          multiline={true}
+          numberOfLines={4}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={music_preference => this.changeProperty('music_preference', music_preference)}
+          value={this.props.music_preference}
           placeholder="Music Preference"
         />
         <TouchableOpacity onPress={() => {
-          this.clearFields()
-          //this.loadHomeScreen()
+          this.sendProfile()
         }} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>Submit Profile</Text>
         </TouchableOpacity>
@@ -169,24 +183,41 @@ class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ preferences }) => {
+const mapStateToProps = ({ preferences, loginProfile }) => {
   const {
-    name,
+    first_name,
+    last_name,
+    age,
     about_me,
+    pets,
+    smoking,
     preferred_ride,
     language,
     music_preference,
+    phone_number,
+    user_id,
+    driver,
   } = preferences;
-
+  const {
+    id,
+  } = loginProfile;
   return {
-    name,
+    first_name,
+    last_name,
+    age,
     about_me,
+    pets,
+    smoking,
     preferred_ride,
     language,
     music_preference,
+    phone_number,
+    user_id,
+    driver,
+    id,
   };
 };
-
 export default connect(mapStateToProps, {
   setProfile,
+  loginProfile,
 })(UserProfile);

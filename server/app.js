@@ -31,6 +31,7 @@ app.use('/newgroup', routes.addgroup);
 app.use('/getMapDetails', routes.maps);
 app.use('/grouplist', routes.getgroups);
 app.use('/removegroup', routes.removegroup);
+app.use('/saveprofile', routes.saveprofile);
 
 // Phong's work
 //
