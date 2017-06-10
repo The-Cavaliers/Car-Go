@@ -1,8 +1,13 @@
 import React from 'react';
 import {
+  AsyncStorage,
+  Button,
+  Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux'; // inject data where we need
 import CONFIG from '../../config/development.json';
 
 import GroupRow from './GroupRow';
@@ -11,7 +16,7 @@ class Group extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: ['one', 'two'],
+      groups: ['one', 'two', 'three'],
     };
     this.selectGroup = this.selectGroup.bind(this);
   }

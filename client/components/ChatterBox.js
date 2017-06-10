@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
-import SocketIOClient from 'socket.io-client';
-import CONFIG from '../../config/development.json';
+import socket from './services/socket.io';
 import { loginProfile } from '../reducers/index';
 import DrawerButton from './DrawerButton';
 
@@ -20,39 +19,37 @@ class ChatterBox extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      username: '',
-      picture_url: '',
-      // userId: null,
-      roomId: null,
+      roomId: 'default',
     };
+    this.baseState = this.state;
     this.onSend = this.onSend.bind(this);
     this.storeMessages = this.storeMessages.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     // Keeps listening to the server side message emission;
-    this.socket = SocketIOClient(CONFIG.URL);
-    this.giveFirstMessage = this.giveFirstMessage.bind(this);
     this.getRoomId = this.getRoomId.bind(this);
-    this.socket.on('receive', this.onReceivedMessage);
-  }
-
-  componentWillMount() {
-    this.giveFirstMessage();
+    socket.on('receive', this.onReceivedMessage);
     this.getRoomId();
   }
 
   getRoomId() {
     AsyncStorage.getItem('roomId', (err, roomId) => {
+      const user = {
+        roomId,
+        username: this.props.username,
+      }
+      console.log('user joined on ', user)
+      socket.emit('userJoined', user)
       this.setState({ roomId });
-      const message = {};
-      message.roomId = roomId;
-      this.socket.emit('userJoined', roomId);
+      // const message = {};
+      // message.roomId = roomId;
+      // socket.emit('userJoined', roomId);
     });
   }
 
   onSend(messages = []) {
     const newMessage = messages[0];
     newMessage.roomId = this.state.roomId;
-    this.socket.emit('message', newMessage);
+    socket.emit('message', messages[0], this.state.roomId);
     this.storeMessages(messages);
   }
 
@@ -67,28 +64,15 @@ class ChatterBox extends React.Component {
     }));
   }
 
-  giveFirstMessage() {
-    this.setState({
-      messages: [
-        {
-          _id: 1,
-          text: `Hi ${this.props.username}!`, // input global state name here
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://static.vecteezy.com/system/resources/previews/000/147/625/original/carpool-vector.jpg',
-          },
-        },
-      ],
-      username: this.props.username,
-      picture_url: this.props.picture_url,
-    })
+  componentWillUnmount() {
+    console.log('unmounting ChatterBox')
+    this.setState(this.baseState);
+    socket.emit('userLeft', this.state.roomId)
   }
 
   render() {
     const user = {
-      _id: this.socket.id || -1,
+      _id: socket.id,
       name: this.props.username,
       avatar: this.props.picture_url,
     };
