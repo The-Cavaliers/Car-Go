@@ -57,7 +57,6 @@ class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    console.log('the props', this.props)
     fetch('http://127.0.0.1:3000/newgroup', {
       method: 'POST',
       headers: {
@@ -141,6 +140,7 @@ class CreateGroup extends Component {
     )
   }
 }
+
 const mapStateToProps = ({ loginProfile }) => {
   const {
     username,
@@ -161,4 +161,5 @@ const mapStateToProps = ({ loginProfile }) => {
     user_id,
   };
 };
+
 export default connect(mapStateToProps)(CreateGroup);

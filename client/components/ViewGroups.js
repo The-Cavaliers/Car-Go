@@ -10,20 +10,10 @@ import ViewButton from './ViewButton';
 import GroupList from './GroupList';
 
 class ViewGroups extends Component {
-	constructor(props) {
-		super(props)
-	}
-
-	static navigationOptions= ({navigation}) => ({
-    title: 'CarGo',
+	static navigationOptions = ({navigation}) => ({
+    title: 'View Group',
     headerLeft: <ViewButton navigation={navigation} />,
-    drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('../assets/menu.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
+    drawerLabel: 'View Group',
   });
 
 	render() {

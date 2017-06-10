@@ -89,7 +89,6 @@ class Home extends Component {
 
   _login() {
     lock.show({}, (err, profile, token) => {
-      console.log('profile', profile)
       if (err) {
         console.log(err);
         return;
@@ -104,11 +103,10 @@ class Home extends Component {
         social_provider,
         user_id: profile.userId,
       }
-      console.log('NEW USER IS', newUser)
       this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
-      .then((data) => {
-        console.log('_____HERE IT IS______',data)
+      .then((response) => {
+        console.log('response from /sign-up server', response.data[1][0]);
       })
       .catch((error) => {
         console.log('error from /sign-up', error);

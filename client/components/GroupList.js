@@ -28,17 +28,8 @@ class CreateList extends Component {
     this.removeGroup = this.removeGroup.bind(this);
   }
   componentDidMount() {
-    this.getGroups(user.id)
+    this.getGroups(this.props.user_id)
     console.log('______________________',this.props)
-    // AsyncStorage.getItem('AsyncProfile', (err, user_data) => {
-    //   var user = JSON.parse(user_data)
-    //   this.setState({
-    //     username: user.username,
-    //     user_id: user.id,
-    //     email: user.email,
-    //     picture_url: user.picture_url,
-    //   })
-    // })
   }
 
   handleChatClick() {
