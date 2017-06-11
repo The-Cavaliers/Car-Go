@@ -22,7 +22,8 @@ export const addPubNubListener = (channelName) => {
       }
     },
     message(message) {
-      console.log('message', message);
+      //console.log('message', message);
+      //return (message.message.position);
       // alert(message);
     },
   });

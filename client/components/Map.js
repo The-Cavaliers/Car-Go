@@ -44,24 +44,24 @@ class Maps extends Component {
         },
         isMapVisible: true,
       });
-      axios.get(`${CONFIG.URL}/getMapDetails`, {
-        params: {
-          location: [position.coords.latitude, position.coords.longitude],
-        },
-      })
-    .then((response) => {
-      const coords = [];
-      response.data.forEach((item) => {
-        coords.push({ latitude: JSON.parse(item.from_coords)[0],
-          longitude: JSON.parse(item.from_coords)[1],
-        });
-      });
-      this.setState({ listOfRegions: coords });
-      //console.log(this.state.listOfRegions);
-    })
-    .catch((error) => {
-      //console.log(error);
-    });
+    //   axios.get(`${CONFIG.URL}/getMapDetails`, {
+    //     params: {
+    //       location: [position.coords.latitude, position.coords.longitude],
+    //     },
+    //   })
+    // .then((response) => {
+    //   const coords = [];
+    //   response.data.forEach((item) => {
+    //     coords.push({ latitude: JSON.parse(item.from_coords)[0],
+    //       longitude: JSON.parse(item.from_coords)[1],
+    //     });
+    //   });
+    //   this.setState({ listOfRegions: coords });
+    //   //console.log(this.state.listOfRegions);
+    // })
+    // .catch((error) => {
+    //   //console.log(error);
+    // });
     },
     error => alert(JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },

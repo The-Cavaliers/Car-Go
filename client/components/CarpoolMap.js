@@ -10,7 +10,16 @@ import pick from 'lodash/pick';
 import MapView from 'react-native-maps';
 import DrawerButton from './DrawerButton';
 import axios from 'axios';
-import { addPubNubListener, addPubNubPublisher, unSubscribe, pubnubStop } from '../services/pubnubClient';
+import CONFIG from '../../config/development.json';
+import PubNub from 'pubnub';
+import { addPubNubPublisher, unSubscribe, pubnubStop } from '../services/pubnubClient';
+
+
+const pubnub = new PubNub({
+  subscribe_key: CONFIG.pubnub.subscribeKey,
+  publish_key: CONFIG.pubnub.publishKey,
+
+});
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -29,40 +38,43 @@ class clientPubNub extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      isMapVisible: false,
+      isRouteTracking: false,
       routeCoordinates: [],
     };
     navigator.geolocation.clearWatch(this.watchId);
   }
 
   componentDidMount() {
-    
-    console.log('Mahimammmmmm');
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
       if (this.state.channelUserRole === 'Driver') {
-        console.log('from carpool driver');
         this.watchUserPostion();
       } else {
-        // this.addPubNubListener();
-        addPubNubListener(this.state.channelName);
-
+         this.addPubNubListener(this.state.channelName);
       }
     });
+    //For Carpool live tracking on mount and unmount
+    this.setState({
+      isRouteTracking: true,
+    });
   }
-
+  componentWillUnmount() {
+  this.state.isRouteTracking = false;
+  //console.log("unmounted", this.state.isRouteTracking);
+  }
+ 
   watchUserPostion() {
     this.watchID = navigator.geolocation.watchPosition((position) => {
       const { routeCoordinates } = this.state;
       const newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-      //this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
-      // alert(positionLatLngs);
-      //this.addPubNubPublisher(positionLatLngs);
-      const watchID = this.watchID;
-      console.log("from Mapppppppp", watchID);
-      // AsyncStorage.setItem('MapWatchId', JSON.stringify({ watchID: watchID}));
+      //For Carpool live tracking on mount and unmount
+      if (this.state.isRouteTracking) {
+        console.log("tracking", positionLatLngs, typeof(positionLatLngs));
+      this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
+      }
+      //For conditional publishing with switched groups
       AsyncStorage.getItem('MapGroup', (err, group_data) => {
       if (this.state.channelName === JSON.parse(group_data).group) {
       addPubNubPublisher( positionLatLngs, this.state.channelName, this.state.channelUserRole )
@@ -73,6 +85,38 @@ class clientPubNub extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+  trackingPosition(message) {
+    console.log(message);
+  }
+
+ addPubNubListener = (channelName) => {
+  console.log('from listener', channelName);
+  const that = this;
+  pubnub.addListener({
+    status(statusEvent) {
+      if (statusEvent.category === 'PNConnectedCategory') {
+        console.log('need to check');
+      } else if (statusEvent.category === 'PNUnknownCategory') {
+        pubnub.setState({
+          state: { new: 'error' },
+        }, (status) => {
+          console.log(statusEvent.errorData.message);
+        });
+      }
+    },
+    message(message) {
+      //For Carpool live tracking on mount and unmount
+      if (that.state.isRouteTracking) {
+        const { routeCoordinates } = that.state;
+        console.log( { routeCoordinates });
+        that.setState({ routeCoordinates: routeCoordinates.concat(message.message.position) });
+      }    
+    },
+  });
+  pubnub.subscribe({
+    channels: [channelName],
+  });
+};
 
 
   render() {
