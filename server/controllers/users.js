@@ -18,7 +18,7 @@ module.exports.checkUser = (req, res) => {
       })
       .catch((error) => {
         console.log('err', error);
-        res.end('PLS HALP! ERROR from server side', error);
+        res.end('PLS HALP! ERROR in users.js controller', error);
       });
     } else {
       res.end(JSON.stringify([true, response]));

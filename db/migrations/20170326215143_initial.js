@@ -4,20 +4,12 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTableIfNotExists('profiles', (table) => {
       table.increments('id').unsigned().primary();
-      table.string('first_name', 100);
-      table.string('last_name', 100);
-      table.string('age');
-      table.string('gender');
-      table.string('about_me').nullable();
-      table.string('pets').nullable();
-      table.string('smoking').nullable();
-      table.string('preferred_ride', 100).nullable();
-      table.boolean('driver', 100);
-      table.string('language', 100).nullable().unique();
-      table.string('music_preference', 100).nullable().unique();
-      table.string('phone_number', 100).nullable();
+      table.string('first', 100).nullable();
+      table.string('last', 100).nullable();
+      table.string('display', 100).nullable();
+      table.string('email', 100).nullable().unique();
+      table.string('phone', 100).nullable();
       table.timestamps(true, true);
-      table.integer('user_id').references('users.id').onDelete('CASCADE');
     }),
 
     knex.schema.createTableIfNotExists('auths', (table) => {
@@ -65,8 +57,12 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTable('messages', (table) => {
       table.increments('id').primary();
-      table.string('text', 1000);
-      table.integer('users_id').references('users.id').onDelete('CASCADE');
+      table.string('_id', 100);
+      table.text('text');
+      table.string('createdAt', 100);
+      table.string('user_id', 100);
+      table.string('user_name', 100);
+      table.text('user_avatar');
       table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
