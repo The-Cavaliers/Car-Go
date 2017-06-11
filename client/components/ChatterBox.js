@@ -47,8 +47,7 @@ class ChatterBox extends React.Component {
       this.socket.on('connect', (err, resp) => {
         user.socket_id = this.socket.id;
       })
-      console.log('user joined on ', user)
-      this.socket.emit('userJoined', user)
+      this.socket.emit('user-joined', user)
       this.setState({ roomId });
     });
   }
@@ -105,7 +104,6 @@ class ChatterBox extends React.Component {
         user={user}
         renderBubble={this.renderBubble}
         renderAvatarOnTop={true}
-        isLoadingEarlier={true}
       />
     );
   }

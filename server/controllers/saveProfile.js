@@ -1,10 +1,7 @@
 const models = require('../../db/models');
-const dbConfig = require('../dbConfig.js');
-const knex = require('knex')(dbConfig);
-
 
 module.exports.saveProfile = function (req, res) {
-	console.log('this is',req.body)
+	console.log('this is', req.body)
   new models.Profile({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -20,5 +17,5 @@ module.exports.saveProfile = function (req, res) {
     phone_number: req.body.phone_number,
     user_id: req.body.user_id,
   }).save();
-	console.log('saved to data base')
-}
+  console.log('saved to data base');
+};
