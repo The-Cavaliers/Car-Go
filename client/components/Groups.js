@@ -16,7 +16,7 @@ class Group extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groups: ['one', 'two', 'three'],
+      groups: ['1', '4', '5'],
     };
     this.selectGroup = this.selectGroup.bind(this);
   }
