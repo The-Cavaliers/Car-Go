@@ -19,6 +19,7 @@ class ChatterBox extends React.Component {
     super(props);
     this.state = {
       messages: [],
+      userId: '',
       roomId: 'default',
     };
     this.baseState = this.state;
@@ -32,18 +33,23 @@ class ChatterBox extends React.Component {
     this.getRoomId();
   }
 
+  componentDidMount() {
+    this.setState({ userId: this.socket.id });
+  }
+
   getRoomId() {
     AsyncStorage.getItem('roomId', (err, roomId) => {
       const user = {
         roomId,
         username: this.props.username,
+        email: this.props.email,
       }
+      this.socket.on('connect', (err, resp) => {
+        user.socket_id = this.socket.id;
+      })
       console.log('user joined on ', user)
       this.socket.emit('userJoined', user)
       this.setState({ roomId });
-      // const message = {};
-      // message.roomId = roomId;
-      // socket.emit('userJoined', roomId);
     });
   }
 
@@ -66,7 +72,7 @@ class ChatterBox extends React.Component {
 
 
   renderBubble(props) {
-    return (props.currentMessage.user.name === this.props.username) ?
+    return (props.currentMessage.user._id === this.socket.id) ?
     (
       <Bubble
         {...props}
@@ -85,7 +91,7 @@ class ChatterBox extends React.Component {
     this.setState(this.baseState);
     this.socket.emit('userLeft', this.state.roomId)
   }
-  
+
   render() {
     const user = {
       _id: this.socket.id,
@@ -98,6 +104,8 @@ class ChatterBox extends React.Component {
         onSend={this.onSend}
         user={user}
         renderBubble={this.renderBubble}
+        renderAvatarOnTop={true}
+        isLoadingEarlier={true}
       />
     );
   }

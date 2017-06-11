@@ -33,9 +33,6 @@ app.use('/grouplist', routes.getgroups);
 app.use('/removegroup', routes.removegroup);
 app.use('/saveprofile', routes.saveprofile);
 
-// Phong's work
-//
-
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
@@ -43,5 +40,4 @@ const allowCrossDomain = (req, res, next) => {
 
 app.use(allowCrossDomain);
 
-// end of Phong's work
 module.exports = app;
