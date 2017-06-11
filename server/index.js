@@ -1,6 +1,6 @@
 const app = require('./app');
 const server = require('http').Server(app);
-const io = require('./socketIo/socket.io.index');
+const io = require('./socket_io/socket.io.index');
 
 io(server);
 
