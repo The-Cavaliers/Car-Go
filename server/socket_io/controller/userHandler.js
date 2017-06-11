@@ -16,41 +16,25 @@ module.exports = (io, socket) => {
     socket.broadcast.to(user.roomId).emit('receive', newMessage);
 
     knex('messages').where('group_id', user.roomId).select('*')
-    // .then((messages) => {
-    //   messages.forEach((msgObj) => {
-    //     io.in(socket.id).emit('receive', {
-    //       _id: msgObj._id,
-    //       text: msgObj.text,
-    //       user: {
-    //         _id: msgObj.user_id,
-    //         name: msgObj.user_name,
-    //         avatar: msgObj.user_avatar,
-    //       },
-    //     });
-    //   });
-    // })
-    .then((messages) => {
-      return messages.map((msgObj) => {
-        return {
-          _id: msgObj._id,
-          text: msgObj.text,
-          user: {
-            _id: msgObj.user_id,
-            name: msgObj.user_name,
-            avatar: msgObj.user_avatar,
-          },
-        }
-      })
-    })
+    .then(messages => messages.map(msgObj => ({
+      _id: msgObj._id,
+      text: msgObj.text,
+      user: {
+        _id: msgObj.user_id,
+        name: msgObj.user_name,
+        avatar: msgObj.user_avatar,
+      },
+    })))
     .then((messages) => {
       newMessage.text = `Hi ${user.username}! Welcome to the group!`;
       messages.push(newMessage);
       messages.reverse();
       io.to(socket.id).emit('receive', messages);
-    });
+    })
+    .catch(err => console.log('err', err));
   });
 
-  socket.on('userLeft', (oldRoomId) => {
+  socket.on('user-left', (oldRoomId) => {
     socket.leave(oldRoomId);
     socket.disconnect();
   });

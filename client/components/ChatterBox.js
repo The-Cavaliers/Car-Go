@@ -88,7 +88,7 @@ class ChatterBox extends React.Component {
 
   componentWillUnmount() {
     this.setState(this.baseState);
-    this.socket.emit('userLeft', this.state.roomId)
+    this.socket.emit('user-left', this.state.roomId)
   }
 
   render() {
