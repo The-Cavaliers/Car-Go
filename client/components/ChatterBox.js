@@ -54,7 +54,6 @@ class ChatterBox extends React.Component {
 
   onSend(messages = []) {
     const newMessage = messages[0];
-    newMessage.roomId = this.state.roomId;
     this.socket.emit('message', messages[0], this.state.roomId);
     this.storeMessages(messages);
   }
@@ -88,7 +87,7 @@ class ChatterBox extends React.Component {
 
   componentWillUnmount() {
     this.setState(this.baseState);
-    this.socket.emit('user-left', this.state.roomId)
+    this.socket.emit('user-left', this.state.roomId, this.props.username)
   }
 
   render() {

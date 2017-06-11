@@ -9,6 +9,7 @@ module.exports = (socket) => {
       user: message.user,
       createdAt: new Date(message.createdAt),
     };
+    console.log('message', messageData)
     socket.broadcast.to(roomId).emit('receive', messageData);
 
     knex('messages').where('group_id', message.roomId)
@@ -22,7 +23,7 @@ module.exports = (socket) => {
       createdAt: message.createdAt,
     })
     .catch((error) => {
-      res.end('Error with message saving', error);
+      console.log('Error with message saving', error);
     });
   });
 };
