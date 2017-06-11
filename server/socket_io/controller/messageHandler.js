@@ -3,14 +3,14 @@ const knex = require('knex')(CONFIG.knex_config);
 
 module.exports = (socket) => {
   socket.on('message', (message, roomId) => {
-    // console.log('roomId from server', message.user._id)
     const messageData = {
       _id: message._id,
       text: message.text,
       user: message.user,
       createdAt: new Date(message.createdAt),
     };
-    socket.broadcast.to(socket.roomId).emit('receive', messageData);
+    console.log('message', messageData)
+    socket.broadcast.to(roomId).emit('receive', messageData);
 
     knex('messages').where('group_id', message.roomId)
     .insert({
@@ -23,8 +23,7 @@ module.exports = (socket) => {
       createdAt: message.createdAt,
     })
     .catch((error) => {
-      console.log('err', error);
-      res.end('Error with message saving', error);
+      console.log('Error with message saving', error);
     });
   });
 };
