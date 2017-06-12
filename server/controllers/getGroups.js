@@ -1,7 +1,5 @@
-const models = require('../../db/models');
-const dbConfig = require('../dbConfig.js');
-const knex = require('knex')(dbConfig);
-
+const CONFIG = require('../../config/development.json');
+const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.getGroups = function (req, res) {
 	var id = req.body.user_id;
