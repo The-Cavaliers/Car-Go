@@ -9,3 +9,4 @@ module.exports.Selectgroup = require('./selectgroup');
 module.exports.SaveProfile = require('./saveProfile');
 module.exports.ReturnOldMessages = require('./returnOldMessages.io');
 module.exports.SaveMessage = require('./saveMessage.io');
+module.exports.VerifyProfile = require('./verifyProfile');

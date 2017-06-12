@@ -7,16 +7,10 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 import { setProfile, loginProfile } from '../actions';
 import DrawerButton from './DrawerButton';
 import styles from '../css/style';
-var radio_props = [
-  {label: 'Driver', value: null },
-  {label: 'Rider', value: 1 }
-];
-
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -26,58 +20,45 @@ class UserProfile extends Component {
   });
   constructor(props) {
     super(props);
-    console.log('htis is our id_____________', this.props)
+
     this.sendProfile = this.sendProfile.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
-    this.setPhoneNumber = this.setPhoneNumber.bind(this);
+    this.checkNumber = this.checkNumber.bind(this);
   }
 
   changeProperty(property, name) {
-    console.log("this is name---------------- ",name)
     const newProperty = {};
     newProperty[property] = name;
     this.props.setProfile(newProperty);
-    console.log(this.props);
-    // console.log(this.props);
   }
 
  sendProfile() {
-  fetch('http://127.0.0.1:3000/saveprofile', {
+  const data = this.props;
+  fetch('http://127.0.0.1:3000/saveProfile', {
       method: 'POST',
       headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        first_name: this.props.first_name,
-        last_name: this.props.last_name,
-        age: this.props.age,
-        gender: this.props.age,
-        phone_number: this.props.phone_number,
-        preferred_ride: this.props.preferred_ride,
-        driver: this.props.driver,
-        language: this.props.language,
-        pets: this.props.pets,
-        smoking: this.props.smoking,
-        about_me: this.props.about_me,
-        music_preference: this.props.music_preference,
-        user_id: this.props.id,
-      })
+      body: JSON.stringify({ data: data })
     })
-    .then(res => (res.json()))
     .then((res) => {
       this.props.navigation.navigate('Drawer');
-      // console.log('this is the response',res)
     })
-    .catch((err) => {
-      this.setState({
-        showSearchError: true
-      })
-      //  console.log('cant find match', );
+    .catch((error) => {
+      console.log('error saving users profile: ', error);
+      this.props.navigation.navigate('Drawer');
     });
 }
 
-  setPhoneNumber(property, number){
+  loadHomeScreen() {
+    this.setState({
+      profile: { ...this.state },
+    });
+    this.props.navigation.navigate('Drawer');
+  }
+
+  checkNumber(property, number){
     var hasNumber = /\d/;
     var checkNumbers = true;
     for (var i = 0; i < number.length; i++) {
@@ -98,23 +79,23 @@ class UserProfile extends Component {
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          onChangeText={firstName => this.changeProperty('first_name', firstName)}
+          onChangeText={first_name => this.changeProperty('first_name', first_name)}
           value={this.props.first_name}
           placeholder="First Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          onChangeText={lastName => this.changeProperty('last_name', lastName)}
+          onChangeText={last_name => this.changeProperty('last_name', last_name)}
           value={this.props.last_name}
           placeholder="Last Name"
         />
         <TextInput
           underlineColorIos="transparent"
           style={styles.input}
-          onChangeText={age => this.changeProperty('age', age)}
+          onChangeText={age => this.checkNumber('age', age)}
           value={this.props.age}
-          placeholder="Last Name"
+          placeholder="Age"
         />
         <TextInput
           underlineColorIos="transparent"
@@ -125,7 +106,7 @@ class UserProfile extends Component {
         />
         <TextInput
           style={styles.input}
-          onChangeText = {digits => this.setPhoneNumber('phone_number', digits)}
+          onChangeText = {phone_number => this.checkNumber('phone_number', phone_number)}
           value = {this.props.phone_number}
           maxLength = {10}
           placeholder="Phone Number"
@@ -135,11 +116,6 @@ class UserProfile extends Component {
           onChangeText={preferred_ride => this.changeProperty('preferred_ride', preferred_ride)}
           value={this.props.preferred_ride}
           placeholder="Vehicle Make & Model"
-        />
-         <RadioForm
-          radio_props={radio_props}
-          initial={0}
-          onPress={(driver) => {this.changeProperty('driver', !this.props.driver)}}
         />
         <TextInput
           style={styles.input}
@@ -188,32 +164,35 @@ const mapStateToProps = ({ preferences, loginProfile }) => {
     first_name,
     last_name,
     age,
+    gender,
+    phone_number,
     about_me,
-    pets,
-    smoking,
     preferred_ride,
     language,
+    pets,
+    smoking,
     music_preference,
-    phone_number,
+    existingUser,
     user_id,
-    driver,
   } = preferences;
   const {
     id,
+    email,
   } = loginProfile;
   return {
     first_name,
     last_name,
     age,
+    gender,
     about_me,
     pets,
     smoking,
+    email,
     preferred_ride,
     language,
     music_preference,
     phone_number,
     user_id,
-    driver,
     id,
   };
 };
