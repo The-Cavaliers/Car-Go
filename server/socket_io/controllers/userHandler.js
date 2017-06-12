@@ -1,5 +1,4 @@
-const CONFIG = require('../../../config/development.json');
-const knex = require('knex')(CONFIG.knex_config);
+const GroupController = require('../../controllers').ReturnOldMessages;
 
 const CarGoBot = {
   user: {
@@ -16,16 +15,7 @@ module.exports = (io, socket) => {
     CarGoBot.text = `${user.username} has joined the chat`;
     socket.broadcast.to(user.roomId).emit('receive', CarGoBot);
 
-    knex('messages').where('group_id', user.roomId).select('*')
-    .then(messages => messages.map(msgObj => ({
-      _id: msgObj._id,
-      text: msgObj.text,
-      user: {
-        _id: msgObj.user_id,
-        name: msgObj.user_name,
-        avatar: msgObj.user_avatar,
-      },
-    })))
+    GroupController.returnOldMessages(user)
     .then((messages) => {
       CarGoBot._id = Math.floor(Math.random() * 1000000);
       CarGoBot.text = `Hi ${user.username}! Welcome to the group!`;

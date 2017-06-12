@@ -23,14 +23,13 @@ exports.up = function (knex, Promise) {
 
     knex.schema.createTableIfNotExists('users', (table) => {
       table.increments('id').primary();
-      table.string('username', 100).nullable();
-      table.string('password', 100);
+      table.string('username', 100);
       table.string('social_provider', 100);
       table.string('token', 100);
       table.string('email', 100).nullable().unique();
       table.string('picture_url');
       table.string('profile', 100);
-      table.integer('group_id').references('groups.id').onDelete('CASCADE');
+      // table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
 
@@ -50,9 +49,10 @@ exports.up = function (knex, Promise) {
       table.timestamps(true, true);
     }),
 
-    knex.schema.createTable('user_groups', (table) => {
-      table.integer('user_id', 100);
-      table.integer('group_id', 100);
+    knex.schema.createTable('users_groups', (table) => {
+      table.increments('id').primary();
+      table.integer('users_id', 100).references('users.id').onDelete('CASCADE');
+      table.integer('groups_id', 100).references('groups.id').onDelete('CASCADE');
     }),
 
     knex.schema.createTable('messages', (table) => {
@@ -77,5 +77,6 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('messages'),
     knex.schema.dropTable('users'),
     knex.schema.dropTable('groups'),
+    knex.schema.dropTable('users_groups'),
   ]);
 };

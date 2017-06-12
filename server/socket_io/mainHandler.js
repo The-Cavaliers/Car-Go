@@ -1,5 +1,5 @@
-const userHandler = require('./controller/userHandler');
-const messageHandler = require('./controller/messageHandler');
+const userHandler = require('./controllers/userHandler');
+const messageHandler = require('./controllers/messageHandler');
 
 module.exports = (io, socket) => {
   userHandler(io, socket);
