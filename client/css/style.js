@@ -193,34 +193,25 @@ const styles = StyleSheet.create({
   piker: {
     width: 50,
   },
+  seatsContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+  },
   seatsButton: {
     width: 100,
-    left: 0,
-    padding: 20,
+    height: 50,
+    padding: 15,
     borderWidth: 1,
     borderColor: '#fff',
     backgroundColor: '#2E4CE5',
   },
-  wrapper: {
-    flex: 1,
-  },
-  containerOne: {
-    flex: .5,
-    flexDirection: 'row',
-    justifyContent: 'flex-start', //replace with flex-end or center
-    borderBottomWidth: 1,
-    borderBottomColor: '#000'
-  },
-  box: {
+  seatsTextHolder: {
     width: 100,
+    padding: 10,
   },
-  box1: {
-  },
-  box2: {
-  },
-  box3: {
+  seatsText: {
+    fontSize: 20,
   }
-
 });
 
 export default styles;

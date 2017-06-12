@@ -72,6 +72,7 @@ class CreateGroup extends Component {
         going_to: this.state.goingTo,
         leaving_from: this.state.LeavingFrom,
         travelDate: this.state.date,
+        seats: this.state.seats,
       }),
     })
     .then((res) => {
@@ -102,22 +103,12 @@ class CreateGroup extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.wrapper}>
-        <View style={styles.containerOne}>
-            <View style={[styles.box, styles.box1]}>
-              <TouchableOpacity onPress={this.incrementCount} style={styles.seatsButton}>
-                <Text style={styles.buttonText}>Seats</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={[styles.box, styles.box3]}>
-              <Text>{this.state.seats}</Text>
-            </View>
-        </View>
-        </View>
+
         <Image style={styles.icon} source={{uri:this.state.picture_url }} />
 
         <View style={styles.inputContainer}>
           {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
+
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -125,6 +116,7 @@ class CreateGroup extends Component {
             value={this.state.LeavingFrom}
             placeholder="Leaving From"
           />
+
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -132,7 +124,6 @@ class CreateGroup extends Component {
             value={this.state.goingTo}
             placeholder="Going To"
           />
-
 
           <DatePicker
             style={{width: 200}}
@@ -158,11 +149,20 @@ class CreateGroup extends Component {
             }}
             onDateChange={(date) => {this.setState({date: date})}}
           />
+
+          <View style={styles.seatsContainer}>
+              <TouchableOpacity onPress={this.incrementCount} style={styles.seatsButton}>
+                <Text style={styles.buttonText}>Seats</Text>
+              </TouchableOpacity>
+            <View style={styles.seatsTextHolder}>
+              <Text style={styles.seatsText}>{this.state.seats}</Text>
+            </View>
+          </View>
+
           <TouchableOpacity onPress={this.handleAddGroupClick} style={styles.buttonContainer}>
             <Text style={styles.buttonText}> Create New Group</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     )
   }
