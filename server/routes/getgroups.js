@@ -7,8 +7,7 @@ router.route('/')
   .get((req, res) => {
   })
   .post((req, res) => {
-  	console.log('in route')
-  	GetGroupsController.getGroups(req, res)
+    GetGroupsController.getGroups(req, res);
   });
 
 module.exports = router;

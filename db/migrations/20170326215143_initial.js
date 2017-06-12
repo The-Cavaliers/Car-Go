@@ -45,14 +45,14 @@ exports.up = function (knex, Promise) {
       table.string('from_coords', 100);
       table.string('to_coords', 100);
       table.string('messages');
-      table.integer('user_id').references('users.id').onDelete('CASCADE');
+      // table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
 
     knex.schema.createTable('users_groups', (table) => {
       table.increments('id').primary();
-      table.integer('users_id', 100).references('users.id').onDelete('CASCADE');
-      table.integer('groups_id', 100).references('groups.id').onDelete('CASCADE');
+      table.integer('user_id').references('users.id');
+      table.integer('group_id').references('groups.id').onDelete('CASCADE');
     }),
 
     knex.schema.createTable('messages', (table) => {

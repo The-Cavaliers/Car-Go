@@ -11,7 +11,7 @@ module.exports.checkUser = (req, res) => {
         email: user.email,
         picture_url: user.picture_url,
         token: user.token,
-        social_provider: user.provider,
+        social_provider: user.social_provider,
       }).returning('*').into('users')
       .then((userLogin) => {
         res.end(JSON.stringify([false, userLogin]));
