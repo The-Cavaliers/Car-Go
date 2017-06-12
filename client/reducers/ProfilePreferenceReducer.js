@@ -15,7 +15,6 @@ const INITIAL_STATE = {
   about_me: '',
   music_preference: '',
   existing_user: true,
-  driver: false,
   user_id: '',
 };
 

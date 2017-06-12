@@ -34,7 +34,6 @@ class UserProfile extends Component {
 
  sendProfile() {
   const data = this.props;
-  console.log('this is the data before sending the profile', data);
   fetch('http://127.0.0.1:3000/saveProfile', {
       method: 'POST',
       headers: {
@@ -51,6 +50,13 @@ class UserProfile extends Component {
       this.props.navigation.navigate('Drawer');
     });
 }
+
+  loadHomeScreen() {
+    this.setState({
+      profile: { ...this.state },
+    });
+    this.props.navigation.navigate('Drawer');
+  }
 
   checkNumber(property, number){
     var hasNumber = /\d/;
@@ -160,13 +166,12 @@ const mapStateToProps = ({ preferences, loginProfile }) => {
     age,
     gender,
     phone_number,
+    about_me,
     preferred_ride,
     language,
     pets,
     smoking,
-    about_me,
     music_preference,
-    driver,
     existingUser,
     user_id,
   } = preferences;
@@ -187,7 +192,6 @@ const mapStateToProps = ({ preferences, loginProfile }) => {
     language,
     music_preference,
     phone_number,
-    driver,
     user_id,
     id,
   };
