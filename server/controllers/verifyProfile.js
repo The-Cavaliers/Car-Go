@@ -1,5 +1,5 @@
-const dbConfig = require('../dbConfig.js');
-const knex = require('knex')(dbConfig);
+const CONFIG = require('../../config/development.json');
+const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.verifyProfile = (req, res) => {
   const profile = req.body.email;

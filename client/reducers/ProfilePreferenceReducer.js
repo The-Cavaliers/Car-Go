@@ -24,15 +24,12 @@ const INITIAL_STATE = {
 
 const preferences = (state = INITIAL_STATE, { type, data }) => {
   let newState = { ...state };
-  console.log('old state', newState);
   if (data) {
     if (data.home) {
       newState = Object.assign(newState, data);
-      console.log('THIS IS THE UPDATED STATE', newState);
     } else {
       const property = Object.keys(data);
       newState[property] = data[property];
-      console.log('This is the newState', newState);
       return newState;
     }
   }

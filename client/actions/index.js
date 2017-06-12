@@ -14,7 +14,6 @@ export const joinGroup = (index) => {
 };
 
 export const setProfile = (data) => {
-  console.log('NEW DATA', data);
   return {
     type: SET_PROFILE,
     data,

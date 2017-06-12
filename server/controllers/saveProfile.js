@@ -1,9 +1,8 @@
-// const models = require('../../db/models');
-const dbConfig = require('../dbConfig.js');
-const knex = require('knex')(dbConfig);
+const CONFIG = require('../../config/development.json');
+const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.saveProfile = function (req, res) {
-  const data = req.body.profile;
+  const data = req.body.data;
   knex('profiles').where('email', data.email)
   .then((profile) => {
     if (profile.length === 0) {

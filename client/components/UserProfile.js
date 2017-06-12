@@ -20,10 +20,6 @@ class UserProfile extends Component {
   });
   constructor(props) {
     super(props);
-    this.state = {
-      driver: false,
-      rider: true,
-    }
 
     this.sendProfile = this.sendProfile.bind(this);
     this.changeProperty = this.changeProperty.bind(this);
@@ -47,7 +43,6 @@ class UserProfile extends Component {
       },
       body: JSON.stringify({ data: data })
     })
-    .then(res => (res.json()))
     .then((res) => {
       this.props.navigation.navigate('Drawer');
     })
