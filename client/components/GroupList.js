@@ -37,15 +37,12 @@ class CreateList extends Component {
   }
 
   handleChatClick(id) {
-    // id is group id
-    // const newRoomId = this.props.roomId;
-    // console.log('new room ID', newRoomId);
-    // console.log('props navigation', this.props.navigation)
     console.log('click Id', id)
     AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
       this.props.navigation.navigate('ChatterBox');
     });
   }
+  
   removeGroup(id) {
     this.setState({
       group_id: id,

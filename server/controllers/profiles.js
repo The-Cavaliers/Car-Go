@@ -18,10 +18,12 @@ module.exports.checkDestinations = (req, res) => {
   var date = req.body.travelDate;
   var leaving_from = req.body.leaving_from;
   var going_to = req.body.going_to;
-  console.log('this is the date',date);
-  knex('groups').where('leaving_from', leaving_from).andWhere('going_to', going_to).andWhere('travelDate', date)
+  console.log('this is the date', date, leaving_from, going_to);
+  knex('groups').where('leaving_from', leaving_from)
+  .andWhere('going_to', going_to)
+  .andWhere('travelDate', date)
   .then(groups => {
-    //console.log(groups)
+    console.log('groups are', groups)
     if(groups.length === 0) {
       console.log('nothing found')
       res.status(201).send(null)
