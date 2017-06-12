@@ -9,4 +9,5 @@ module.exports.maps = require('./maps');
 module.exports.getgroups = require('./getgroups');
 module.exports.removegroup = require('./removegroup');
 module.exports.selectgroup = require('./selectgroup');
-module.exports.saveprofile = require('./saveprofile');
+module.exports.saveProfile = require('./saveProfile');
+module.exports.verifyProfile = require('./verifyProfile');

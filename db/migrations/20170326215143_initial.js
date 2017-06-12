@@ -2,12 +2,19 @@ exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('profiles', (table) => {
       table.increments('id').unsigned().primary();
-      table.string('first', 100).nullable();
-      table.string('last', 100).nullable();
-      table.string('display', 100).nullable();
+      table.string('first_name', 100);
+      table.string('last_name', 100);
+      table.string('age');
+      table.string('gender');
       table.string('email', 100).nullable().unique();
-      table.string('phone', 100).nullable();
-      table.timestamps(true, true);
+      table.string('about_me').nullable();
+      table.string('pets').nullable();
+      table.string('smoking').nullable();
+      table.string('preferred_ride', 100).nullable();
+      table.boolean('driver', 100);
+      table.string('language', 100).nullable();
+      table.string('music_preference', 100).nullable();
+      table.string('phone_number', 100).nullable();
     }),
     knex.schema.createTableIfNotExists('auths', (table) => {
       table.increments('id').unsigned().primary();
@@ -43,7 +50,6 @@ exports.up = function (knex, Promise) {
       // table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
-<<<<<<< HEAD
 
     knex.schema.createTable('users_groups', (table) => {
       table.increments('id').primary();
@@ -51,8 +57,6 @@ exports.up = function (knex, Promise) {
       table.integer('group_id').references('groups.id').onDelete('CASCADE');
     }),
 
-=======
->>>>>>> pulling Ali's changes
     knex.schema.createTable('messages', (table) => {
       table.increments('id').primary();
       table.string('_id', 100);

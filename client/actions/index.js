@@ -1,4 +1,4 @@
-import { LOGIN_PROFILE, SET_PROFILE, MESSAGES } from './type';
+import { LOGIN_PROFILE, SET_PROFILE } from './type';
 
 export const createGroup = (index) => {
   return {
@@ -14,9 +14,16 @@ export const joinGroup = (index) => {
 };
 
 export const setProfile = (data) => {
+  console.log('NEW DATA', data);
   return {
     type: SET_PROFILE,
     data,
+  };
+};
+
+export const setProfileAsync = (data) => {
+  return function (dispatch) {
+    dispatch(setProfile(data));
   };
 };
 
@@ -28,7 +35,6 @@ const setLoginProfile = (data) => {
 };
 
 export const setLoginProfileAsync = (data) => {
-  //console.log('DATA FROM SETLOGINASYNC: ', data);
   return function (dispatch) {
     dispatch(setLoginProfile(data));
   };

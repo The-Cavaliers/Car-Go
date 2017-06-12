@@ -19,10 +19,9 @@ import { connect } from 'react-redux';
 import DrawerButton from './DrawerButton';
 import GroupsButton from './GroupsButton';
 import Map from './Map';
+import UserProfile from './UserProfile';
 import CONFIG from '../../config/development.json';
-import * as actions from '../actions';
-
-// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
+import { setProfileAsync, setLoginProfileAsync } from '../actions';
 
 const Auth0Lock = require('react-native-lock');
 
@@ -56,7 +55,7 @@ class Home extends Component {
           longitudeDelta: 0.0421,
         },
         isMapVisible: false,
-        isLoggedIn: false
+        isLoggedIn: false,
       }
     this._login = this._login.bind(this);
   };
@@ -67,8 +66,6 @@ class Home extends Component {
     }
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
-      // console.log('JSON', initialPosition);
-      // console.log('POSITION', position);
       this.setState({
         region:  {
           latitude: 37.783692,
@@ -108,26 +105,49 @@ class Home extends Component {
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
         this.props.setLoginProfileAsync(data.data[1][0]);
-        //console.log(this.props)
+      }).then((data) => {
+        axios.post(`${CONFIG.URL}/verifyProfile`, { email: this.props.email })
+        .then((data) => {
+          let profile = data.data;
+          if (profile[0]) {
+            profile[1][0].home = true;
+            this.props.setProfileAsync(profile[1][0]);
+          } else {
+            this.props.setProfileAsync({ 'existing_user': false });
+          }
+        })
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
       });
     });
   }
+
   render() {
-    return (
+    if (this.props.existing_user) {
 
-      <TabView tabBarPosition={'bottom'} initialPage={1}>
+      return (
 
-        <JoinGroupScreen tabLabel='Find a Ride' />
+        <TabView tabBarPosition={'bottom'} initialPage={1}>
 
-        <Map tabLabel='View Map' />
+          <JoinGroupScreen tabLabel='Find a Ride' />
 
-        <CreateGroup tabLabel='Create Group' />
+          <Map tabLabel='View Map' />
 
-      </TabView>
-    )
+          <CreateGroup tabLabel='Create Group' />
+
+        </TabView>
+
+      )
+
+    } else {
+      
+      return (
+
+        <UserProfile />
+
+      )
+    }
   }
 }
 const styles = StyleSheet.create({
@@ -137,7 +157,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ loginProfile }) => {
+const mapStateToProps = ({ loginProfile, preferences }) => {
   const {
     username,
     email,
@@ -145,18 +165,25 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    user_id,
     id,
   } = loginProfile;
+
+  const {
+    existing_user,
+  } = preferences;
+
   return {
     username,
     email,
     picture_url,
     token,
+    user_id,
     social_provider,
     created_at,
+    existing_user,
     id,
   };
 };
 
-
-export default connect(mapStateToProps, actions)(Home);
+export default connect(mapStateToProps, { setProfileAsync, setLoginProfileAsync })(Home);
