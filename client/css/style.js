@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255,1)',
     borderWidth: 1,
-    borderColor: '#D8D9DD'
+    borderColor: '#D8D9DD',
   },
   bioinput: {
     fontSize: 16,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255,1)',
     borderWidth: 1,
-    borderColor: '#D8D9DD'
+    borderColor: '#D8D9DD',
   },
   buttonContainer: {
     alignSelf: 'stretch',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   joinButton: {
-    height:28,
+    height: 28,
     width: 28,
     borderRadius: 14,
     backgroundColor: '#66bfff',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     right: 100,
   },
   removeButton: {
-    height:28,
+    height: 28,
     width: 28,
     borderRadius: 14,
     backgroundColor: 'red',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     right: 110,
   },
   mapButton: {
-    height:28,
+    height: 28,
     width: 28,
     borderRadius: 14,
     backgroundColor: 'green',
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   error: {
     marginBottom: 4,
-    color: 'red'
+    color: 'red',
   },
   loading: {
     height:50,
@@ -163,32 +163,36 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 2,
     left: 1,
-    color: 'gray'
+    color: 'gray',
   },
   from: {
     fontSize: 12,
     position: 'absolute',
     top: 1,
     left: 45,
-    color: 'gray'
+    color: 'gray',
   },
   to: {
     fontSize: 12,
     position: 'absolute',
     top: 20,
     left: 45,
-    color: 'gray'
+    color: 'gray',
   },
   date: {
     fontSize: 12,
     position: 'absolute',
     top: 1,
     right: 5,
-    color: 'gray'
+    color: 'gray',
   },
   scrollContainer: {
     backgroundColor: '#fff',
     padding: 10,
+    flex: 1,
+    borderRadius: 3,
+    borderColor: '#dae5ed',
+    borderWidth: 10,
   },
   piker: {
     width: 50,

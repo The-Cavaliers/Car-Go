@@ -104,10 +104,11 @@ class Home extends Component {
         social_provider,
         user_id: profile.userId,
       }
-      this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
-        console.log('These are the props', this.props)
+        const userProfile = data.data[1][0];
+        this.props.setLoginProfileAsync(userProfile);
+        // console.log('These are the props', this.props)
         return;
       }).then((data) => {
         axios.post(`${CONFIG.URL}/verifyProfile`, { email: this.props.email })

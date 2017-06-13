@@ -1,4 +1,4 @@
-const config = require('config')['knex'];
+const config = require('config').knex;
 
 module.exports = function(grunt) {
 
@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     eslint: {
-      target: ['Gruntfile.js', 'client/**/*.js', 'db/**/*.js', 'server/**/*.js']
+      target: ['Gruntfile.js', 'client/**/*.js', 'db/**/*.js', 'server/**/*.js'];
     },
 
     mochaTest: {

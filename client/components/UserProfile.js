@@ -73,6 +73,9 @@ class UserProfile extends Component {
     }
   }
 
+  //  check each of the components and map their contents into another sub component
+  
+
   render() {
     return (
       <ScrollView style={styles.scrollContainer}>
@@ -105,6 +108,7 @@ class UserProfile extends Component {
           placeholder="Gender"
         />
         <TextInput
+          class="multi_line"
           style={styles.bioinput}
           onChangeText={about_me => this.changeProperty('about_me', about_me)}
           value={this.props.about_me}
