@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     flexGrow: 1,
     resizeMode: 'cover',
     width: null,

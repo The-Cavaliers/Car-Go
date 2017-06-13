@@ -14,6 +14,8 @@ exports.up = function (knex, Promise) {
       table.string('language', 100).nullable();
       table.string('music_preference', 100).nullable();
       table.string('phone_number', 100).nullable();
+      table.timestamps(true, true);
+      table.integer('user_id').references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('auths', (table) => {
       table.increments('id').unsigned().primary();
