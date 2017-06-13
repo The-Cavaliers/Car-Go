@@ -3,7 +3,6 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   Image,
@@ -12,16 +11,16 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
-import { Container, Content, Button } from 'native-base';
+import { Container, Content, Card, CardItem, Footer, FooterTab, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 import axios from 'axios';
 
 import CONFIG from '../../config/development.json';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
-    title: 'Join Group',
+    title: 'Find Ride',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Join Group',
+    drawerLabel: 'Find Ride',
   });
   constructor(props) {
     super(props)
@@ -35,7 +34,7 @@ class JoinGroup extends Component {
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: new Date(),
+      date: '05-13-2017',
       user_img: 'person.png'
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
@@ -109,7 +108,7 @@ class JoinGroup extends Component {
   }
   render() {
     return (
-      <Image source={require('../assets/group_Background.jpeg')} style={styles.backgroundImage}>
+      <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showSearchError ? <Text style={styles.error}>No groups found, try another date</Text> : null}
@@ -128,7 +127,7 @@ class JoinGroup extends Component {
             placeholder="Going To"
           />
           <DatePicker
-            style={{width: 200}}
+            style={{width: 200, marginBottom: 10}}
             date={this.state.date}
             mode="date"
             placeholder="Select Date"
@@ -152,25 +151,54 @@ class JoinGroup extends Component {
             onDateChange={(date) => {this.setState({date: date})}}
           />
           <Button block primary onPress={this.sendInputValues}>
-            <Text style={styles.buttonText}> Find a Ride</Text>
+            <Text> Find a Ride</Text>
           </Button>
         </View>
-
-        {this.state.groupsView ? <ScrollView>
-          {this.state.groups.map((item, idx) =>
-          <View key={idx} style={styles.group}>
-            <Image style={styles.icon} source={require('../assets/person.png')} />
-            <Text style={styles.name} >Group: {item.name}</Text>
-            <Text style={styles.from} >From: {item.leaving_from}</Text>
-            <Text style={styles.to}>To: {item.going_to}</Text>
-            <Text style={styles.date}>Date: {item.travelDate}</Text>
-            <TouchableOpacity onPress={() => this.handleJoinClick(item.email, item.id)} key={idx} style={styles.joinButton}>
-             <Text style={styles.joinbuttonText}>Join</Text>
-            </TouchableOpacity>
-          </View>
-          )}
-          </ScrollView>
-        : null}
+      <Container>
+        <Content>
+          {this.state.groupsView ? <ScrollView>
+            {this.state.groups.map((item, idx) =>
+               <Card >
+                    <CardItem key={idx}>
+                        <Left>
+                            <Thumbnail key={idx} source={{uri: item.img_url}} />
+                            <Body>
+                                <Text >{item.name}</Text>
+                                <Text note>CarGo Driver</Text>
+                            </Body>
+                        </Left>
+                        <Right>
+                          <Text>Departing: {item.travelDate}</Text>
+                        </Right>
+                      </CardItem>
+                      <CardItem>
+                          <Body>
+                          <Right>
+                            <Text note>Leaving From: {item.leaving_from}</Text>
+                          </Right>
+                          <Left>
+                            <Text note>Going to: {item.going_to}</Text>
+                          </Left>
+                          <Left>
+                            <Text note>Available seats: {item.seats}</Text>
+                          </Left>
+                          </Body>
+                      </CardItem>
+                      <CardItem>
+                          <Button transparent>
+                          </Button><Text>                      </Text>
+                          <Button small rounded primary onPress={() => this.handleJoinClick(item.email, item.id)}>
+                              <Text >Join</Text>
+                          </Button><Text>                       </Text>
+                          <Button transparent>
+                          </Button>
+                    </CardItem>
+               </Card>
+            )}
+            </ScrollView>
+          : null}
+        </Content>
+      </Container>
 
       </Image>
     )
@@ -199,3 +227,13 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
+         /* <View key={idx} style={styles.group}>
+            <Image style={styles.icon} source={require('../assets/person.png')} />
+            <Text style={styles.name} >Group: {item.name}</Text>
+            <Text style={styles.from} >From: {item.leaving_from}</Text>
+            <Text style={styles.to}>To: {item.going_to}</Text>
+            <Text style={styles.date}>Date: {item.travelDate}</Text>
+            <TouchableOpacity onPress={() => this.handleJoinClick(item.email, item.id)} key={idx} style={styles.joinButton}>
+             <Text style={styles.joinbuttonText}>Join</Text>
+            </TouchableOpacity>
+          </View> */

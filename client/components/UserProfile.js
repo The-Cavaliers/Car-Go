@@ -6,11 +6,13 @@ import {
   Picker,
   TextInput,
   ScrollView,
+  Image,
 } from 'react-native';
 
 import { setProfile, loginProfile } from '../actions';
 import DrawerButton from './DrawerButton';
 import styles from '../css/style';
+import { Container, Content, Button } from 'native-base';
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -74,91 +76,90 @@ class UserProfile extends Component {
   }
 
   //  check each of the components and map their contents into another sub component
-  
+
 
   render() {
     return (
-      <ScrollView style={styles.scrollContainer}>
-        <TextInput
-          underlineColorIos="transparent"
-          style={styles.input}
-          onChangeText={first_name => this.changeProperty('first_name', first_name)}
-          value={this.props.first_name}
-          placeholder="First Name"
-        />
-        <TextInput
-          underlineColorIos="transparent"
-          style={styles.input}
-          onChangeText={last_name => this.changeProperty('last_name', last_name)}
-          value={this.props.last_name}
-          placeholder="Last Name"
-        />
-        <TextInput
-          underlineColorIos="transparent"
-          style={styles.input}
-          onChangeText={age => this.checkNumber('age', age)}
-          value={this.props.age}
-          placeholder="Age"
-        />
-        <TextInput
-          underlineColorIos="transparent"
-          style={styles.input}
-          onChangeText={gender => this.changeProperty('gender', gender)}
-          value={this.props.gender}
-          placeholder="Gender"
-        />
-        <TextInput
-          class="multi_line"
-          style={styles.bioinput}
-          onChangeText={about_me => this.changeProperty('about_me', about_me)}
-          value={this.props.about_me}
-          placeholder="About Me"
-          multiline={true}
-          numberOfLines={4}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={pets => this.changeProperty('pets', pets)}
-          value={this.props.pets}
-          placeholder="Pets"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={smoking => this.changeProperty('smoking', smoking)}
-          value={this.props.smoking}
-          placeholder="Smoke"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={preferred_ride => this.changeProperty('preferred_ride', preferred_ride)}
-          value={this.props.preferred_ride}
-          placeholder="Vehicle Make & Model"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={(language) => this.changeProperty('language', language)}
-          value={this.props.language}
-          placeholder="Language"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={music_preference => this.changeProperty('music_preference', music_preference)}
-          value={this.props.music_preference}
-          placeholder="Music Preference"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText = {phone_number => this.checkNumber('phone_number', phone_number)}
-          value = {this.props.phone_number}
-          maxLength = {10}
-          placeholder="Phone Number"
-        />
-        <TouchableOpacity onPress={() => {
-          this.sendProfile()
-        }} style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Submit Profile</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
+          <TextInput
+            underlineColorIos="transparent"
+            style={styles.input}
+            onChangeText={first_name => this.changeProperty('first_name', first_name)}
+            value={this.props.first_name}
+            placeholder="First Name"
+          />
+          <TextInput
+            underlineColorIos="transparent"
+            style={styles.input}
+            onChangeText={last_name => this.changeProperty('last_name', last_name)}
+            value={this.props.last_name}
+            placeholder="Last Name"
+          />
+          <TextInput
+            underlineColorIos="transparent"
+            style={styles.input}
+            onChangeText={age => this.checkNumber('age', age)}
+            value={this.props.age}
+            placeholder="Age"
+          />
+          <TextInput
+            underlineColorIos="transparent"
+            style={styles.input}
+            onChangeText={gender => this.changeProperty('gender', gender)}
+            value={this.props.gender}
+            placeholder="Gender"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText = {phone_number => this.checkNumber('phone_number', phone_number)}
+            value = {this.props.phone_number}
+            maxLength = {10}
+            placeholder="Phone Number"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={preferred_ride => this.changeProperty('preferred_ride', preferred_ride)}
+            value={this.props.preferred_ride}
+            placeholder="Vehicle Make & Model"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(language) => this.changeProperty('language', language)}
+            value={this.props.language}
+            placeholder="Language"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={pets => this.changeProperty('pets', pets)}
+            value={this.props.pets}
+            placeholder="Pets"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={smoking => this.changeProperty('smoking', smoking)}
+            value={this.props.smoking}
+            placeholder="Smoke"
+          />
+          <TextInput
+            style={styles.bioinput}
+            onChangeText={about_me => this.changeProperty('about_me', about_me)}
+            value={this.props.about_me}
+            placeholder="About Me"
+            multiline={true}
+            numberOfLines={4}
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={music_preference => this.changeProperty('music_preference', music_preference)}
+            value={this.props.music_preference}
+            placeholder="Music Preference"
+          />
+           <Button block primary onPress={() => {
+            this.sendProfile()
+          }}>
+            <Text style={styles.buttonText}>Save Profile</Text>
+          </Button>
+      </Image>
     );
   }
 }

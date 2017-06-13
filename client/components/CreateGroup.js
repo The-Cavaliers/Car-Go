@@ -33,7 +33,7 @@ class CreateGroup extends Component {
       email: '',
       picture_url: '',
       goingTo: '',
-      date: new Date(),
+      date: '05-13-2017',
       user_img: 'person.png',
       seats: 1,
     }
@@ -55,7 +55,7 @@ class CreateGroup extends Component {
     this.setState({
       LeavingFrom: '',
       goingTo: '',
-      date: false
+      date: '01-01-2017'
     })
   }
   addGroup = () => {
@@ -104,7 +104,7 @@ class CreateGroup extends Component {
   render() {
     return (
 
-      <Image source={require('../assets/group_Background.jpeg')} style={styles.backgroundImage}>
+      <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
@@ -126,7 +126,7 @@ class CreateGroup extends Component {
           />
 
           <DatePicker
-            style={{width: 200}}
+            style={{width: 200, borderColor: '#fff'}}
             date={this.state.date}
             mode="date"
             placeholder="Select Date"
@@ -143,7 +143,7 @@ class CreateGroup extends Component {
                 marginLeft: 0
               },
               dateInput: {
-                marginLeft: 36
+                marginLeft: 36,
               }
               // ... You can check the source to find the other keys.
             }}
@@ -151,7 +151,7 @@ class CreateGroup extends Component {
           />
 
           <View style={styles.seatsContainer}>
-            <Button info onPress={this.incrementCount}>
+            <Button primary onPress={this.incrementCount}>
               <Text style={styles.buttonText}>Seats</Text>
             </Button>
 
