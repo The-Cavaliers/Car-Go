@@ -25,7 +25,11 @@ module.exports.removeGroup = (req, res) => {
         } else {
           res.status(201).send(groups);
         }
-      }));
+      }))
+      .catch((err) => {
+        console.log('err in join deletion', err);
+        res.status(503);
+      });
     })
     .catch((err) => {
       console.log('err in driver del', err);

@@ -104,7 +104,7 @@ class CreateGroup extends Component {
   render() {
     return (
 
-      <Image source={require('../assets/AdobeStock_55307183.jpeg')} style={styles.backgroundImage}>
+      <Image source={require('../assets/groupBackground.jpeg')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
