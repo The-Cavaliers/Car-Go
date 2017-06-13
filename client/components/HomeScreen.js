@@ -105,6 +105,9 @@ class Home extends Component {
         user_id: profile.userId,
       }
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
+      .then(() => {
+        this.props.setLoginProfileAsync(newUser);
+      })
       .then((data) => {
         const userProfile = data.data[1][0];
         this.props.setLoginProfileAsync(userProfile);
@@ -175,8 +178,8 @@ const mapStateToProps = ({ loginProfile, preferences }) => {
     token,
     social_provider,
     created_at,
-    user_id,
     id,
+    user_id,
   } = loginProfile;
 
   const {
