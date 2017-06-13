@@ -80,7 +80,7 @@ class UserProfile extends Component {
 
   render() {
     return (
-      <Image source={require('../assets/AdobeStock_55307183.jpeg')} style={styles.backgroundImage}>
+      <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
         <ScrollView>
           <TextInput
             underlineColorIos="transparent"
@@ -162,7 +162,6 @@ class UserProfile extends Component {
           </Button>
         </ScrollView>
       </Image>
->>>>>>> saved before rebase
     );
   }
 }

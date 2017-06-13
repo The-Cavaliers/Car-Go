@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'center',
     color: '#fff',
   },
@@ -123,20 +123,7 @@ const styles = StyleSheet.create({
     width: 25,
     color: '#fff',
   },
-  mapBtnHolder: {
-    position: 'absolute',
-    bottom: 2,
-    right: 110,
-  },
-  mapButton: {
-    height: 28,
-    width: 28,
-    borderRadius: 14,
-    backgroundColor: 'green',
-    position: 'absolute',
-    bottom: 2,
-    right: 2,
-  },
+
   mapbuttonText: {
     fontSize: 8,
     marginTop: 8,
@@ -160,45 +147,15 @@ const styles = StyleSheet.create({
     top: 2,
     left: 2,
   },
-  name: {
-    fontSize: 12,
-    position: 'absolute',
-    bottom: 2,
-    left: 1,
-    color: 'gray',
-  },
-  from: {
-    fontSize: 12,
-    position: 'absolute',
-    top: 1,
-    left: 45,
-    color: 'gray',
-  },
-  to: {
-    fontSize: 12,
-    position: 'absolute',
-    top: 20,
-    left: 45,
-    color: 'gray',
-  },
-  date: {
-    fontSize: 12,
-    position: 'absolute',
-    top: 1,
-    right: 5,
-    color: 'gray',
-  },
+
   scrollContainer: {
-<<<<<<< HEAD
     backgroundColor: '#fff',
     padding: 10,
     flex: 1,
     borderRadius: 3,
     borderColor: '#dae5ed',
     borderWidth: 10,
-=======
   alignSelf: 'stretch',
->>>>>>> saved before rebase
   },
   piker: {
     width: 50,
@@ -232,6 +189,14 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: null,
     height: null,
+  },
+  margin: {
+    marginLeft: 2,
+    marginRight: 2,
+    padding: 10,
+  },
+  small: {
+    marginLeft: 20
   }
 });
 

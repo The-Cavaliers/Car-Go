@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TextInput,
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
   Image,
@@ -14,6 +13,7 @@ import axios from 'axios';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
+import { Container, Content, Card, CardItem, Footer, FooterTab, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
 import CONFIG from '../../config/development.json';
 
@@ -26,15 +26,17 @@ class CreateList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      groups: [],
+      groups: [1,2,3],
       // group_id: '',
       showLoading: false
     }
+    this.props.styles = styles
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
     this.changeToMap = this.changeToMap.bind(this);
   }
   componentDidMount() {
+    console.log('THIS IS THE PROPS', this.state.groups)
     this.getGroups(this.props.id)
   }
 
@@ -104,7 +106,86 @@ class CreateList extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+        <Container>
+            <Content>
+              {this.state.groups.map((item, idx) =>
+                <Card >
+                    <CardItem key={idx}>
+                        <Left>
+                            <Thumbnail key={idx} source={{uri: item.img_url}} />
+                            <Body>
+                                <Text >{item.name}</Text>
+                                <Text note>CarGo Driver</Text>
+                            </Body>
+                        </Left>
+                        <Right>
+                          <Text>Departing: {item.travelDate}</Text>
+                        </Right>
+                      </CardItem>
+                      <CardItem>
+                          <Body>
+                          <Right>
+                            <Text note>Leaving From: {item.leaving_from}</Text>
+                          </Right>
+                          <Left>
+                            <Text note>Going to: {item.going_to}</Text>
+                          </Left>
+                          <Left>
+                            <Text note>Available seats: {item.seats}</Text>
+                          </Left>
+                          </Body>
+                      </CardItem>
+                      <CardItem>
+                          <Button small rounded primary onPress={() => this.changeToMap()}>
+                              <Text>Map</Text>
+                          </Button><Text>   </Text>
+                          <Button style={styles.margin} small rounded danger onPress={() => this.removeGroup(item.id)}>
+                              <Text >Remove</Text>
+                          </Button><Text>   </Text>
+                          <Button style={styles.margin} small rounded primary onPress={() => this.handleChatClick(item.id)}>
+                              <Text>Message</Text>
+                          </Button>
+                    </CardItem>
+               </Card>
+              )}
+            </Content>
+        </Container>
+    )
+  }
+}
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    id,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    id,
+  };
+};
+export default connect(mapStateToProps)(CreateList);
+     /* <View style={styles.container}>
+
+
+
+
+
+
+
+
+
+
+
         {this.state.showLoading ? <Image style={styles.loading} source={require('../assets/loading.gif')} />
         : null}
         {this.state.groups.length === 0 ?
@@ -132,28 +213,4 @@ class CreateList extends Component {
             </View>
           </View>
         )}
-      </View>
-    )
-  }
-}
-const mapStateToProps = ({ loginProfile }) => {
-  const {
-    username,
-    email,
-    picture_url,
-    token,
-    social_provider,
-    created_at,
-    id,
-  } = loginProfile;
-  return {
-    username,
-    email,
-    picture_url,
-    token,
-    social_provider,
-    created_at,
-    id,
-  };
-};
-export default connect(mapStateToProps)(CreateList);
+      </View> */
