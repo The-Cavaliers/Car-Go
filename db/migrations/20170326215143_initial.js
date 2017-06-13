@@ -31,7 +31,6 @@ exports.up = function (knex, Promise) {
       table.string('email', 100).nullable().unique();
       table.string('picture_url', 300);
       table.string('profile', 100);
-      // table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
     }),
     knex.schema.createTable('groups', (table) => {
@@ -46,7 +45,6 @@ exports.up = function (knex, Promise) {
       table.string('from_coords', 100);
       table.string('to_coords', 100);
       table.string('messages');
-      table.integer('user_id').references('users.id');
       table.timestamps(true, true);
     }),
 

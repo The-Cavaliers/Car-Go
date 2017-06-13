@@ -68,7 +68,6 @@ class ChatterBox extends React.Component {
     }));
   }
 
-
   renderBubble(props) {
     return (props.currentMessage.user._id === this.socket.id) ?
     (

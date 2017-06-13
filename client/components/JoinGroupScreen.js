@@ -13,6 +13,9 @@ import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 import { Container, Content, Button } from 'native-base';
+import axios from 'axios';
+
+import CONFIG from '../../config/development.json';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
@@ -35,6 +38,7 @@ class JoinGroup extends Component {
       date: new Date(),
       user_img: 'person.png'
     }
+    this.handleJoinClick = this.handleJoinClick.bind(this);
   }
   sendInputValues = () => {
     this.setState({
@@ -77,8 +81,15 @@ class JoinGroup extends Component {
     });
   }
 
-  handleJoinClick = (email) => {
+  handleJoinClick = (email, id) => {
+    console.log('email id', CONFIG.URL,  email, id)
+    const user = {
+      user_id: this.props.id,
+      group_id: id,
+    }
     this.sendEmail(email);
+    axios.post(`${CONFIG.URL}/join-group`, user)
+    .catch(err => { console.log('err', err) })
   }
 
   sendEmail = (email) => {
@@ -93,8 +104,6 @@ class JoinGroup extends Component {
       }),
     })
     .then(res => (res.json()))
-    .then((res) => {
-    })
     .catch((err) => {
     });
   }
@@ -155,7 +164,7 @@ class JoinGroup extends Component {
             <Text style={styles.from} >From: {item.leaving_from}</Text>
             <Text style={styles.to}>To: {item.going_to}</Text>
             <Text style={styles.date}>Date: {item.travelDate}</Text>
-            <TouchableOpacity onPress={() => this.handleJoinClick(item.email)} key={idx} style={styles.joinButton}>
+            <TouchableOpacity onPress={() => this.handleJoinClick(item.email, item.id)} key={idx} style={styles.joinButton}>
              <Text style={styles.joinbuttonText}>Join</Text>
             </TouchableOpacity>
           </View>
@@ -176,6 +185,7 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   } = loginProfile;
   return {
     username,
@@ -184,8 +194,8 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   };
 };
 
 export default connect(mapStateToProps)(JoinGroup);
-
