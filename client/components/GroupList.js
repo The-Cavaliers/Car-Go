@@ -29,7 +29,7 @@ class CreateList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      groups: [1,2,3],
+      groups: [],
       // group_id: '',
       showLoading: false
     }
