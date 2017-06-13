@@ -33,7 +33,7 @@ class JoinGroup extends Component {
       groupName: '',
       LeavingFrom: '',
       goingTo: '',
-      groups: {},
+      groups: [],
       date: '05-13-2017',
       user_img: 'person.png'
     }
@@ -80,7 +80,7 @@ class JoinGroup extends Component {
     });
   }
 
-  handleJoinClick = (email, id) => {
+  handleJoinClick = (email, id, idx) => {
     console.log('email id', CONFIG.URL,  email, id)
     const user = {
       user_id: this.props.id,
@@ -88,6 +88,13 @@ class JoinGroup extends Component {
     }
     this.sendEmail(email);
     axios.post(`${CONFIG.URL}/join-group`, user)
+    .then((val) => {
+      const groups = this.state.groups;
+      console.log('groups b4', groups)
+      groups.splice(idx, 1);
+      console.log('groups after', groups)
+      this.setState({ groups });
+    })
     .catch(err => { console.log('err', err) })
   }
 
@@ -158,8 +165,8 @@ class JoinGroup extends Component {
         <Content>
           {this.state.groupsView ? <ScrollView>
             {this.state.groups.map((item, idx) =>
-               <Card >
-                    <CardItem key={idx}>
+               <Card key={idx}>
+                    <CardItem>
                         <Left>
                             <Thumbnail key={idx} source={{uri: item.img_url}} />
                             <Body>
@@ -187,7 +194,7 @@ class JoinGroup extends Component {
                       <CardItem>
                           <Button transparent>
                           </Button><Text>                      </Text>
-                          <Button small rounded primary onPress={() => this.handleJoinClick(item.email, item.id)}>
+                          <Button small rounded primary onPress={() => this.handleJoinClick(item.email, item.id, idx)}>
                               <Text >Join</Text>
                           </Button><Text>                       </Text>
                           <Button transparent>

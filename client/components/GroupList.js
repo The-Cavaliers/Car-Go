@@ -15,6 +15,9 @@ import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 import { Container, Content, Card, CardItem, Footer, FooterTab, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
+import GET_CHAT_ID from '../actions/type';
+import { getChatIdAsync } from '../actions/index';
+
 import CONFIG from '../../config/development.json';
 
 class CreateList extends Component {
@@ -26,7 +29,7 @@ class CreateList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      groups: [1,2,3],
+      groups: [],
       // group_id: '',
       showLoading: false
     }
@@ -42,9 +45,13 @@ class CreateList extends Component {
 
   handleChatClick(id) {
     console.log('click Id', id)
-    AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
-      this.props.navigation.navigate('Messenger');
-    });
+    // AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
+    //   this.props.navigation.navigate('Messenger');
+    // });
+    this.props.getChatIdAsync(id);
+    console.log('this is props in create', this.props)
+    this.props.navigation.navigate('Messenger');
+
   }
 
   removeGroup(group_id) {
@@ -153,7 +160,7 @@ class CreateList extends Component {
     )
   }
 }
-const mapStateToProps = ({ loginProfile }) => {
+const mapStateToProps = ({ loginProfile, getChatId }) => {
   const {
     username,
     email,
@@ -163,6 +170,7 @@ const mapStateToProps = ({ loginProfile }) => {
     created_at,
     id,
   } = loginProfile;
+  const { chatId } = getChatId;
   return {
     username,
     email,
@@ -171,7 +179,8 @@ const mapStateToProps = ({ loginProfile }) => {
     social_provider,
     created_at,
     id,
+    chatId,
   };
 };
-export default connect(mapStateToProps)(CreateList);
 
+export default connect(mapStateToProps, { getChatIdAsync })(CreateList);

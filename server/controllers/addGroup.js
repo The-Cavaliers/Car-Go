@@ -2,9 +2,7 @@ const CONFIG = require('../../config/development.json');
 const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.saveGroup = (req, res) => {
-  console.log('req bodyy', req.body)
   const user = { user_id: req.body.user_id };
-  console.log('userrrr', user)
   knex('groups')
   .insert({
     name: req.body.username,

@@ -6,6 +6,9 @@ module.exports.joinGroup = (req, res) => {
     user_id: req.body.user_id,
     group_id: req.body.group_id,
   })
+  .then(() => {
+    res.end('join success');
+  })
   .catch((err) => {
     console.log('err', err);
   });
