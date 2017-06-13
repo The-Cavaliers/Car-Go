@@ -9,7 +9,7 @@ import CONFIG from '../../config/development.json';
 
 import { getChatId } from '../reducers/index';
 
-class ChatterBox extends React.Component {
+class Messenger extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'Messenger',
@@ -143,4 +143,4 @@ const mapStateToProps = ({ loginProfile, getChatId }) => {
     chatId,
   };
 };
-export default connect(mapStateToProps)(ChatterBox);
+export default connect(mapStateToProps)(Messenger);
