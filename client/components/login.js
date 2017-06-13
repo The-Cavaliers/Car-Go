@@ -62,7 +62,7 @@ class Login extends Component {
   };
 
   componentDidMount () {
-    this._login();
+   // this._login();
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
       // console.log('JSON', initialPosition);
