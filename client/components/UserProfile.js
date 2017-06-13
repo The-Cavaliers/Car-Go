@@ -36,6 +36,7 @@ class UserProfile extends Component {
 
  sendProfile() {
   const data = this.props;
+  console.log('THIS IS THE PROPS ON THE PROFILE PAGE', this.props);
   fetch('http://127.0.0.1:3000/saveProfile', {
       method: 'POST',
       headers: {
@@ -74,13 +75,11 @@ class UserProfile extends Component {
       this.changeProperty(property, number);
     }
   }
-
   //  check each of the components and map their contents into another sub component
-
-
   render() {
     return (
       <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
+        <ScrollView style={styles.margin}>
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -159,6 +158,7 @@ class UserProfile extends Component {
           }}>
             <Text style={styles.buttonText}>Save Profile</Text>
           </Button>
+          </ScrollView>
       </Image>
     );
   }
