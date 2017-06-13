@@ -26,21 +26,11 @@ export const setLoginProfileAsync = (data) => {
   };
 };
 
-const getChatId = chatId => {
-  console.log('inside GET CHAT ID', chatId)
-  return {
-    type: GET_CHAT_ID,
-    chatId,
-  }
-};
+const getChatId = chatId => ({
+  type: GET_CHAT_ID,
+  chatId,
+});
 
-// export const getChatIdAsync = chatId => (dispatch) => {
-//   dispatch(getChatId(chatId));
-// };
-
-export const getChatIdAsync = (chatId) => {
-  console.log('chat id in thunk', chatId)
-  return function (dispatch) {
-    dispatch(getChatId(chatId));
-  };
+export const getChatIdAsync = chatId => (dispatch) => {
+  dispatch(getChatId(chatId));
 };
