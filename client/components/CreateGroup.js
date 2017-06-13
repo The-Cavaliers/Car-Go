@@ -14,6 +14,7 @@ import {
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
+import NumberPicker from 'react-native-numberpicker';
 
 class CreateGroup extends Component {
   static navigationOptions= ({navigation}) => ({
@@ -32,7 +33,8 @@ class CreateGroup extends Component {
       picture_url: '',
       goingTo: '',
       date: new Date(),
-      user_img: 'person.png'
+      user_img: 'person.png',
+      seats: 1,
     }
   }
 
@@ -70,6 +72,7 @@ class CreateGroup extends Component {
         going_to: this.state.goingTo,
         leaving_from: this.state.LeavingFrom,
         travelDate: this.state.date,
+        seats: this.state.seats,
       }),
     })
     .then((res) => {
@@ -85,13 +88,27 @@ class CreateGroup extends Component {
        console.log('cant find match', err);
     });
   }
+  incrementCount = () => {
+    if(this.state.seats >= 3) {
+      console.log('in herere')
+      this.setState({
+        seats: 0
+      })
+    } else {
+      this.setState({
+        seats: this.state.seats + 1
+      })
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
+
         <Image style={styles.icon} source={{uri:this.state.picture_url }} />
 
         <View style={styles.inputContainer}>
           {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
+
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -99,6 +116,7 @@ class CreateGroup extends Component {
             value={this.state.LeavingFrom}
             placeholder="Leaving From"
           />
+
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -106,6 +124,7 @@ class CreateGroup extends Component {
             value={this.state.goingTo}
             placeholder="Going To"
           />
+
           <DatePicker
             style={{width: 200}}
             date={this.state.date}
@@ -130,11 +149,20 @@ class CreateGroup extends Component {
             }}
             onDateChange={(date) => {this.setState({date: date})}}
           />
+
+          <View style={styles.seatsContainer}>
+              <TouchableOpacity onPress={this.incrementCount} style={styles.seatsButton}>
+                <Text style={styles.buttonText}>Seats</Text>
+              </TouchableOpacity>
+            <View style={styles.seatsTextHolder}>
+              <Text style={styles.seatsText}>{this.state.seats}</Text>
+            </View>
+          </View>
+
           <TouchableOpacity onPress={this.handleAddGroupClick} style={styles.buttonContainer}>
             <Text style={styles.buttonText}> Create New Group</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     )
   }

@@ -27,6 +27,7 @@ module.exports.saveGroup = (res, req) => {
     email: res.body.email,
     img_url: res.body.picture_url,
     travelDate: res.body.travelDate,
+    seats: res.body.seats,
   }).returning('id')
   .then(groupId => knex('users_groups').insert({
     user_id: user.user_id,

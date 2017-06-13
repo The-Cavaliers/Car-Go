@@ -3734,6 +3734,10 @@ inquirer@^0.12.0:
     strip-ansi "^3.0.0"
     through "^2.3.6"
 
+install@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.10.1.tgz#1c7b53c8dd7335ef534c2648de28f599df1bdd97"
+
 interpret@^0.6.5:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-0.6.6.tgz#fecd7a18e7ce5ca6abfb953e1f86213a49f1625b"
@@ -5852,6 +5856,10 @@ react-native-auth0@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/react-native-auth0/-/react-native-auth0-0.0.1.tgz#6a712cc0f00740337396205bc3da453f52d25026"
 
+react-native-chooser@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-chooser/-/react-native-chooser-1.5.2.tgz#01a3c3ede9969e3ab6f8d0eda2aafd97af7574e4"
+
 react-native-communications@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.1.1.tgz#ff6f917c305e6d3fa935a89908aea5dc39b247d4"
@@ -5939,6 +5947,10 @@ react-native-material-design@^0.3.7:
     react-native-material-design-styles "git+https://github.com/react-native-material-design/react-native-material-design-styles.git"
     react-native-vector-icons "^2.0.1"
 
+react-native-numberpicker@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-numberpicker/-/react-native-numberpicker-0.0.5.tgz#5386b2f5906e7306a67fe0d32fd89ffad08f21fa"
+
 react-native-parsed-text@0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.16.tgz#788f6a51c3e2c224ad89101cc3d63f5993d37747"
@@ -5952,6 +5964,10 @@ react-native-scrollable-tab-view@^0.6.6:
   resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.6.6.tgz#d49d21060745845e9c59e3d39a2bacd4056a8b59"
   dependencies:
     react-timer-mixin "^0.13.3"
+
+react-native-simple-picker@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-simple-picker/-/react-native-simple-picker-1.2.1.tgz#f8f14d6b7499940afa99cedcef2a0eb8b6c97f20"
 
 react-native-simple-radio-button@^2.5.0-alpha.1:
   version "2.5.0-alpha.1"

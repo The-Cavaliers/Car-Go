@@ -10,7 +10,7 @@ import CreateGroup from '../CreateGroup';
 const Drawer = DrawerNavigator({
   Home: { screen: Home },
   UserProfile: { screen: UserProfile },
-  ChatterBox: { screen: ChatterBox },
+  Messenger: { screen: ChatterBox },
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
   GroupList: { screen: GroupList },

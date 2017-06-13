@@ -30,7 +30,7 @@ exports.up = function (knex, Promise) {
       table.string('social_provider', 100);
       table.string('token', 100);
       table.string('email', 100).nullable().unique();
-      table.string('picture_url');
+      table.string('picture_url', 300);
       table.string('profile', 100);
       // table.integer('group_id').references('groups.id').onDelete('CASCADE');
       table.timestamps(true, true);
@@ -42,18 +42,18 @@ exports.up = function (knex, Promise) {
       table.string('going_to', 100);
       table.string('email');
       table.string('travelDate', 100);
-      table.string('img_url', 100);
-      table.string('seats', 100);
+      table.string('img_url', 300);
+      table.integer('seats');
       table.string('from_coords', 100);
       table.string('to_coords', 100);
       table.string('messages');
-      // table.integer('user_id').references('users.id').onDelete('CASCADE');
+      table.integer('user_id').references('users.id');
       table.timestamps(true, true);
     }),
 
     knex.schema.createTable('users_groups', (table) => {
       table.increments('id').primary();
-      table.integer('user_id').references('users.id');
+      table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.integer('group_id').references('groups.id').onDelete('CASCADE');
     }),
 

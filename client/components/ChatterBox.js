@@ -11,9 +11,9 @@ import CONFIG from '../../config/development.json';
 class ChatterBox extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Chatter Box',
+    title: 'Messenger',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'ChatterBox',
+    drawerLabel: 'Messenger',
   });
   constructor(props) {
     super(props);

@@ -193,6 +193,25 @@ const styles = StyleSheet.create({
   piker: {
     width: 50,
   },
+  seatsContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  seatsButton: {
+    width: 100,
+    height: 50,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: '#fff',
+    backgroundColor: '#2E4CE5',
+  },
+  seatsTextHolder: {
+    width: 100,
+    padding: 10,
+  },
+  seatsText: {
+    fontSize: 20,
+  }
 });
 
 export default styles;
