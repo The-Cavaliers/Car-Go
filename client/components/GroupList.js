@@ -96,7 +96,18 @@ class CreateList extends Component {
        console.log('cant find match', err);
     });
   }
-  changeToMap() {
+  changeToMap(groupDetails) {
+    console.log(groupDetails);
+    //Check if the user is Driver or Rider
+    if( this.props.email !== groupDetails.email ) {
+     // console.log("I am driver");
+      AsyncStorage.setItem('MapGroup', JSON.stringify({ group: groupDetails.group_id , role: 'Driver' , leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to }));
+    } else {
+      //console.log("I am rider");
+      AsyncStorage.setItem('MapGroup', JSON.stringify({ group: groupDetails.group_id , role: 'Rider' , leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to }));
+    }
+    //console.log("propsssss", this.props);
+    this.props.navigation.navigate('CarpoolMap');
 
   }
   render() {
