@@ -81,7 +81,6 @@ class UserProfile extends Component {
   render() {
     return (
       <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
-        <ScrollView>
           <TextInput
             underlineColorIos="transparent"
             style={styles.input}
@@ -160,7 +159,6 @@ class UserProfile extends Component {
           }}>
             <Text style={styles.buttonText}>Save Profile</Text>
           </Button>
-        </ScrollView>
       </Image>
     );
   }

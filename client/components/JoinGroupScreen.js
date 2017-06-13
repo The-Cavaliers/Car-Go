@@ -18,9 +18,9 @@ import CONFIG from '../../config/development.json';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
-    title: 'Join Group',
+    title: 'Find Ride',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Join Group',
+    drawerLabel: 'Find Ride',
   });
   constructor(props) {
     super(props)
@@ -34,7 +34,7 @@ class JoinGroup extends Component {
       LeavingFrom: '',
       goingTo: '',
       groups: {},
-      date: new Date(),
+      date: '05-13-2017',
       user_img: 'person.png'
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
@@ -151,7 +151,7 @@ class JoinGroup extends Component {
             onDateChange={(date) => {this.setState({date: date})}}
           />
           <Button block primary onPress={this.sendInputValues}>
-            <Text style={styles.buttonText}> Find a Ride</Text>
+            <Text> Find a Ride</Text>
           </Button>
         </View>
       <Container>

@@ -109,10 +109,10 @@ class CreateList extends Component {
         <Container>
             <Content>
               {this.state.groups.map((item, idx) =>
-                <Card >
-                    <CardItem key={idx}>
+                <Card key={idx} >
+                    <CardItem>
                         <Left>
-                            <Thumbnail key={idx} source={{uri: item.img_url}} />
+                            <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
                             <Body>
                                 <Text >{item.name}</Text>
                                 <Text note>CarGo Driver</Text>
@@ -135,14 +135,14 @@ class CreateList extends Component {
                           </Left>
                           </Body>
                       </CardItem>
-                      <CardItem>
+                      <CardItem key={idx + 2}>
                           <Button small rounded primary onPress={() => this.changeToMap()}>
                               <Text>Map</Text>
                           </Button><Text>   </Text>
-                          <Button style={styles.margin} small rounded danger onPress={() => this.removeGroup(item.id)}>
+                          <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
                               <Text >Remove</Text>
                           </Button><Text>   </Text>
-                          <Button style={styles.margin} small rounded primary onPress={() => this.handleChatClick(item.id)}>
+                          <Button small rounded primary onPress={() => this.handleChatClick(item.id)}>
                               <Text>Message</Text>
                           </Button>
                     </CardItem>
@@ -174,43 +174,4 @@ const mapStateToProps = ({ loginProfile }) => {
   };
 };
 export default connect(mapStateToProps)(CreateList);
-     /* <View style={styles.container}>
 
-
-
-
-
-
-
-
-
-
-
-        {this.state.showLoading ? <Image style={styles.loading} source={require('../assets/loading.gif')} />
-        : null}
-        {this.state.groups.length === 0 ?
-          <Text style={styles.error}>You have no groups</Text>
-        : null}
-        {this.state.groups.map((item, idx) =>
-          <View key={idx} style={styles.group}>
-            <TouchableOpacity onPress={() => this.handleChatClick(item.id)} key={idx} style={styles.joinButton}>
-              <Text style={styles.chatbuttonText}>chat</Text>
-            </TouchableOpacity>
-            <Image style={styles.icon} source={{uri: item.img_url}} />
-            <Text style={styles.name} >Group: {item.name}</Text>
-            <Text style={styles.from} >From: {item.leaving_from}</Text>
-            <Text style={styles.to}>To: {item.going_to}</Text>
-            <Text style={styles.date}>Date: {item.travelDate}</Text>
-            <View style={styles.removeBtnHolder}>
-              <TouchableOpacity onPress={() => this.removeGroup(item.id)} key={idx} style={styles.removeButton}>
-                <Text style={styles.removebuttonText}>delete</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.mapBtnHolder}>
-              <TouchableOpacity onPress={() => this.changeToMap()} key={idx} style={styles.mapButton}>
-                <Text style={styles.mapbuttonText}>Map</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </View> */

@@ -33,7 +33,7 @@ class CreateGroup extends Component {
       email: '',
       picture_url: '',
       goingTo: '',
-      date: new Date(),
+      date: '05-13-2017',
       user_img: 'person.png',
       seats: 1,
     }
@@ -55,7 +55,7 @@ class CreateGroup extends Component {
     this.setState({
       LeavingFrom: '',
       goingTo: '',
-      date: false
+      date: '01-01-2017'
     })
   }
   addGroup = () => {
@@ -126,7 +126,7 @@ class CreateGroup extends Component {
           />
 
           <DatePicker
-            style={{width: 200}}
+            style={{width: 200, borderColor: '#fff'}}
             date={this.state.date}
             mode="date"
             placeholder="Select Date"
@@ -143,7 +143,7 @@ class CreateGroup extends Component {
                 marginLeft: 0
               },
               dateInput: {
-                marginLeft: 36
+                marginLeft: 36,
               }
               // ... You can check the source to find the other keys.
             }}

@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2E4CE5',
   },
   buttonText: {
-    fontSize: 16,
-    // fontWeight: 'bold',
     textAlign: 'center',
     color: '#fff',
   },
@@ -83,8 +81,6 @@ const styles = StyleSheet.create({
   },
   joinbuttonText: {
     fontSize: 8,
-    marginTop: 8,
-    marginLeft: 5,
     width: 22,
     color: '#fff',
   },
