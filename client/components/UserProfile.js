@@ -105,11 +105,24 @@ class UserProfile extends Component {
           placeholder="Gender"
         />
         <TextInput
+          style={styles.bioinput}
+          onChangeText={about_me => this.changeProperty('about_me', about_me)}
+          value={this.props.about_me}
+          placeholder="About Me"
+          multiline={true}
+          numberOfLines={4}
+        />
+        <TextInput
           style={styles.input}
-          onChangeText = {phone_number => this.checkNumber('phone_number', phone_number)}
-          value = {this.props.phone_number}
-          maxLength = {10}
-          placeholder="Phone Number"
+          onChangeText={pets => this.changeProperty('pets', pets)}
+          value={this.props.pets}
+          placeholder="Pets"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={smoking => this.changeProperty('smoking', smoking)}
+          value={this.props.smoking}
+          placeholder="Smoke"
         />
         <TextInput
           style={styles.input}
@@ -125,29 +138,16 @@ class UserProfile extends Component {
         />
         <TextInput
           style={styles.input}
-          onChangeText={pets => this.changeProperty('pets', pets)}
-          value={this.props.pets}
-          placeholder="Pets"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={smoking => this.changeProperty('smoking', smoking)}
-          value={this.props.smoking}
-          placeholder="Smoke"
-        />
-        <TextInput
-          style={styles.bioinput}
-          onChangeText={about_me => this.changeProperty('about_me', about_me)}
-          value={this.props.about_me}
-          placeholder="About Me"
-          multiline={true}
-          numberOfLines={4}
-        />
-        <TextInput
-          style={styles.input}
           onChangeText={music_preference => this.changeProperty('music_preference', music_preference)}
           value={this.props.music_preference}
           placeholder="Music Preference"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText = {phone_number => this.checkNumber('phone_number', phone_number)}
+          value = {this.props.phone_number}
+          maxLength = {10}
+          placeholder="Phone Number"
         />
         <TouchableOpacity onPress={() => {
           this.sendProfile()
@@ -173,7 +173,6 @@ const mapStateToProps = ({ preferences, loginProfile }) => {
     smoking,
     music_preference,
     existingUser,
-    user_id,
   } = preferences;
   const {
     id,
@@ -184,15 +183,14 @@ const mapStateToProps = ({ preferences, loginProfile }) => {
     last_name,
     age,
     gender,
+    email,
     about_me,
     pets,
     smoking,
-    email,
     preferred_ride,
     language,
     music_preference,
     phone_number,
-    user_id,
     id,
   };
 };

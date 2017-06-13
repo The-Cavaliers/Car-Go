@@ -104,11 +104,11 @@ class Home extends Component {
         social_provider,
         user_id: profile.userId,
       }
-      console.log('NEW USER IS', newUser)
       this.props.setLoginProfileAsync(newUser);
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
-        this.props.setLoginProfileAsync(data.data[1][0]);
+        console.log('These are the props', this.props)
+        return;
       }).then((data) => {
         axios.post(`${CONFIG.URL}/verifyProfile`, { email: this.props.email })
         .then((data) => {
@@ -154,6 +154,7 @@ class Home extends Component {
     }
   }
 }
+
 const styles = StyleSheet.create({
   icon: {
     width: 24,
