@@ -115,11 +115,15 @@ class Home extends Component {
         .then((data) => {
           let profile = data.data;
           if (profile[0]) {
+            console.log('PROFILEEEE', profile)
             profile[1][0].home = true;
             this.props.setProfileAsync(profile[1][0]);
           } else {
             this.props.setProfileAsync({ 'existing_user': false });
           }
+        })
+        .catch((err) => {
+          console.log('err', err)
         })
       })
       .catch((error) => {
@@ -146,7 +150,7 @@ class Home extends Component {
       )
 
     } else {
-      
+
       return (
 
         <UserProfile />
@@ -171,8 +175,8 @@ const mapStateToProps = ({ loginProfile, preferences }) => {
     token,
     social_provider,
     created_at,
-    user_id,
     id,
+    user_id,
   } = loginProfile;
 
   const {

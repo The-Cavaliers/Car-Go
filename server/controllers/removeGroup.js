@@ -1,17 +1,20 @@
 const CONFIG = require('../../config/development.json');
 const knex = require('knex')(CONFIG.knex_config);
 
-
-module.exports.remvoveGroup = function (req, res) {
-  knex('users_groups')
+module.exports.removeGroup = (req, res) => {
+  knex('groups')
   .where('id', req.body.group_id)
-  .del()
-  .then(() => {
-    return knex('groups')
-    .where('id', req.body.group_id)
+  .modify((qb) => {
+    qb.andWhere('email', req.body.email)
     .del()
-    .then(() =>{
-      return knex.select('group_id').from('users_groups')
+    .then(() => {
+      knex('users_groups')
+      .where({
+        'users_groups.user_id': req.body.user_id,
+        'users_groups.group_id': req.body.group_id,
+      })
+      .del()
+      .then(() => knex.select('group_id').from('users_groups')
       .where('users_groups.user_id', req.body.user_id)
       .join('groups', 'groups.id', '=', 'users_groups.group_id')
       .select('*')
@@ -20,12 +23,16 @@ module.exports.remvoveGroup = function (req, res) {
           console.log('nothing found');
           res.status(201).send([]);
         } else {
-            res.status(201).send(groups);
+          res.status(201).send(groups);
         }
-      })
+      }))
+      .catch((err) => {
+        console.log('err in join deletion', err);
+        res.status(503);
+      });
     })
     .catch((err) => {
-      console.log('this is the err', err);
+      console.log('err in driver del', err);
       res.status(503);
     });
   });

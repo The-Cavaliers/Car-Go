@@ -10,9 +10,12 @@ import {
   Image,
   AsyncStorage,
 } from 'react-native';
+import axios from 'axios';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
+
+import CONFIG from '../../config/development.json';
 
 class CreateList extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -24,7 +27,7 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      group_id: '',
+      // group_id: '',
       showLoading: false
     }
     this.handleChatClick = this.handleChatClick.bind(this);
@@ -38,31 +41,31 @@ class CreateList extends Component {
   handleChatClick(id) {
     console.log('click Id', id)
     AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
-      this.props.navigation.navigate('ChatterBox');
+      this.props.navigation.navigate('Messenger');
     });
   }
 
-  removeGroup(id) {
-    this.setState({
-      group_id: id,
-    })
+  removeGroup(group_id) {
+    // this.setState({
+    //   group_id: id,
+    // })
 
-    fetch('http://127.0.0.1:3000/removegroup', {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        group_id: id,
-        user_id: this.props.id
-      }),
+    // const user = {
+    //   group_id,
+    //   user_id: this.props.id,
+    //   email: this.props.email,
+    // }
+    // console.log('user object', user)
+
+    axios.post(`${CONFIG.URL}/removegroup`, {
+      group_id,
+      user_id: this.props.id,
+      email: this.props.email,
     })
-    .then(res => (res.json()))
     .then((res) => {
       console.log('this is the response',res)
       this.setState({
-        groups: res
+        groups: res.data,
       })
     })
     .catch((err) => {
@@ -74,7 +77,7 @@ class CreateList extends Component {
     this.setState({
       showLoading: true
     })
-    fetch('http://127.0.0.1:3000/grouplist', {
+    fetch(`${CONFIG.URL}/grouplist`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',

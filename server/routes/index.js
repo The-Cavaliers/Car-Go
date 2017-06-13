@@ -11,3 +11,4 @@ module.exports.removegroup = require('./removegroup');
 module.exports.selectgroup = require('./selectgroup');
 module.exports.saveProfile = require('./saveprofile');
 module.exports.verifyProfile = require('./verifyProfile');
+module.exports.joingroup = require('./joingroup');

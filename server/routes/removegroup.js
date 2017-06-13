@@ -4,10 +4,8 @@ const router = express.Router();
 const RemoveGroupController = require('../controllers').RemoveGroup;
 
 router.route('/')
-  .get((req, res) => {
-  })
   .post((req, res) => {
-  	RemoveGroupController.remvoveGroup(req, res)
+    RemoveGroupController.removeGroup(req, res);
   });
 
 module.exports = router;
