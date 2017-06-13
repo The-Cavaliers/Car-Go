@@ -41,7 +41,7 @@ class CreateList extends Component {
   handleChatClick(id) {
     console.log('click Id', id)
     AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
-      this.props.navigation.navigate('ChatterBox');
+      this.props.navigation.navigate('Messenger');
     });
   }
 

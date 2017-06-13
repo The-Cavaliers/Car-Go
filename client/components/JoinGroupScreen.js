@@ -109,7 +109,7 @@ class JoinGroup extends Component {
   }
   render() {
     return (
-      <Image source={require('../assets/groupBackground.jpeg')} style={styles.backgroundImage}>
+      <Image source={require('../assets/group_Background.jpeg')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showSearchError ? <Text style={styles.error}>No groups found, try another date</Text> : null}
