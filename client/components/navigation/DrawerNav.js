@@ -14,7 +14,6 @@ const Drawer = DrawerNavigator({
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
   GroupList: { screen: GroupList },
-  ChatterBox: { screen: ChatterBox },
 },
   {
     drawerWidth: 200,

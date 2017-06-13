@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, AsyncStorage } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import { loginProfile } from '../reducers/index';
 import DrawerButton from './DrawerButton';
 
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
+
+import { getChatId } from '../reducers/index';
 
 class ChatterBox extends React.Component {
 
@@ -20,7 +21,7 @@ class ChatterBox extends React.Component {
     this.state = {
       messages: [],
       userId: '',
-      roomId: 'default',
+      // roomId: 'default',
     };
     this.baseState = this.state;
     this.onSend = this.onSend.bind(this);
@@ -38,23 +39,36 @@ class ChatterBox extends React.Component {
   }
 
   getRoomId() {
-    AsyncStorage.getItem('roomId', (err, roomId) => {
-      const user = {
-        roomId,
-        username: this.props.username,
-        email: this.props.email,
-      }
-      this.socket.on('connect', (err, resp) => {
-        user.socket_id = this.socket.id;
-      })
-      this.socket.emit('user-joined', user)
-      this.setState({ roomId });
-    });
+    console.log('This is propppps', this.props)
+    // AsyncStorage.getItem('roomId', (err, roomId) => {
+    //   const user = {
+    //     roomId,
+    //     username: this.props.username,
+    //     email: this.props.email,
+    //   }
+    //   console.log('userrrr', user)
+    //   this.socket.on('connect', (err, resp) => {
+    //     user.socket_id = this.socket.id;
+    //   })
+    //   this.socket.emit('user-joined', user)
+    //   this.setState({ roomId });
+    // });
+    const user = {
+      roomId: this.props.chatId,
+      username: this.props.username,
+      email: this.props.email,
+    }
+    console.log('userrrr', user)
+    this.socket.on('connect', (err, resp) => {
+      user.socket_id = this.socket.id;
+    })
+    this.socket.emit('user-joined', user)
+    // this.setState({ roomId });
   }
 
   onSend(messages = []) {
     const newMessage = messages[0];
-    this.socket.emit('message', messages[0], this.state.roomId);
+    this.socket.emit('message', messages[0], this.props.chatId);
     this.storeMessages(messages);
   }
 
@@ -86,7 +100,7 @@ class ChatterBox extends React.Component {
 
   componentWillUnmount() {
     this.setState(this.baseState);
-    this.socket.emit('user-left', this.state.roomId, this.props.username)
+    this.socket.emit('user-left', this.props.roomId, this.props.username)
   }
 
   render() {
@@ -107,7 +121,7 @@ class ChatterBox extends React.Component {
   }
 }
 
-const mapStateToProps = ({ loginProfile }) => {
+const mapStateToProps = ({ loginProfile, getChatId }) => {
   const {
     username,
     email,
@@ -115,7 +129,9 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
   } = loginProfile;
+  const { chatId } = getChatId;
   return {
     username,
     email,
@@ -123,8 +139,8 @@ const mapStateToProps = ({ loginProfile }) => {
     token,
     social_provider,
     created_at,
+    id,
+    chatId,
   };
 };
-
-
 export default connect(mapStateToProps)(ChatterBox);
