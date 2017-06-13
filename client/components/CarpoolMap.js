@@ -16,17 +16,17 @@ import PubNub from 'pubnub';
 //import { addPubNubPublisher, unSubscribe, pubnubStop, getPolyLineDetails } from '../services/pubnubClient';
 
 
-const pubnub = new PubNub({
-  subscribe_key: CONFIG.pubnub.subscribeKey,
-  publish_key: CONFIG.pubnub.publishKey,
+// const pubnub = new PubNub({
+//   subscribe_key: CONFIG.pubnub.subscribeKey,
+//   publish_key: CONFIG.pubnub.publishKey,
 
-});
+// });
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'CarPool Map',
     headerLeft: <DrawerButton navigation={navigation} />,
-    headerRight: <MapButton navigation={navigation} />,
+    headerRight: <MapButton navigation={navigation}/>,
     drawerLabel: 'CarPool Map',
   });
 
@@ -47,6 +47,12 @@ class clientPubNub extends Component {
       finalDestination: {},
     };
     navigator.geolocation.clearWatch(this.watchId);
+    this.UnsubscribeRiders = this.UnsubscribeRiders.bind(this);
+    this.pubnub = new PubNub({
+      subscribe_key: CONFIG.pubnub.subscribeKey,
+      publish_key: CONFIG.pubnub.publishKey,
+
+    });
   }
 
   componentDidMount() {
@@ -82,12 +88,14 @@ class clientPubNub extends Component {
  //For Publishing 
   watchUserPostion() {
     alert("From publisher");
+    let counter = 0;
     this.getPolyLineDetails();
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let { routeCoordinates } = this.state;
       let newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-  
+      console.log(positionLatLngs);
+      
       //For Carpool live tracking on mount and unmount
       if (this.state.isRouteTracking) {
           this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
@@ -96,9 +104,9 @@ class clientPubNub extends Component {
       //For conditional publishing with switched groups
       AsyncStorage.getItem('MapGroup', (err, group_data) => {
         if (this.state.channelName === JSON.parse(group_data).group) {
-          //check if the destination has reached
+          //check if the destination has reached and unsubscribe
           if((this.state.finalDestination.lat === positionLatLngs.latitude) && (this.state.finalDestination.lng === positionLatLngs.longitude)) {
-            UnsubscribeRiders();
+            this.UnsubscribeRiders();
           }
           this.addPubNubPublisher( positionLatLngs, this.state.channelName, this.state.channelUserRole )
         }
@@ -117,7 +125,7 @@ class clientPubNub extends Component {
     alert("From listener");
     const that = this;
     let counter =0;
-    pubnub.addListener({
+     this.pubnub.addListener({
       status(statusEvent) {
         if (statusEvent.category === 'PNConnectedCategory') {
           console.log('need to checkk=============================');
@@ -147,7 +155,7 @@ class clientPubNub extends Component {
       }    
     }
   });
-  pubnub.subscribe({
+  this.pubnub.subscribe({
     channels: [channelName],
   });
 
@@ -225,7 +233,8 @@ class clientPubNub extends Component {
 
   //Unsubscribe 
   UnsubscribeRiders = () => {
-    //check if the user reached the destination, and stop subscription by default
+    //check if the user reached the destination, and stop subscription  and publish
+    consoe.log("Hello from unsubscribe");
     navigator.geolocation.clearWatch(this.watchID);
     pubnub.unsubscribeAll();
   }
