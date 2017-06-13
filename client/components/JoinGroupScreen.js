@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
+import { Container, Content, Button } from 'native-base';
 
 class JoinGroup extends Component {
    static navigationOptions = ({navigation}) => ({
@@ -99,7 +100,7 @@ class JoinGroup extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <Image source={require('../assets/AdobeStock_55307183.jpeg')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showSearchError ? <Text style={styles.error}>No groups found, try another date</Text> : null}
@@ -141,9 +142,9 @@ class JoinGroup extends Component {
             }}
             onDateChange={(date) => {this.setState({date: date})}}
           />
-          <TouchableOpacity onPress={this.sendInputValues} style={styles.buttonContainer}>
+          <Button block primary onPress={this.sendInputValues}>
             <Text style={styles.buttonText}> Find a Ride</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
 
         {this.state.groupsView ? <ScrollView>
@@ -162,7 +163,7 @@ class JoinGroup extends Component {
           </ScrollView>
         : null}
 
-      </View>
+      </Image>
     )
   }
 }
