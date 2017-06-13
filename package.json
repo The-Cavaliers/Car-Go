@@ -34,6 +34,7 @@
     "mocha": "^3.4.2",
     "morgan": "^1.8.2",
     "mysql": "^2.13.0",
+    "native-base": "^2.1.5",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^1.0.0",

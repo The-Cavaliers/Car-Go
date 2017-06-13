@@ -15,6 +15,7 @@ import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 import NumberPicker from 'react-native-numberpicker';
+import { Container, Content, Button } from 'native-base';
 
 class CreateGroup extends Component {
   static navigationOptions= ({navigation}) => ({
@@ -102,9 +103,8 @@ class CreateGroup extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
 
-        <Image style={styles.icon} source={{uri:this.state.picture_url }} />
+      <Image source={require('../assets/AdobeStock_55307183.jpeg')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
           {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
@@ -151,19 +151,20 @@ class CreateGroup extends Component {
           />
 
           <View style={styles.seatsContainer}>
-              <TouchableOpacity onPress={this.incrementCount} style={styles.seatsButton}>
-                <Text style={styles.buttonText}>Seats</Text>
-              </TouchableOpacity>
+            <Button info onPress={this.incrementCount}>
+              <Text style={styles.buttonText}>Seats</Text>
+            </Button>
+
             <View style={styles.seatsTextHolder}>
               <Text style={styles.seatsText}>{this.state.seats}</Text>
             </View>
           </View>
 
-          <TouchableOpacity onPress={this.handleAddGroupClick} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}> Create New Group</Text>
-          </TouchableOpacity>
+          <Button block primary onPress={this.handleAddGroupClick}>
+              <Text style={styles.buttonText}>Create New Group</Text>
+          </Button>
         </View>
-      </View>
+      </Image>
     )
   }
 }

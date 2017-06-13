@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
-    flexGrow: 1,
-    backgroundColor: '#fff',
-  },
+  // container: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   flexGrow: 1,
+  //   backgroundColor: '#fff',
+  // },
   welcome: {
     textAlign: 'center',
     margin: 20,
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignSelf: 'stretch',
     margin: 20,
+    borderRadius: 10,
     padding: 20,
     borderWidth: 1,
     borderColor: '#fff',
@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
   seatsContainer: {
     marginTop: 10,
     flexDirection: 'row',
+    marginBottom: 5
   },
   seatsButton: {
     width: 100,
@@ -211,6 +212,16 @@ const styles = StyleSheet.create({
   },
   seatsText: {
     fontSize: 20,
+    paddingLeft: 40
+  },
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    resizeMode: 'cover',
+    width: null,
+    height: null,
   }
 });
 
