@@ -128,7 +128,7 @@ class JoinGroup extends Component {
             placeholder="Going To"
           />
           <DatePicker
-            style={{width: 200}}
+            style={{width: 200, marginBottom: 10}}
             date={this.state.date}
             mode="date"
             placeholder="Select Date"

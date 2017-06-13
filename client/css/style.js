@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   flexGrow: 1,
-  //   backgroundColor: '#fff',
-  // },
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    resizeMode: 'cover',
+    width: null,
+    height: null,
+  },
   welcome: {
     textAlign: 'center',
     margin: 20,
@@ -187,12 +189,16 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   scrollContainer: {
+<<<<<<< HEAD
     backgroundColor: '#fff',
     padding: 10,
     flex: 1,
     borderRadius: 3,
     borderColor: '#dae5ed',
     borderWidth: 10,
+=======
+  alignSelf: 'stretch',
+>>>>>>> saved before rebase
   },
   piker: {
     width: 50,

@@ -151,7 +151,7 @@ class CreateGroup extends Component {
           />
 
           <View style={styles.seatsContainer}>
-            <Button info onPress={this.incrementCount}>
+            <Button primary onPress={this.incrementCount}>
               <Text style={styles.buttonText}>Seats</Text>
             </Button>
 
