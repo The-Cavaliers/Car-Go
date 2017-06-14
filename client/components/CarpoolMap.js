@@ -264,7 +264,7 @@ class clientPubNub extends Component {
         <MapView.Marker
           coordinate={this.state.routeCoordinates[this.state.routeCoordinates.length-1]}
           title={"Driver"}
-          image={require('../assets/Car1.png')}
+          image={require('../assets/car1.png')}
         />
 
         <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>
