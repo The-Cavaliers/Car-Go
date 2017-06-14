@@ -9,6 +9,11 @@ module.exports.joinGroup = (req, res) => {
   .then(() => {
     res.end('join success');
   })
+  .then(() => {
+    console.log('group ID', req.body.group_id)
+    return knex('groups').where('id', '=', req.body.group_id)
+    .decrement('seats', 1)
+  })
   .catch((err) => {
     console.log('err', err);
   });

@@ -99,8 +99,9 @@ class Messenger extends React.Component {
   }
 
   componentWillUnmount() {
+    console.log('unmount in Messenger', this.props.chatId)
     this.setState(this.baseState);
-    this.socket.emit('user-left', this.props.roomId, this.props.username)
+    this.socket.emit('user-left', this.props.chatId, this.props.username)
   }
 
   render() {

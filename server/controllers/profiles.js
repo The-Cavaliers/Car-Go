@@ -13,29 +13,29 @@ module.exports.getAll = (req, res) => {
     });
 };
 
-//gets groups from the database
+// gets groups from the database
 module.exports.checkDestinations = (req, res) => {
-  var date = req.body.travelDate;
-  var leaving_from = req.body.leaving_from;
-  var going_to = req.body.going_to;
+  const date = req.body.travelDate;
+  const leaving_from = req.body.leaving_from;
+  const going_to = req.body.going_to;
   console.log('this is the date', date, leaving_from, going_to);
   knex('groups').where('leaving_from', leaving_from)
   .andWhere('going_to', going_to)
   .andWhere('travelDate', date)
-  .then(groups => {
-    console.log('groups are', groups)
-    if(groups.length === 0) {
-      console.log('nothing found')
-      res.status(201).send(null)
+  .then((groups) => {
+    console.log('groups are', groups);
+    if (groups.length === 0) {
+      console.log('nothing found');
+      res.status(201).send(null);
     } else {
       res.status(201).send(groups);
     }
   })
-  .catch(err => {
-    console.log('this is the err',err)
+  .catch((err) => {
+    console.log('this is the err', err);
     res.status(503);
-  })
-}
+  });
+};
 // module.exports.create = (req, res) => {
 //   models.Profile.forge({ username: req.body.username, password: req.body.password })
 //     .save()

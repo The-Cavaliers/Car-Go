@@ -47,28 +47,18 @@ class JoinGroup extends Component {
     })
     this.getGroups();
   }
-  componentDidMount() {
-  }
+
   getGroups = () => {
-    fetch('http://127.0.0.1:3000/groups', {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        going_to: this.state.goingTo,
-        leaving_from: this.state.LeavingFrom,
-        travelDate: this.state.date,
-      }),
+    axios.post(`${CONFIG.URL}/groups`, {
+      going_to: this.state.goingTo,
+      leaving_from: this.state.LeavingFrom,
+      travelDate: this.state.date,
     })
-    .then(res => (res.json()))
     .then((res) => {
       this.setState({
-        groups: res,
+        groups: res.data,
         groupsView: true,
-        showSearchError: false
-
+        showSearchError: false,
       })
       // console.log('this is the response',res)
     })
@@ -81,7 +71,6 @@ class JoinGroup extends Component {
   }
 
   handleJoinClick = (email, id, idx) => {
-    console.log('email id', CONFIG.URL,  email, id)
     const user = {
       user_id: this.props.id,
       group_id: id,
