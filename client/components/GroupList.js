@@ -7,6 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Modal,
+  TouchableHighlight,
   AsyncStorage,
 } from 'react-native';
 import axios from 'axios';
@@ -30,13 +32,17 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      // group_id: '',
+      profile: {},
+      modalVisible: false,
       showLoading: false
     }
     this.props.styles = styles
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
     this.changeToMap = this.changeToMap.bind(this);
+    this.renderProfile = this.renderProfile.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.getProfile = this.getProfile.bind(this);
   }
   componentDidMount() {
     console.log('THIS IS THE PROPS', this.state.groups)
@@ -95,18 +101,69 @@ class CreateList extends Component {
   changeToMap() {
 
   }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+  renderProfile(email) {
+    //console.log(email);
+    //getProfile(email);
+    this.setModalVisible()
+  }
+  getProfile(email) {
+    fetch(`${CONFIG.URL}/getprofile`, {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+      console.log('this is the response',res)
+      this.setState({
+        profile: res,
+      })
+    })
+    .catch((err) => {
+       console.log('cant find match', err);
+    });
+  }
   render() {
     return (
         <Container>
             <Content>
+                <View style={{marginTop: 22}}>
+                  <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {alert("Modal has been closed.")}}
+                    >
+                   <View style={{marginTop: 22}}>
+                    <View>
+                      <Text>Hello World!</Text>
+                      <TouchableHighlight onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}>
+                        <Text>Close Profile</Text>
+                      </TouchableHighlight>
+                    </View>
+                   </View>
+                  </Modal>
+                </View>
               {this.state.groups.map((item, idx) =>
                 <Card key={idx} >
                     <CardItem>
                         <Left>
-                            <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
+                              <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
                             <Body>
                                 <Text >{item.name}</Text>
-                                <Text note>CarGo Driver</Text>
+                                <Button transparent onPress={() => this.renderProfile(item.email)}>
+                                  <Text note>Read Profile</Text>
+                                </Button>
                             </Body>
                         </Left>
                         <Right>
