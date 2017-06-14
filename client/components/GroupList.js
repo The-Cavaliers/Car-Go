@@ -32,9 +32,9 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      profile: {},
+      profile: [],
       modalVisible: false,
-      showLoading: false
+      showLoading: false,
     }
     this.props.styles = styles
     this.handleChatClick = this.handleChatClick.bind(this);
@@ -45,13 +45,12 @@ class CreateList extends Component {
     this.getProfile = this.getProfile.bind(this);
   }
   componentDidMount() {
-    console.log('THIS IS THE PROPS', this.state.groups)
     this.getGroups(this.props.id)
+    this.getProfile(this.props.email);
   }
 
   handleChatClick(id) {
     this.props.getChatIdAsync(id);
-    console.log('this is props in create', this.props)
     this.props.navigation.navigate('Messenger');
 
   }
@@ -63,7 +62,6 @@ class CreateList extends Component {
       email: this.props.email,
     })
     .then((res) => {
-      console.log('this is the response',res)
       this.setState({
         groups: res.data,
       })
@@ -89,7 +87,6 @@ class CreateList extends Component {
     })
     .then(res => (res.json()))
     .then((res) => {
-      console.log('this is the response',res)
       this.setState({
         groups: res,
         showLoading: false
@@ -106,12 +103,10 @@ class CreateList extends Component {
     this.setState({modalVisible: visible});
   }
   renderProfile(email) {
-    //console.log(email);
-    //getProfile(email);
     this.setModalVisible()
   }
   getProfile(email) {
-    fetch(`${CONFIG.URL}/getprofile`, {
+    fetch(`${CONFIG.URL}/getuserprofile`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -123,10 +118,11 @@ class CreateList extends Component {
     })
     .then(res => (res.json()))
     .then((res) => {
-      console.log('this is the response',res)
+      console.log('this is the response from profile',res)
       this.setState({
         profile: res,
       })
+      console.log('THIS IS THE STATE', this.state.profile)
     })
     .catch((err) => {
        console.log('cant find match', err);
@@ -145,7 +141,10 @@ class CreateList extends Component {
                     >
                    <View style={{marginTop: 22}}>
                     <View>
-                      <Text>Hello World!</Text>
+                      {this.state.profile.map((item, idx) => {
+                          <Text>{item.first_name}</Text>
+                      })}
+
                       <TouchableHighlight onPress={() => {
                         this.setModalVisible(!this.state.modalVisible)
                       }}>
