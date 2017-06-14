@@ -8,7 +8,6 @@ module.exports.getAll = (req, res) => {
       res.status(200).send(profiles);
     })
     .catch((err) => {
-      // This code indicates an outside service (the database) did not respond in time
       res.status(503).send(err);
     });
 };

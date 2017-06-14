@@ -15,7 +15,6 @@ module.exports.getMapPins = (req, res) => {
       leaving_from: data.results[0].address_components[3].long_name,
     }).select('*')
   .then((response) => {
-    // console.log(response);
     res.send(response);
   })
   .catch((error) => {

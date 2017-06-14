@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
     flexGrow: 1,
     resizeMode: 'cover',
     width: null,
@@ -193,7 +192,19 @@ const styles = StyleSheet.create({
   },
   small: {
     marginLeft: 20
-  }
+  },
+  modals: {
+    marginTop: 200,
+    backgroundColor: '#fff',
+    paddingBottom: 20,
+  },
+  profileContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 70,
+  },
 });
 
 export default styles;

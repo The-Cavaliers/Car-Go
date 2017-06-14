@@ -25,14 +25,12 @@ module.exports.saveProfile = function (req, res) {
       .returning('*')
       .into('profiles')
       .then((userProfile) => {
-
         res.end(JSON.stringify([true, userProfile]));
       });
     } else {
       knex('profiles')
       .where('email', data.email)
       .then((newData) => {
-        console.log('USER PROFILE', newData);
         knex.update({
           first_name: data.first_name,
           last_name: data.last_name,

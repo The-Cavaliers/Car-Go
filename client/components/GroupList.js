@@ -32,7 +32,7 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      profile: [],
+      profile: [{}],
       modalVisible: false,
       showLoading: false,
     }
@@ -121,7 +121,6 @@ class CreateList extends Component {
       this.setState({
         profile: res,
       })
-      console.log('THIS IS THE STATE', this.state.profile)
     })
     .catch((err) => {
        console.log('cant find match', err);
