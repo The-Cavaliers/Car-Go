@@ -67,8 +67,8 @@ const seedDataBase = function (argument) {
       leaving_from: leavingFrom,
       going_to: goingTo,
       email: email[Math.floor(Math.random() * 8)],
-      from_coords: JSON.stringify([addressLocation[leavingFrom].lat[Math.floor(Math.random() * 2)], addressLocation[leavingFrom].long[Math.floor(Math.random() * 0)]]),
-      to_coords: JSON.stringify([addressLocation[goingTo].lat[Math.floor(Math.random() * 2)], addressLocation[goingTo].long[Math.floor(Math.random() * 0)]]),
+      from_coords: JSON.stringify([addressLocation[leavingFrom].lat[Math.floor(Math.random() * 2)], addressLocation[leavingFrom].long[Math.floor(Math.random() * 2)]]),
+      to_coords: JSON.stringify([addressLocation[goingTo].lat[Math.floor(Math.random() * 2)], addressLocation[goingTo].long[Math.floor(Math.random() * 2)]]),
       travelDate: dates[Math.floor(Math.random() * 8)],
     }).save();
   }
