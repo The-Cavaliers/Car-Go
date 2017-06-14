@@ -60,7 +60,6 @@ class JoinGroup extends Component {
         groupsView: true,
         showSearchError: false,
       })
-      // console.log('this is the response',res)
     })
     .catch((err) => {
       this.setState({
@@ -79,16 +78,14 @@ class JoinGroup extends Component {
     axios.post(`${CONFIG.URL}/join-group`, user)
     .then((val) => {
       const groups = this.state.groups;
-      console.log('groups b4', groups)
       groups.splice(idx, 1);
-      console.log('groups after', groups)
       this.setState({ groups });
     })
     .catch(err => { console.log('err', err) })
   }
 
   sendEmail = (email) => {
-    fetch('http://127.0.0.1:3000/email', {
+    fetch(`${CONFIG.URL}/email`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -142,7 +139,6 @@ class JoinGroup extends Component {
               dateInput: {
                 marginLeft: 36,
               }
-              // ... You can check the source to find the other keys.
             }}
             onDateChange={(date) => {this.setState({date: date})}}
           />

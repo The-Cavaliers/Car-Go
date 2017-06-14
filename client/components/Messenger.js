@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import DrawerButton from './DrawerButton';
 
@@ -21,7 +21,6 @@ class Messenger extends React.Component {
     this.state = {
       messages: [],
       userId: '',
-      // roomId: 'default',
     };
     this.baseState = this.state;
     this.onSend = this.onSend.bind(this);
@@ -40,30 +39,15 @@ class Messenger extends React.Component {
 
   getRoomId() {
     console.log('This is propppps', this.props)
-    // AsyncStorage.getItem('roomId', (err, roomId) => {
-    //   const user = {
-    //     roomId,
-    //     username: this.props.username,
-    //     email: this.props.email,
-    //   }
-    //   console.log('userrrr', user)
-    //   this.socket.on('connect', (err, resp) => {
-    //     user.socket_id = this.socket.id;
-    //   })
-    //   this.socket.emit('user-joined', user)
-    //   this.setState({ roomId });
-    // });
     const user = {
       roomId: this.props.chatId,
       username: this.props.username,
       email: this.props.email,
     }
-    console.log('userrrr', user)
     this.socket.on('connect', (err, resp) => {
       user.socket_id = this.socket.id;
     })
     this.socket.emit('user-joined', user)
-    // this.setState({ roomId });
   }
 
   onSend(messages = []) {
@@ -99,7 +83,6 @@ class Messenger extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmount in Messenger', this.props.chatId)
     this.setState(this.baseState);
     this.socket.emit('user-left', this.props.chatId, this.props.username)
   }

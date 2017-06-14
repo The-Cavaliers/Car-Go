@@ -55,17 +55,6 @@ class CreateList extends Component {
   }
 
   removeGroup(group_id) {
-    // this.setState({
-    //   group_id: id,
-    // })
-
-    // const user = {
-    //   group_id,
-    //   user_id: this.props.id,
-    //   email: this.props.email,
-    // }
-    // console.log('user object', user)
-
     axios.post(`${CONFIG.URL}/removegroup`, {
       group_id,
       user_id: this.props.id,

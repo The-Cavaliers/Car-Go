@@ -22,11 +22,12 @@ module.exports.checkDestinations = (req, res) => {
   knex('groups').where('leaving_from', leaving_from)
   .andWhere('going_to', going_to)
   .andWhere('travelDate', date)
+  .andWhere('seats', '>', 0)
   .then((groups) => {
     console.log('groups are', groups);
     if (groups.length === 0) {
       console.log('nothing found');
-      res.status(201).send(null);
+      res.status(201).send([]);
     } else {
       res.status(201).send(groups);
     }
@@ -36,6 +37,7 @@ module.exports.checkDestinations = (req, res) => {
     res.status(503);
   });
 };
+
 // module.exports.create = (req, res) => {
 //   models.Profile.forge({ username: req.body.username, password: req.body.password })
 //     .save()
@@ -84,7 +86,6 @@ module.exports.update = (req, res) => {
       res.sendStatus(404);
     });
 };
-
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()
 //     .then(profile => {
