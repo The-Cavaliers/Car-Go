@@ -32,7 +32,7 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      profile: [],
+      profile: [{}],
       modalVisible: false,
       showLoading: false,
     }
@@ -121,7 +121,6 @@ class CreateList extends Component {
       this.setState({
         profile: res,
       })
-      console.log('THIS IS THE STATE', this.state.profile)
     })
     .catch((err) => {
        console.log('cant find match', err);
@@ -155,74 +154,79 @@ class CreateList extends Component {
   }
   render() {
     return (
-       <Container>
-           <Content>
-               <View style={{marginTop: 22}}>
-                 <Modal
-                   animationType={"slide"}
-                   transparent={false}
-                   visible={this.state.modalVisible}
-                   onRequestClose={() => {alert("Modal has been closed.")}}
-                   >
-                  <View style={{marginTop: 22}}>
-                   <View>
-                     {this.state.profile.map((item, idx) => {
-                         <Text>{item.first_name}</Text>
-                     })}
-                     <TouchableHighlight onPress={() => {
-                       this.setModalVisible(!this.state.modalVisible)
-                     }}>
-                       <Text>Close Profile</Text>
-                     </TouchableHighlight>
-                   </View>
-                  </View>
-                 </Modal>
-               </View>
-             {this.state.groups.map((item, idx) =>
-               <Card key={idx} >
-                   <CardItem>
-                       <Left>
-                             <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
-                           <Body>
-                               <Text >{item.name}</Text>
-                               <Button transparent onPress={() => this.renderProfile(item.email)}>
-                                 <Text note>Read Profile</Text>
-                               </Button>
-                           </Body>
-                       </Left>
-                       <Right>
-                         <Text>Departing: {item.travelDate}</Text>
-                       </Right>
-                     </CardItem>
-                     <CardItem>
-                         <Body>
-                         <Right>
-                           <Text note>Leaving From: {item.leaving_from}</Text>
-                         </Right>
-                         <Left>
-                           <Text note>Going to: {item.going_to}</Text>
-                         </Left>
-                         <Left>
-                           <Text note>Available seats: {item.seats}</Text>
-                         </Left>
-                         </Body>
-                     </CardItem>
-                     <CardItem key={idx + 2}>
-                         <Button small rounded primary onPress={() => this.changeToMap(item)}>
-                             <Text>Map</Text>
-                         </Button><Text>   </Text>
-                         <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
-                             <Text >Remove</Text>
-                         </Button><Text>   </Text>
-                         <Button small rounded primary onPress={() => this.handleChatClick(item.id)}>
-                             <Text>Message</Text>
-                         </Button>
-                   </CardItem>
-              </Card>
-             )}
-           </Content>
-       </Container>
-     )
+        <Container>
+            <Content>
+
+                  <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {alert("Modal has been closed.")}}
+                    >
+                    <View style={styles.modals}>
+                      <View style={styles.profileContainer}>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>{this.state.profile[0].first_name} {this.state.profile[0].last_name}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>{this.state.profile[0].gender}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Age: {this.state.profile[0].age}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Allow Smoking: {this.state.profile[0].smoking}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Allow Pets: {this.state.profile[0].pets}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Type of Music: {this.state.profile[0].music_preference}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Type of Car: {this.state.profile[0].preferred_ride}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Contact: {this.state.profile[0].email}</Text>
+                        <Text style={{color: 'gray', paddingBottom: 8}}>Bio: {this.state.profile[0].about_me}</Text>
+                      </View>
+                      <Button block primary onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}>
+                        <Text>Close Profile</Text>
+                      </Button>
+                    </View>
+                  </Modal>
+              {this.state.groups.map((item, idx) =>
+                <Card key={idx} >
+                    <CardItem>
+                        <Left>
+                              <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
+                            <Body>
+                                <Text >{item.name}</Text>
+                                <Button transparent onPress={() => this.renderProfile(item.email)}>
+                                  <Text note>Read Profile</Text>
+                                </Button>
+                            </Body>
+                        </Left>
+                        <Right>
+                          <Text>Departing: {item.travelDate}</Text>
+                        </Right>
+                      </CardItem>
+                      <CardItem>
+                          <Body>
+                          <Right>
+                            <Text note>Leaving From: {item.leaving_from}</Text>
+                          </Right>
+                          <Left>
+                            <Text note>Going to: {item.going_to}</Text>
+                          </Left>
+                          <Left>
+                            <Text note>Available seats: {item.seats}</Text>
+                          </Left>
+                          </Body>
+                      </CardItem>
+                      <CardItem key={idx + 2}>
+                          <Button small rounded primary onPress={() => this.changeToMap(item)}>
+                              <Text>Map</Text>
+                          </Button><Text>   </Text>
+                          <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
+                              <Text >Remove</Text>
+                          </Button><Text>   </Text>
+                          <Button small rounded primary onPress={() => this.handleChatClick(item.id)}>
+                              <Text>Message</Text>
+                          </Button>
+                    </CardItem>
+               </Card>
+              )}
+            </Content>
+        </Container>
+    )
   }
 }
 const mapStateToProps = ({ loginProfile, getChatId }) => {

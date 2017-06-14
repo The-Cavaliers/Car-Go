@@ -31,9 +31,6 @@ class Maps extends Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
-      // const initialPosition = JSON.stringify(position);
-    //   console.log('JSON', initialPosition);
-    //   console.log('POSITION', position);
       this.setState({
         region: {
           latitude: position.coords.latitude,
@@ -67,42 +64,6 @@ class Maps extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
-
-  // componentWillMount() {
-
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     var initialPosition = JSON.stringify(position);
-  //     this.setState({
-  //       region:  {
-  //         latitude: position.coords.latitude,
-  //         longitude: position.coords.longitude,
-  //         latitudeDelta: 0.0922,
-  //         longitudeDelta: 0.3421,
-  //         loc: 0,
-  //       },
-  //       isMapVisible: true,
-  //     });
-  //   },
-  //   (error) => alert(JSON.stringify(error)),
-  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-  //   );
-  //   axios.get(`${CONFIG.URL}/getMapDetails`)
-  //   .then((response) => {
-  //     const coords = [];
-  //     response.data.forEach(function (item){
-  //       coords.push({ latitude: JSON.parse(item.from_coords)[0],
-  //         longitude: JSON.parse(item.from_coords)[1],
-  //       });
-  //     });
-  //     this.setState({listOfRegions: coords });
-  //     // console.log(this.state.listOfRegions);
-  //   })
-  //   .catch((error) =>{
-  //     console.log(error);
-  //   });
-  // }
-
-
   render() {
     return (
       <MapView
@@ -118,7 +79,7 @@ class Maps extends Component {
           <MapView.Marker
             key={id}
             coordinate={marker}
-            image={require('../assets/Car1.png')}
+            image={require('../assets/car1.png')}
           />
          ))}
       </MapView>
