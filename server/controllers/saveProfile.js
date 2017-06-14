@@ -20,6 +20,7 @@ module.exports.saveProfile = function (req, res) {
         language: data.language,
         music_preference: data.music_preference,
         phone_number: data.phone_number,
+        user_id: data.id,
       })
       .returning('*')
       .into('profiles')

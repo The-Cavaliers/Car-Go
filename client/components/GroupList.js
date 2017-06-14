@@ -7,6 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Modal,
+  TouchableHighlight,
   AsyncStorage,
 } from 'react-native';
 import axios from 'axios';
@@ -30,49 +32,36 @@ class CreateList extends Component {
     super(props)
     this.state = {
       groups: [],
-      // group_id: '',
-      showLoading: false
+      profile: [],
+      modalVisible: false,
+      showLoading: false,
     }
     this.props.styles = styles
     this.handleChatClick = this.handleChatClick.bind(this);
     this.removeGroup = this.removeGroup.bind(this);
     this.changeToMap = this.changeToMap.bind(this);
+    this.renderProfile = this.renderProfile.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.getProfile = this.getProfile.bind(this);
   }
   componentDidMount() {
-    console.log('THIS IS THE PROPS', this.state.groups)
     this.getGroups(this.props.id)
+    this.getProfile(this.props.email);
   }
 
   handleChatClick(id) {
-    console.log('click Id', id)
-    // AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
-    //   this.props.navigation.navigate('Messenger');
-    // });
     this.props.getChatIdAsync(id);
-    console.log('this is props in create', this.props)
     this.props.navigation.navigate('Messenger');
 
   }
 
   removeGroup(group_id) {
-    // this.setState({
-    //   group_id: id,
-    // })
-
-    // const user = {
-    //   group_id,
-    //   user_id: this.props.id,
-    //   email: this.props.email,
-    // }
-    // console.log('user object', user)
-
     axios.post(`${CONFIG.URL}/removegroup`, {
       group_id,
       user_id: this.props.id,
       email: this.props.email,
     })
     .then((res) => {
-      console.log('this is the response',res)
       this.setState({
         groups: res.data,
       })
@@ -98,7 +87,6 @@ class CreateList extends Component {
     })
     .then(res => (res.json()))
     .then((res) => {
-      console.log('this is the response',res)
       this.setState({
         groups: res,
         showLoading: false
@@ -111,18 +99,71 @@ class CreateList extends Component {
   changeToMap() {
 
   }
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+  renderProfile(email) {
+    this.setModalVisible()
+  }
+  getProfile(email) {
+    fetch(`${CONFIG.URL}/getuserprofile`, {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    })
+    .then(res => (res.json()))
+    .then((res) => {
+      console.log('this is the response from profile',res)
+      this.setState({
+        profile: res,
+      })
+      console.log('THIS IS THE STATE', this.state.profile)
+    })
+    .catch((err) => {
+       console.log('cant find match', err);
+    });
+  }
   render() {
     return (
         <Container>
             <Content>
+                <View style={{marginTop: 22}}>
+                  <Modal
+                    animationType={"slide"}
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {alert("Modal has been closed.")}}
+                    >
+                   <View style={{marginTop: 22}}>
+                    <View>
+                      {this.state.profile.map((item, idx) => {
+                          <Text>{item.first_name}</Text>
+                      })}
+
+                      <TouchableHighlight onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}>
+                        <Text>Close Profile</Text>
+                      </TouchableHighlight>
+                    </View>
+                   </View>
+                  </Modal>
+                </View>
               {this.state.groups.map((item, idx) =>
                 <Card key={idx} >
                     <CardItem>
                         <Left>
-                            <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
+                              <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
                             <Body>
                                 <Text >{item.name}</Text>
-                                <Text note>CarGo Driver</Text>
+                                <Button transparent onPress={() => this.renderProfile(item.email)}>
+                                  <Text note>Read Profile</Text>
+                                </Button>
                             </Body>
                         </Left>
                         <Right>
