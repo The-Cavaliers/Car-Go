@@ -218,3 +218,4 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
+

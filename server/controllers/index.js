@@ -10,3 +10,4 @@ module.exports.ReturnOldMessages = require('./returnOldMessages.io');
 module.exports.SaveMessage = require('./saveMessage.io');
 module.exports.VerifyProfile = require('./verifyProfile');
 module.exports.JoinGroup = require('./joinGroup');
+module.exports.GetUserProfile = require('./getUserProfile');

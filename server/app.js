@@ -34,6 +34,7 @@ app.use('/removegroup', routes.removegroup);
 app.use('/verifyProfile', routes.verifyProfile);
 app.use('/saveProfile', routes.saveProfile);
 app.use('/join-group', routes.joingroup);
+app.use('/getuserprofile', routes.getuserprofile);
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
