@@ -39,7 +39,6 @@ class clientPubNub extends Component {
       finalDestination: {},
       groupPublisherEmail:'',
     };
-    navigator.geolocation.clearWatch(this.watchId);
   }
   componentDidMount() {
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
@@ -66,7 +65,7 @@ class clientPubNub extends Component {
       if (this.state.channelUserRole === 'Driver') {
         this.watchUserPostion();
       } else if(this.state.channelUserRole === 'Rider') {
-        this.addPubNubListener(this.state.channelName);
+        this.addPubNubListener(this.state.channelName, 'Rider');
       }
     });
 
@@ -84,13 +83,14 @@ class clientPubNub extends Component {
   watchUserPostion() {
     alert("From publisher");
     let counter = 0;
+    // call the subscribe
+    
     this.getPolyLineDetails();
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let { routeCoordinates } = this.state;
       let newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-      console.log(positionLatLngs);
-      
+      console.log(positionLatLngs);     
       
       //For Carpool live tracking on mount and unmount
       if (this.state.isRouteTracking) { 
@@ -167,7 +167,7 @@ class clientPubNub extends Component {
         let isDriverPresent = false;
         console.log("from presence",response.channels[channelName]['occupants'])
         response.channels[channelName]['occupants'].forEach(function(occupant) {
-          if ( occupant.uuid === "abc124 " ) {
+          if ( (occupant.uuid === "abc124 ") && (counter > 1) ) {
             isDriverPresent = true;
           }
         });
@@ -257,6 +257,11 @@ class clientPubNub extends Component {
     this.props.navigation.navigate('Home');
   }
 
+  //RegionChange
+  onRegionChange(region) {
+    this.setState({ region });
+  }
+
   render() {
     return (
       <MapView
@@ -266,12 +271,11 @@ class clientPubNub extends Component {
         showsCompass
         showsPointsOfInterest
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude:37.332211,
+          longitude: -122.030778,
           latitudeDelta: 0.0522,
           longitudeDelta: 0.0421
         }}
-        autoFocus
         // overlays={[{
         //   coordinates: this.state.routeCoordinates,
         //   strokeColor: 'purple',
