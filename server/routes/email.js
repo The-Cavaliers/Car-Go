@@ -7,7 +7,7 @@ router.route('/')
   .get((req, res) => {
   })
   .post((req, res) => {
-  	EmailController.emailUser(req, res)
+    EmailController.emailUser(req, res);
   });
 
 module.exports = router;

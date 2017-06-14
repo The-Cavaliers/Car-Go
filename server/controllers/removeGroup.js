@@ -5,7 +5,6 @@ module.exports.removeGroup = (req, res) => {
   knex('groups')
   .where('id', req.body.group_id)
   .modify((qb) => {
-    // qb.increment('seats', 1).catch((err) => { console.log(err); });
     qb.andWhere('email', req.body.email)
     .del()
     .then(() => {
@@ -36,7 +35,7 @@ module.exports.removeGroup = (req, res) => {
       console.log('err in driver del', err);
       res.status(503);
     });
-  })
+  });
 };
 
 module.exports.incrementSeats = (req, res) => {
