@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import {
 View,
-Text,
 AsyncStorage,
 StyleSheet,
 } from 'react-native';
@@ -13,20 +13,12 @@ import Polyline from '@mapbox/polyline';
 import axios from 'axios';
 import CONFIG from '../../config/development.json';
 import PubNub from 'pubnub';
-//import { addPubNubPublisher, unSubscribe, pubnubStop, getPolyLineDetails } from '../services/pubnubClient';
-
-
-// const pubnub = new PubNub({
-//   subscribe_key: CONFIG.pubnub.subscribeKey,
-//   publish_key: CONFIG.pubnub.publishKey,
-
-// });
+import {  Button, Text } from 'native-base';
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'CarPool Map',
     headerLeft: <DrawerButton navigation={navigation} />,
-    headerRight: <MapButton navigation={navigation}/>,
     drawerLabel: 'CarPool Map',
   });
 
@@ -45,20 +37,23 @@ class clientPubNub extends Component {
       Destination : '',
       Source: '',
       finalDestination: {},
+      groupPublisherEmail:'',
     };
     navigator.geolocation.clearWatch(this.watchId);
-    this.UnsubscribeRiders = this.UnsubscribeRiders.bind(this);
-    this.pubnub = new PubNub({
-      subscribe_key: CONFIG.pubnub.subscribeKey,
-      publish_key: CONFIG.pubnub.publishKey,
-
-    });
   }
-
   componentDidMount() {
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
+      this.state.groupPublisherEmail = JSON.parse(group_data).driverEmail;
+      this.pubnub = new PubNub({
+        subscribe_key: CONFIG.pubnub.subscribeKey,
+        publish_key: CONFIG.pubnub.publishKey,
+        //uuid:JSON.parse(group_data).userEmail,
+        uuid:"abc124 ",
+      });
+      
+      //Get the Destination Address from Group List for Unsubscribe
       //this.state.Destination = JSON.parse(group_data).goingTo;
       this.state.Destination = 'Hayward';
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
@@ -96,11 +91,11 @@ class clientPubNub extends Component {
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
       console.log(positionLatLngs);
       
+      
       //For Carpool live tracking on mount and unmount
-      if (this.state.isRouteTracking) {
-          this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });
+      if (this.state.isRouteTracking) { 
+          this.setState({ routeCoordinates: routeCoordinates.concat(positionLatLngs) });    
       }
-
       //For conditional publishing with switched groups
       AsyncStorage.getItem('MapGroup', (err, group_data) => {
         if (this.state.channelName === JSON.parse(group_data).group) {
@@ -130,7 +125,7 @@ class clientPubNub extends Component {
         if (statusEvent.category === 'PNConnectedCategory') {
           console.log('need to checkk=============================');
         } else if (statusEvent.category === 'PNUnknownCategory') {
-          pubnub.setState({
+          this.pubnub.setState({
             state: { new: 'error' },
           },(status) => {
               console.log(statusEvent.errorData.message);
@@ -157,18 +152,41 @@ class clientPubNub extends Component {
   });
   this.pubnub.subscribe({
     channels: [channelName],
+    withPresence: true
   });
+  
+  //Check if the Driver has joined yet or not
+  this.pubnub.hereNow(
+    {
+      channels: [channelName], 
+      includeUUIDs: true,
+      includeState: true
+    },
+    function (status, response) {
+        // handle status, response
+        let isDriverPresent = false;
+        console.log("from presence",response.channels[channelName]['occupants'])
+        response.channels[channelName]['occupants'].forEach(function(occupant) {
+          if ( occupant.uuid === "abc124 " ) {
+            isDriverPresent = true;
+          }
+        });
+      isDriverPresent ? null : alert("Driver not yet joined");
+    }
+  );
 
   };
 
   addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
     console.log('positions for publishing', positionLatLngs);
-    pubnub.publish({
+
+    this.pubnub.publish({
       message: {
         player: userRole,
         position: positionLatLngs,
       },
       channel: channelName,
+      withPresence: true
     },
     (status, response) => {
       if (status.error) {
@@ -233,10 +251,10 @@ class clientPubNub extends Component {
 
   //Unsubscribe 
   UnsubscribeRiders = () => {
-    //check if the user reached the destination, and stop subscription  and publish
-    consoe.log("Hello from unsubscribe");
+    //check if the user reached the destination, and stop subscription  and publis
     navigator.geolocation.clearWatch(this.watchID);
-    pubnub.unsubscribeAll();
+    this.pubnub.unsubscribeAll();
+    this.props.navigation.navigate('Home');
   }
 
   render() {
@@ -252,7 +270,8 @@ class clientPubNub extends Component {
           longitude: -122.4324,
           latitudeDelta: 0.0522,
           longitudeDelta: 0.0421
-        }}    
+        }}
+        autoFocus
         // overlays={[{
         //   coordinates: this.state.routeCoordinates,
         //   strokeColor: 'purple',
@@ -269,6 +288,9 @@ class clientPubNub extends Component {
           title={"My Location"}
           pinColor = "red"
         />
+        <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>
+          <Text>UnSubscribe</Text>
+        </Button>
       </MapView> 
          
     );
@@ -301,5 +323,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default clientPubNub;
-
+const mapStateToProps = ({ loginProfile }) => {
+  const {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    id,
+  } = loginProfile;
+  return {
+    username,
+    email,
+    picture_url,
+    token,
+    social_provider,
+    created_at,
+    id,
+  };
+};
+export default connect(mapStateToProps)(clientPubNub);

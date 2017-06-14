@@ -112,13 +112,14 @@ class Maps extends Component {
         showsCompass
         showsPointsOfInterest
         region={this.state.region}
+        autoFocus
       >
         {console.log(this.state.listOfRegions)}
         {this.state.listOfRegions.map((marker, id) => (
           <MapView.Marker
             key={id}
             coordinate={marker}
-            image={require('../assets/carMarker4.png')}
+            image={require('../assets/Caar1.png')}
           />
          ))}
       </MapView>

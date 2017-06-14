@@ -130,12 +130,24 @@ class CreateList extends Component {
   changeToMap(groupDetails) {
     console.log(groupDetails);
     //Check if the user is Driver or Rider
-    if( this.props.email !== groupDetails.email ) {
+    if( this.props.email === groupDetails.email ) {
      // console.log("I am driver");
-      AsyncStorage.setItem('MapGroup', JSON.stringify({ group: groupDetails.group_id , role: 'Driver' , leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to }));
+      AsyncStorage.setItem('MapGroup', JSON.stringify({ 
+        group: groupDetails.group_id,
+        role: 'Driver', 
+        leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to,
+        driverEmail: groupDetails.email,
+        userEmail: this.props.email,
+      }));
     } else {
       //console.log("I am rider");
-      AsyncStorage.setItem('MapGroup', JSON.stringify({ group: groupDetails.group_id , role: 'Rider' , leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to }));
+      AsyncStorage.setItem('MapGroup', JSON.stringify({ 
+        group: groupDetails.group_id, 
+        role: 'Rider', 
+        leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to,
+        driverEmail: groupDetails.email,
+        userEmail: this.props.email,
+      }));
     }
     //console.log("propsssss", this.props);
     this.props.navigation.navigate('CarpoolMap');
