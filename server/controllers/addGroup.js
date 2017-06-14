@@ -17,5 +17,8 @@ module.exports.saveGroup = (req, res) => {
     user_id: user.user_id,
     group_id: groupId[0],
   }))
+  .then(() => {
+    res.end(200);
+  })
   .catch(err => console.log('err with saving group', err));
 };

@@ -93,7 +93,6 @@ class CreateGroup extends Component {
   }
   incrementCount = () => {
     if(this.state.seats >= 3) {
-      console.log('in herere')
       this.setState({
         seats: 0
       })

@@ -20,7 +20,6 @@ class Messenger extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      userId: '',
     };
     this.baseState = this.state;
     this.onSend = this.onSend.bind(this);
@@ -33,12 +32,7 @@ class Messenger extends React.Component {
     this.getRoomId();
   }
 
-  componentDidMount() {
-    this.setState({ userId: this.socket.id });
-  }
-
   getRoomId() {
-    console.log('This is propppps', this.props)
     const user = {
       roomId: this.props.chatId,
       username: this.props.username,
