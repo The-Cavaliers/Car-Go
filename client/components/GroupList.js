@@ -17,7 +17,6 @@ import styles from '../css/style';
 import DrawerButton from './DrawerButton';
 import { Container, Content, Card, CardItem, Footer, FooterTab, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
 
-import GET_CHAT_ID from '../actions/type';
 import { getChatIdAsync } from '../actions/index';
 
 import CONFIG from '../../config/development.json';
@@ -128,9 +127,7 @@ class CreateList extends Component {
   }
   changeToMap(groupDetails) {
     console.log(groupDetails);
-    //Check if the user is Driver or Rider
     if( this.props.email === groupDetails.email ) {
-     // console.log("I am driver");
       AsyncStorage.setItem('MapGroup', JSON.stringify({
         group: groupDetails.group_id,
         role: 'Driver',
@@ -139,7 +136,6 @@ class CreateList extends Component {
         userEmail: this.props.email,
       }));
     } else {
-      //console.log("I am rider");
       AsyncStorage.setItem('MapGroup', JSON.stringify({
         group: groupDetails.group_id,
         role: 'Rider',
@@ -148,7 +144,6 @@ class CreateList extends Component {
         userEmail: this.props.email,
       }));
     }
-    //console.log("propsssss", this.props);
     this.props.navigation.navigate('CarpoolMap');
 
   }
