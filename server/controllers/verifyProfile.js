@@ -7,7 +7,6 @@ module.exports.verifyProfile = (req, res) => {
   .returning('*')
   .into('profiles')
   .then((userProfile) => {
-    console.log('This is the users profile', userProfile);
     res.end(JSON.stringify([true, userProfile]));
   })
   .catch((error) => {

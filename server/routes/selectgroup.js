@@ -4,7 +4,6 @@ const GroupController = require('../controllers').Selectgroup;
 
 router.route('/')
   .post((req, res) => {
-    // function to select group
     GroupController.selectgroup(req, res);
   });
 
