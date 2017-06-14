@@ -7,7 +7,7 @@ const ViewButton = props => (
     <Image source={require('../assets/menuu.jpg')} style={styles.icon} />
   </TouchableOpacity>
  );
-// DrawerButton.propTypes = propTypes;
+
 const styles = StyleSheet.create({
   icon: {
     width: 24,

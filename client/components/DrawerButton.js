@@ -8,7 +8,6 @@ const DrawerButton = props => (
   </TouchableOpacity>
  );
 
-// DrawerButton.propTypes = propTypes;
 const styles = StyleSheet.create({
   icon: {
     width: 24,

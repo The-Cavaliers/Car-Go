@@ -7,7 +7,7 @@ const styles = {
 };
 
 const GroupsButton = props => (
-  <TouchableOpacity style={styles} onPress={() => props.navigation.navigate('ViewGroups')}>
+  <TouchableOpacity style={styles} onPress={() => props.navigation.navigate('GroupList')}>
     <Text>Groups</Text>
   </TouchableOpacity>
  );

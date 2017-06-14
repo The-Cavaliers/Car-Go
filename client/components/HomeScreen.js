@@ -108,7 +108,6 @@ class Home extends Component {
       .then((data) => {
         const userProfile = data.data[1][0];
         this.props.setLoginProfileAsync(userProfile);
-        // console.log('These are the props', this.props)
         return;
       }).then((data) => {
         axios.post(`${CONFIG.URL}/verifyProfile`, { email: this.props.email })
@@ -134,27 +133,16 @@ class Home extends Component {
 
   render() {
     if (this.props.existing_user) {
-
       return (
-
         <TabView tabBarPosition={'bottom'} initialPage={1}>
-
           <JoinGroupScreen tabLabel='Find a Ride' />
-
           <Map tabLabel='View Map' />
-
           <CreateGroup tabLabel='Create Group' />
-
         </TabView>
-
       )
-
     } else {
-
       return (
-
         <UserProfile />
-
       )
     }
   }

@@ -17,6 +17,8 @@ import DrawerButton from './DrawerButton';
 import NumberPicker from 'react-native-numberpicker';
 import { Container, Content, Button } from 'native-base';
 
+import CONFIG from '../../config/development.json';
+
 class CreateGroup extends Component {
   static navigationOptions= ({navigation}) => ({
     title: 'Create Group',
@@ -40,7 +42,7 @@ class CreateGroup extends Component {
   }
 
   handleAddGroupClick = () => {
-    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true, 'Fremont': true, 'San Jose': true, 'San Mateo': true, 'Santa Clara': true};
+    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true, 'Fremont': true, 'San Jose': true, 'San Mateo': true, 'Santa Clara': true };
       if(cities[this.state.LeavingFrom] && cities[this.state.goingTo]) {
         this.addGroup();
         this.setState({
@@ -59,7 +61,7 @@ class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    fetch('http://127.0.0.1:3000/newgroup', {
+    fetch(`${CONFIG.URL}/newgroup`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -91,7 +93,6 @@ class CreateGroup extends Component {
   }
   incrementCount = () => {
     if(this.state.seats >= 3) {
-      console.log('in herere')
       this.setState({
         seats: 0
       })

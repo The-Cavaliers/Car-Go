@@ -44,28 +44,12 @@ class CreateList extends Component {
   }
 
   handleChatClick(id) {
-    console.log('click Id', id)
-    // AsyncStorage.setItem('roomId', JSON.stringify(id), () => {
-    //   this.props.navigation.navigate('Messenger');
-    // });
     this.props.getChatIdAsync(id);
     console.log('this is props in create', this.props)
     this.props.navigation.navigate('Messenger');
-
   }
 
   removeGroup(group_id) {
-    // this.setState({
-    //   group_id: id,
-    // })
-
-    // const user = {
-    //   group_id,
-    //   user_id: this.props.id,
-    //   email: this.props.email,
-    // }
-    // console.log('user object', user)
-
     axios.post(`${CONFIG.URL}/removegroup`, {
       group_id,
       user_id: this.props.id,

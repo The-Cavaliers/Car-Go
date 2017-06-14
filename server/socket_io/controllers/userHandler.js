@@ -27,6 +27,7 @@ module.exports = (io, socket) => {
   });
 
   socket.on('user-left', (oldRoomId, user) => {
+    console.log('user leavingggg', oldRoomId, user)
     CarGoBot._id = Math.floor(Math.random() * 1000000);
     CarGoBot.text = `${user} has left the chat`;
     socket.broadcast.to(oldRoomId).emit('receive', CarGoBot);

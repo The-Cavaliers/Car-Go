@@ -13,6 +13,7 @@ import { setProfile, loginProfile } from '../actions';
 import DrawerButton from './DrawerButton';
 import styles from '../css/style';
 import { Container, Content, Button } from 'native-base';
+import CONFIG from '../../config/development.json';
 
 class UserProfile extends Component {
   static navigationOptions = ({navigation}) => ({
@@ -36,7 +37,7 @@ class UserProfile extends Component {
 
  sendProfile() {
   const data = this.props;
-  fetch('http://127.0.0.1:3000/saveProfile', {
+  fetch(`${CONFIG.URL}/saveProfile`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',

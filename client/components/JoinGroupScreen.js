@@ -35,7 +35,6 @@ class JoinGroup extends Component {
       goingTo: '',
       groups: [],
       date: '05-13-2017',
-      user_img: 'person.png'
     }
     this.handleJoinClick = this.handleJoinClick.bind(this);
   }
@@ -47,41 +46,28 @@ class JoinGroup extends Component {
     })
     this.getGroups();
   }
-  componentDidMount() {
-  }
+
   getGroups = () => {
-    fetch('http://127.0.0.1:3000/groups', {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        going_to: this.state.goingTo,
-        leaving_from: this.state.LeavingFrom,
-        travelDate: this.state.date,
-      }),
+    axios.post(`${CONFIG.URL}/groups`, {
+      going_to: this.state.goingTo,
+      leaving_from: this.state.LeavingFrom,
+      travelDate: this.state.date,
     })
-    .then(res => (res.json()))
     .then((res) => {
       this.setState({
-        groups: res,
+        groups: res.data,
         groupsView: true,
-        showSearchError: false
-
+        showSearchError: false,
       })
-      // console.log('this is the response',res)
     })
     .catch((err) => {
       this.setState({
         showSearchError: true
       })
-      //  console.log('cant find match', );
     });
   }
 
   handleJoinClick = (email, id, idx) => {
-    console.log('email id', CONFIG.URL,  email, id)
     const user = {
       user_id: this.props.id,
       group_id: id,
@@ -90,16 +76,14 @@ class JoinGroup extends Component {
     axios.post(`${CONFIG.URL}/join-group`, user)
     .then((val) => {
       const groups = this.state.groups;
-      console.log('groups b4', groups)
       groups.splice(idx, 1);
-      console.log('groups after', groups)
       this.setState({ groups });
     })
     .catch(err => { console.log('err', err) })
   }
 
   sendEmail = (email) => {
-    fetch('http://127.0.0.1:3000/email', {
+    fetch(`${CONFIG.URL}/email`, {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -113,6 +97,7 @@ class JoinGroup extends Component {
     .catch((err) => {
     });
   }
+
   render() {
     return (
       <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
@@ -153,7 +138,6 @@ class JoinGroup extends Component {
               dateInput: {
                 marginLeft: 36,
               }
-              // ... You can check the source to find the other keys.
             }}
             onDateChange={(date) => {this.setState({date: date})}}
           />
@@ -234,13 +218,3 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
-         /* <View key={idx} style={styles.group}>
-            <Image style={styles.icon} source={require('../assets/person.png')} />
-            <Text style={styles.name} >Group: {item.name}</Text>
-            <Text style={styles.from} >From: {item.leaving_from}</Text>
-            <Text style={styles.to}>To: {item.going_to}</Text>
-            <Text style={styles.date}>Date: {item.travelDate}</Text>
-            <TouchableOpacity onPress={() => this.handleJoinClick(item.email, item.id)} key={idx} style={styles.joinButton}>
-             <Text style={styles.joinbuttonText}>Join</Text>
-            </TouchableOpacity>
-          </View> */

@@ -6,6 +6,7 @@ const RemoveGroupController = require('../controllers').RemoveGroup;
 router.route('/')
   .post((req, res) => {
     RemoveGroupController.removeGroup(req, res);
+    RemoveGroupController.incrementSeats(req, res);
   });
 
 module.exports = router;

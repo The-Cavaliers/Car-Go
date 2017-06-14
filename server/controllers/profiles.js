@@ -4,51 +4,37 @@ const knex = require('knex')(CONFIG.knex_config);
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
-    .then(profiles => {
+    .then((profiles) => {
       res.status(200).send(profiles);
     })
-    .catch(err => {
+    .catch((err) => {
       // This code indicates an outside service (the database) did not respond in time
       res.status(503).send(err);
     });
 };
 
-//gets groups from the database
+// gets groups from the database
 module.exports.checkDestinations = (req, res) => {
-  var date = req.body.travelDate;
-  var leaving_from = req.body.leaving_from;
-  var going_to = req.body.going_to;
+  const date = req.body.travelDate;
+  const leaving_from = req.body.leaving_from;
+  const going_to = req.body.going_to;
   console.log('this is the date', date, leaving_from, going_to);
   knex('groups').where('leaving_from', leaving_from)
   .andWhere('going_to', going_to)
   .andWhere('travelDate', date)
-  .then(groups => {
-    console.log('groups are', groups)
-    if(groups.length === 0) {
-      console.log('nothing found')
-      res.status(201).send(null)
+  .andWhere('seats', '>', 0)
+  .then((groups) => {
+    if (groups.length === 0) {
+      res.status(201).send([]);
     } else {
       res.status(201).send(groups);
     }
   })
-  .catch(err => {
-    console.log('this is the err',err)
+  .catch((err) => {
+    console.log('this is the err', err);
     res.status(503);
-  })
-}
-// module.exports.create = (req, res) => {
-//   models.Profile.forge({ username: req.body.username, password: req.body.password })
-//     .save()
-//     .then(result => {
-//       res.status(201).send(result.omit('password'));
-//     })
-//     .catch(err => {
-//       if (err.constraint === 'users_username_unique') {
-//         return res.status(403);
-//       }
-//       res.status(500).send(err);
-//     });
-// };
+  });
+};
 
 module.exports.getOne = (req, res) => {
   models.Profile.where({ id: req.params.id }).fetch()
@@ -68,7 +54,7 @@ module.exports.getOne = (req, res) => {
 
 module.exports.update = (req, res) => {
   models.Profile.where({ id: req.params.id }).fetch()
-    .then(profile => {
+    .then((profile) => {
       if (!profile) {
         throw profile;
       }
@@ -77,29 +63,10 @@ module.exports.update = (req, res) => {
     .then(() => {
       res.sendStatus(201);
     })
-    .error(err => {
+    .error((err) => {
       res.status(500).send(err);
     })
     .catch(() => {
       res.sendStatus(404);
     });
 };
-
-// module.exports.deleteOne = (req, res) => {
-//   models.Profile.where({ id: req.params.id }).fetch()
-//     .then(profile => {
-//       if (!profile) {
-//         throw profile;
-//       }
-//       return profile.destroy();
-//     })
-//     .then(() => {
-//       res.sendStatus(200);
-//     })
-//     .error(err => {
-//       res.status(503).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };
