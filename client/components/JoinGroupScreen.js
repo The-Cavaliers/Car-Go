@@ -166,7 +166,6 @@ class JoinGroup extends Component {
           {this.state.groupsView ? <ScrollView>
             {this.state.groups.map((item, idx) =>
                <Card key={idx}>
-
                     <CardItem>
                         <Left>
                             <Thumbnail key={idx} source={{uri: item.img_url}} />
@@ -235,13 +234,4 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
-         /* <View key={idx} style={styles.group}>
-            <Image style={styles.icon} source={require('../assets/person.png')} />
-            <Text style={styles.name} >Group: {item.name}</Text>
-            <Text style={styles.from} >From: {item.leaving_from}</Text>
-            <Text style={styles.to}>To: {item.going_to}</Text>
-            <Text style={styles.date}>Date: {item.travelDate}</Text>
-            <TouchableOpacity onPress={() => this.handleJoinClick(item.email, item.id)} key={idx} style={styles.joinButton}>
-             <Text style={styles.joinbuttonText}>Join</Text>
-            </TouchableOpacity>
-          </View> */
+
