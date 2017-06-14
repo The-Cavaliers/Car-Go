@@ -72,7 +72,7 @@ class CreateList extends Component {
 
   getGroups = () => {
     this.setState({
-      showLoading: true
+      showLoading: true,
     })
     fetch(`${CONFIG.URL}/grouplist`, {
       method: 'POST',
@@ -155,75 +155,74 @@ class CreateList extends Component {
   }
   render() {
     return (
-        <Container>
-            <Content>
-                <View style={{marginTop: 22}}>
-                  <Modal
-                    animationType={"slide"}
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {alert("Modal has been closed.")}}
-                    >
-                   <View style={{marginTop: 22}}>
-                    <View>
-                      {this.state.profile.map((item, idx) => {
-                          <Text>{item.first_name}</Text>
-                      })}
-
-                      <TouchableHighlight onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible)
-                      }}>
-                        <Text>Close Profile</Text>
-                      </TouchableHighlight>
+         <Container>
+             <Content>
+                 <View style={{marginTop: 22}}>
+                   <Modal
+                     animationType={"slide"}
+                     transparent={false}
+                     visible={this.state.modalVisible}
+                     onRequestClose={() => {alert("Modal has been closed.")}}
+                     >
+                    <View style={{marginTop: 22}}>
+                     <View>
+                       {this.state.profile.map((item, idx) => {
+                           <Text>{item.first_name}</Text>
+                       })}
+                       <TouchableHighlight onPress={() => {
+                         this.setModalVisible(!this.state.modalVisible)
+                       }}>
+                         <Text>Close Profile</Text>
+                       </TouchableHighlight>
+                     </View>
                     </View>
-                   </View>
-                  </Modal>
-                </View>
-              {this.state.groups.map((item, idx) =>
-                <Card key={idx} >
-                    <CardItem>
-                        <Left>
-                              <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
-                            <Body>
-                                <Text >{item.name}</Text>
-                                <Button transparent onPress={() => this.renderProfile(item.email)}>
-                                  <Text note>Read Profile</Text>
-                                </Button>
-                            </Body>
-                        </Left>
-                        <Right>
-                          <Text>Departing: {item.travelDate}</Text>
-                        </Right>
-                      </CardItem>
-                      <CardItem>
-                          <Body>
-                          <Right>
-                            <Text note>Leaving From: {item.leaving_from}</Text>
-                          </Right>
-                          <Left>
-                            <Text note>Going to: {item.going_to}</Text>
-                          </Left>
-                          <Left>
-                            <Text note>Available seats: {item.seats}</Text>
-                          </Left>
-                          </Body>
-                      </CardItem>
-                      <CardItem key={idx + 2}>
-                          <Button small rounded primary onPress={() => this.changeToMap()}>
-                              <Text>Map</Text>
-                          </Button><Text>   </Text>
-                          <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
-                              <Text >Remove</Text>
-                          </Button><Text>   </Text>
-                          <Button small rounded primary onPress={() => this.handleChatClick(item.id)}>
-                              <Text>Message</Text>
-                          </Button>
-                    </CardItem>
-               </Card>
-              )}
-            </Content>
-        </Container>
-    )
+                   </Modal>
+                 </View>
+               {this.state.groups.map((item, idx) =>
+                 <Card key={idx} >
+                     <CardItem>
+                         <Left>
+                               <Thumbnail key={idx + 1} source={{uri: item.img_url}} />
+                             <Body>
+                                 <Text >{item.name}</Text>
+                                 <Button transparent onPress={() => this.renderProfile(item.email)}>
+                                   <Text note>Read Profile</Text>
+                                 </Button>
+                             </Body>
+                         </Left>
+                         <Right>
+                           <Text>Departing: {item.travelDate}</Text>
+                         </Right>
+                       </CardItem>
+                       <CardItem>
+                           <Body>
+                           <Right>
+                             <Text note>Leaving From: {item.leaving_from}</Text>
+                           </Right>
+                           <Left>
+                             <Text note>Going to: {item.going_to}</Text>
+                           </Left>
+                           <Left>
+                             <Text note>Available seats: {item.seats}</Text>
+                           </Left>
+                           </Body>
+                       </CardItem>
+                       <CardItem key={idx + 2}>
+                           <Button small rounded primary onPress={() => this.changeToMap()}>
+                               <Text>Map</Text>
+                           </Button><Text>   </Text>
+                           <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
+                               <Text >Remove</Text>
+                           </Button><Text>   </Text>
+                           <Button small rounded primary onPress={() => this.handleChatClick(item.id)}>
+                               <Text>Message</Text>
+                           </Button>
+                     </CardItem>
+                </Card>
+               )}
+             </Content>
+         </Container>
+     )
   }
 }
 const mapStateToProps = ({ loginProfile, getChatId }) => {
