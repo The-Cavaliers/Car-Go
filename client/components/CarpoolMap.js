@@ -53,28 +53,27 @@ class clientPubNub extends Component {
       });
 
       //Get the Destination Address from Group List for Unsubscribe
-      //this.state.Destination = JSON.parse(group_data).goingTo;
-      // this.state.Destination = 'Hayward';
-      // axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
-      // .then((data) => {
-      //   this.state.finalDestination = data.data.results[0].geometry.location;
-      // })
-      // .catch((error) => {
-      //   console.log('error from google', error);
-      // });
+      this.state.Destination = JSON.parse(group_data).goingTo;
+      this.state.Destination = 'Hayward';
+      axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
+      .then((data) => {
+        this.state.finalDestination = data.data.results[0].geometry.location;
+      })
+      .catch((error) => {
+        console.log('error from google', error);
+      });
       if (this.state.channelUserRole === 'Driver') {
-        alert("calling driver");
         this.watchUserPostion();
       } else if (this.state.channelUserRole === 'Rider') {
         this.addPubNubListener(this.state.channelName, 'Rider');
       }
     });
-
     //For Carpool live tracking on mount and unmount
     this.setState({
       isRouteTracking: true,
     });
   }
+
   //Stop tracking on Map when component unMounts
   componentWillUnmount() {
     this.state.isRouteTracking = false;
@@ -83,9 +82,9 @@ class clientPubNub extends Component {
   //For Publishing 
   watchUserPostion() {
     let counter = 0;
+    alert('Calling driver');
     // call the subscribe
     this.addPubNubListener(this.state.channelName, 'Driver');
-    this.getPolyLineDetails();
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let { routeCoordinates } = this.state;
       let newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
@@ -121,17 +120,17 @@ class clientPubNub extends Component {
     const that = this;
     let counter = 0;
     this.pubnub.addListener({
-      status(statusEvent) {
-        if (statusEvent.category === 'PNConnectedCategory') {
-          console.log('need to checkk=============================');
-        } else if (statusEvent.category === 'PNUnknownCategory') {
-          this.pubnub.setState({
-            state: { new: 'error' },
-          }, (status) => {
-            console.log(statusEvent.errorData.message);
-          });
-        }
-      },
+      // status(statusEvent) {
+      //   if (statusEvent.category === 'PNConnectedCategory') {
+      //     console.log('need to checkk=============================');
+      //   } else if (statusEvent.category === 'PNUnknownCategory') {
+      //     this.pubnub.setState({
+      //       state: { new: 'error' },
+      //     }, (status) => {
+      //       console.log(statusEvent.errorData.message);
+      //     });
+      //   }
+      // },
       message(message) {
         //discard the messages for Driver
         if (Role === 'Rider') {
@@ -174,7 +173,7 @@ class clientPubNub extends Component {
           }
         });
         if (!isDriverPresent) {
-          alert("Driver did not start yet")
+          //alert("Driver did not start yet")
         }
       }
     );
@@ -225,32 +224,6 @@ class clientPubNub extends Component {
       (error) => alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 100 }
     );
-  }
-
-
-  //Google polyline for Drivers
-  getPolyLineDetails = () => {
-    const startLocation = '37.783692, -122.408967';
-    const endLocation = 'Fremont';
-    const wayPoints = ['Foster City, CA', 'Redwood City. CA'];
-    const key = CONFIG.GoogleGeocoder.key;
-    axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLocation}&destination=${endLocation}&waypoints=optimize:true|${wayPoints}&key=${key}`)
-      .then((data) => {
-        const points = Polyline.decode(data.data.routes[0].overview_polyline.points);
-        const coords = points.map((point) => ({
-          latitude: point[0],
-          longitude: point[1],
-        }));
-        this.setState({ coords: coords })
-      })
-      .catch((error) => {
-        console.log('error from google', error);
-      });
-  };
-
-  // Need to Implement Get all Riders pick up points
-  getRidersPickUpPoints = () => {
-
   }
 
   //Unsubscribe 
