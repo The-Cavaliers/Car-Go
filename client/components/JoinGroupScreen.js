@@ -150,7 +150,6 @@ class JoinGroup extends Component {
           {this.state.groupsView ? <ScrollView>
             {this.state.groups.map((item, idx) =>
                <Card key={idx}>
-
                     <CardItem>
                         <Left>
                             <Thumbnail key={idx} source={{uri: item.img_url}} />
@@ -219,3 +218,4 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
+
