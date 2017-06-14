@@ -118,7 +118,7 @@ class Maps extends Component {
           <MapView.Marker
             key={id}
             coordinate={marker}
-            image={require('../assets/Caar1.png')}
+            image={require('../assets/Car1.png')}
           />
          ))}
       </MapView>

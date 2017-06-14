@@ -132,18 +132,18 @@ class CreateList extends Component {
     //Check if the user is Driver or Rider
     if( this.props.email === groupDetails.email ) {
      // console.log("I am driver");
-      AsyncStorage.setItem('MapGroup', JSON.stringify({ 
+      AsyncStorage.setItem('MapGroup', JSON.stringify({
         group: groupDetails.group_id,
-        role: 'Driver', 
+        role: 'Driver',
         leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to,
         driverEmail: groupDetails.email,
         userEmail: this.props.email,
       }));
     } else {
       //console.log("I am rider");
-      AsyncStorage.setItem('MapGroup', JSON.stringify({ 
-        group: groupDetails.group_id, 
-        role: 'Rider', 
+      AsyncStorage.setItem('MapGroup', JSON.stringify({
+        group: groupDetails.group_id,
+        role: 'Rider',
         leavingFrom: groupDetails.leaving_from, goingTo: groupDetails.going_to,
         driverEmail: groupDetails.email,
         userEmail: this.props.email,
@@ -208,7 +208,7 @@ class CreateList extends Component {
                          </Body>
                      </CardItem>
                      <CardItem key={idx + 2}>
-                         <Button small rounded primary onPress={() => this.changeToMap()}>
+                         <Button small rounded primary onPress={() => this.changeToMap(item)}>
                              <Text>Map</Text>
                          </Button><Text>   </Text>
                          <Button small rounded danger onPress={() => this.removeGroup(item.id)}>
