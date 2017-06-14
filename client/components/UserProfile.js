@@ -75,7 +75,7 @@ class UserProfile extends Component {
       this.changeProperty(property, number);
     }
   }
-  //  check each of the components and map their contents into another sub component
+
   render() {
     return (
       <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>

@@ -14,5 +14,5 @@ module.exports.getProfile = function (req, res) {
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
 };

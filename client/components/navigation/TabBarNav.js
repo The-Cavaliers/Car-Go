@@ -1,7 +1,5 @@
 import React from 'react';
-// Navigation
 import { addNavigationHelpers } from 'react-navigation';
-// Redux
 import { connect } from 'react-redux';
 import TabBar from './TabBar';
 

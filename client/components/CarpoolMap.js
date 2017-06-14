@@ -79,7 +79,7 @@ class clientPubNub extends Component {
     this.state.isRouteTracking = false;
   }
 
-  //For Publishing 
+  //For Publishing
   watchUserPostion() {
     let counter = 0;
     alert('Driver');
@@ -127,7 +127,7 @@ class clientPubNub extends Component {
           if (that.state.isRouteTracking) {
             let { routeCoordinates } = that.state;
 
-            //Get the driver position to estimate the arrival timings initially 
+            //Get the driver position to estimate the arrival timings initially
             if (counter === 0) {
               that.getTimings(message.message.position);
               counter++;
@@ -191,7 +191,7 @@ class clientPubNub extends Component {
       });
   };
 
-  //Get the arrival timings of driver at Riders position 
+  //Get the arrival timings of driver at Riders position
   getTimings = (currentDriverPosition) => {
     const key = CONFIG.GoogleGeocoder.key;
     const DriverPosition = currentDriverPosition.latitude + "," + currentDriverPosition.longitude;
@@ -217,7 +217,7 @@ class clientPubNub extends Component {
     );
   }
 
-  //Unsubscribe 
+  //Unsubscribe
   UnsubscribeRiders = () => {
     //check if the user reached the destination, and stop subscription  and publish
     navigator.geolocation.clearWatch(this.watchID);
@@ -264,7 +264,7 @@ class clientPubNub extends Component {
         <MapView.Marker
           coordinate={this.state.routeCoordinates[this.state.routeCoordinates.length-1]}
           title={"Driver"}
-          image={require('../assets/Caar1.png')}
+          image={require('../assets/Car1.png')}
         />
 
         <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>

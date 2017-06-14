@@ -2,6 +2,7 @@ const app = require('./app');
 const server = require('http').Server(app);
 const io = require('./socket_io/socket.io.index');
 
+io(server);
 
 const PORT = process.env.port || 3000;
 
