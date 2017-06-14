@@ -49,11 +49,11 @@ class clientPubNub extends Component {
         subscribe_key: CONFIG.pubnub.subscribeKey,
         publish_key: CONFIG.pubnub.publishKey,
         //uuid:JSON.parse(group_data).userEmail,
-        uuid: "abc1245",
+        uuid: "abc126",
       });
 
       //Get the Destination Address from Group List for Unsubscribe
-      this.state.Destination = JSON.parse(group_data).goingTo;
+      //this.state.Destination = JSON.parse(group_data).goingTo;
       this.state.Destination = 'Hayward';
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
       .then((data) => {
@@ -82,14 +82,14 @@ class clientPubNub extends Component {
   //For Publishing 
   watchUserPostion() {
     let counter = 0;
-    alert('Calling driver');
+    alert('Driver');
     // call the subscribe
     this.addPubNubListener(this.state.channelName, 'Driver');
     this.watchID = navigator.geolocation.watchPosition((position) => {
       let { routeCoordinates } = this.state;
       let newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
       const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
-      console.log(positionLatLngs);
+      //console.log(positionLatLngs);
 
       //For Carpool live tracking on mount and unmount
       if (this.state.isRouteTracking) {
@@ -113,25 +113,14 @@ class clientPubNub extends Component {
     );
   }
 
-
   //For Subscribing
   addPubNubListener = (channelName, Role) => {
     // alert("From listener");
     const that = this;
     let counter = 0;
     this.pubnub.addListener({
-      // status(statusEvent) {
-      //   if (statusEvent.category === 'PNConnectedCategory') {
-      //     console.log('need to checkk=============================');
-      //   } else if (statusEvent.category === 'PNUnknownCategory') {
-      //     this.pubnub.setState({
-      //       state: { new: 'error' },
-      //     }, (status) => {
-      //       console.log(statusEvent.errorData.message);
-      //     });
-      //   }
-      // },
-      message(message) {
+      message(message, event) {
+        console.log(event);
         //discard the messages for Driver
         if (Role === 'Rider') {
           //For Carpool live tracking on mount and unmount
@@ -157,6 +146,7 @@ class clientPubNub extends Component {
     });
 
     //Check if the Driver has joined yet or not
+    if( Role === 'Rider') {
     this.pubnub.hereNow(
       {
         channels: [channelName],
@@ -168,20 +158,21 @@ class clientPubNub extends Component {
         let isDriverPresent = false;
         console.log("from presence", response.channels[channelName]['occupants'])
         response.channels[channelName]['occupants'].forEach(function (occupant) {
-          if ((occupant.uuid === "abc1245") && (counter > 1)) {
+          if ((occupant.uuid === "abc126")) {
             isDriverPresent = true;
           }
         });
         if (!isDriverPresent) {
-          //alert("Driver did not start yet")
+          alert("Driver did not start yet")
         }
       }
     );
 
   };
+  }
 
   addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
-    console.log('positions for publishing', positionLatLngs);
+    //console.log('positions for publishing', positionLatLngs);
 
     this.pubnub.publish({
       message: {
@@ -195,7 +186,7 @@ class clientPubNub extends Component {
         if (status.error) {
           console.log(status.errorData);
         } else {
-          console.log('message Published w/ timetoken', response.timetoken, channelName);
+          //console.log('message Published w/ timetoken', response.timetoken, channelName);
         }
       });
   };
@@ -228,20 +219,16 @@ class clientPubNub extends Component {
 
   //Unsubscribe 
   UnsubscribeRiders = () => {
-    //check if the user reached the destination, and stop subscription  and publis
+    //check if the user reached the destination, and stop subscription  and publish
     navigator.geolocation.clearWatch(this.watchID);
     this.pubnub.unsubscribeAll();
     this.props.navigation.navigate('Home');
   }
 
   //RegionChange
-  onRegionChange(region) {
-    this.setState({ region });
-  }
+
 
   render() {
-    console.log("Mapppppp", typeof (this.state.routeCoordinates.slice(-1)))
-    console.log("mapppppp22222", typeof (this.state.riderCoords));
     var coord = this.state.routeCoordinates.slice(-1);
     return (
       <MapView
@@ -257,6 +244,7 @@ class clientPubNub extends Component {
           latitudeDelta: 0.0522,
           longitudeDelta: 0.0421
         }}
+
       // overlays={[{
       //   coordinates: this.state.routeCoordinates,
       //   strokeColor: 'purple',

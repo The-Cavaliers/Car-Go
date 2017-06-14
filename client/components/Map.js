@@ -114,7 +114,6 @@ class Maps extends Component {
         region={this.state.region}
         autoFocus
       >
-        {console.log(this.state.listOfRegions)}
         {this.state.listOfRegions.map((marker, id) => (
           <MapView.Marker
             key={id}
