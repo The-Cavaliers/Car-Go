@@ -144,7 +144,7 @@ class CreateGroup extends Component {
           />
 
           <Button  onPress={() => {this.checkDestination('leaving_from', this.state.leavingFrom)}}>
-            <Text style={styles.buttonText}>Check For Cities</Text>
+            <Text style={styles.buttonText}>Check For Cities></Text>
           </Button>
 
           {this.state.leavingResults.length ? 
@@ -162,8 +162,8 @@ class CreateGroup extends Component {
             placeholder="Going To"
           />
 
-          <Button  onPress={() => {this.checkDestination('going_to', this.state.goingTo)}}>
-            <Text style={styles.buttonText}>Check For Cities</Text>
+          <Button onPress={() => {this.checkDestination('going_to', this.state.goingTo)}}>
+            <Text style={styles.buttonText}>Check For Cities></Text>
           </Button>
 
           {this.state.goingResults.length ? 
