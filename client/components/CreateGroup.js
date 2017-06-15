@@ -11,6 +11,7 @@ import {
   Image,
   AsyncStorage,
 } from 'react-native';
+import axios from 'axios';
 import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
@@ -61,25 +62,15 @@ class CreateGroup extends Component {
     })
   }
   addGroup = () => {
-    fetch(`${CONFIG.URL}/newgroup`, {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.props.username,
-        email: this.props.email,
-        picture_url: this.props.picture_url,
-        user_id: this.props.id,
-        going_to: this.state.goingTo,
-        leaving_from: this.state.LeavingFrom,
-        travelDate: this.state.date,
-        seats: this.state.seats,
-      }),
-    })
-    .then((res) => {
-      res.json()
+    axios.post(`${CONFIG.URL}/newgroup`, {
+      username: this.props.username,
+      email: this.props.email,
+      picture_url: this.props.picture_url,
+      user_id: this.props.id,
+      going_to: this.state.goingTo,
+      leaving_from: this.state.LeavingFrom,
+      travelDate: this.state.date,
+      seats: this.state.seats,
     })
     .then((res) => {
       console.log('this is the response',res)

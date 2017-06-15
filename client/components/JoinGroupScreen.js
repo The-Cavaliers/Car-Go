@@ -52,8 +52,10 @@ class JoinGroup extends Component {
       going_to: this.state.goingTo,
       leaving_from: this.state.LeavingFrom,
       travelDate: this.state.date,
+      email: this.props.email,
     })
     .then((res) => {
+      console.log('groups array', res.data)
       this.setState({
         groups: res.data,
         groupsView: true,
@@ -218,4 +220,3 @@ const mapStateToProps = ({ loginProfile }) => {
 };
 
 export default connect(mapStateToProps)(JoinGroup);
-

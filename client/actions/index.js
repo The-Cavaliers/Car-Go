@@ -1,22 +1,9 @@
-import { LOGIN_PROFILE, SET_PROFILE, GET_CHAT_ID } from './type';
-
-export const setProfile = (data) => {
-  return {
-    type: SET_PROFILE,
-    data,
-  };
-};
+import { setProfile, setLoginProfile } from './profileActions';
+import { getChatId } from './chatActions';
 
 export const setProfileAsync = (data) => {
   return function (dispatch) {
     dispatch(setProfile(data));
-  };
-};
-
-const setLoginProfile = (data) => {
-  return {
-    type: LOGIN_PROFILE,
-    data,
   };
 };
 
@@ -25,11 +12,6 @@ export const setLoginProfileAsync = (data) => {
     dispatch(setLoginProfile(data));
   };
 };
-
-const getChatId = chatId => ({
-  type: GET_CHAT_ID,
-  chatId,
-});
 
 export const getChatIdAsync = chatId => (dispatch) => {
   dispatch(getChatId(chatId));

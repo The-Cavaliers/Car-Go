@@ -6,8 +6,8 @@ import DrawerButton from './DrawerButton';
 
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
+import { messenger } from '../reducers/index';
 
-import { getChatId } from '../reducers/index';
 
 class Messenger extends React.Component {
 
@@ -99,7 +99,7 @@ class Messenger extends React.Component {
   }
 }
 
-const mapStateToProps = ({ loginProfile, getChatId }) => {
+const mapStateToProps = ({ loginProfile, messenger }) => {
   const {
     username,
     email,
@@ -109,7 +109,7 @@ const mapStateToProps = ({ loginProfile, getChatId }) => {
     created_at,
     id,
   } = loginProfile;
-  const { chatId } = getChatId;
+  const { chatId } = messenger;
   return {
     username,
     email,
