@@ -8,6 +8,14 @@ const pubnub = new PubNub({
 
 });
 
+
+export const GetCurrentLocation = () => new Promise((resolve, reject) => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position);
+    resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+  }, error => reject(error));
+});
+
 export const addPubNubListener = (channelName) => {
   console.log('from listener', channelName);
   pubnub.addListener({
@@ -33,21 +41,26 @@ export const addPubNubListener = (channelName) => {
   });
 };
 
-export const addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
-  pubnub.publish({
-    message: {
-      player: userRole,
-      position: positionLatLngs,
+export const addPubNubRiderPublisher = (channelName, userRole, userName ) => {
+ //get the current location of rider
+  GetCurrentLocation().then((positionLatLngs) => {
+    const selectChannel = `${channelName}Rider`;
+    pubnub.publish({
+      message: {
+        player: userRole,
+        position: positionLatLngs,
+        Name: userName,
+      },
+      channel: selectChannel,
     },
-    channel: channelName,
-  },
-    (status, response) => {
-      if (status.error) {
-        console.log(status.errorData);
-      } else {
-        console.log('message Published w/ timetoken', response.timetoken, channelName);
-      }
+      (status, response) => {
+        if (status.error) {
+          console.log(status.errorData);
+        } else {
+          console.log('message from rider', response.timetoken, channelName, positionLatLngs);
+        }
     });
+  });
 };
 
 export const unSubscribe = (channelName) => {
@@ -66,9 +79,4 @@ export const pubnubStop = () => {
   pubnub.stop();
 };
 
-export const GetCurrentLocation = () => new Promise((resolve, reject) => {
-  navigator.geolocation.getCurrentPosition((position) => {
-    console.log(position);
-    resolve({ lat: position.coords.latitude, long: position.coords.longitude });
-  }, (error) => reject(error));
-});
+

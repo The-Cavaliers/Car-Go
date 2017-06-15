@@ -14,7 +14,7 @@ import axios from 'axios';
 import CONFIG from '../../config/development.json';
 import PubNub from 'pubnub';
 import { Button, Text } from 'native-base';
-import { GetCurrentLocation } from '../services/pubnubClient';
+import { GetCurrentLocation, addPubNubRiderPublisher } from '../services/pubnubClient';
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -39,6 +39,7 @@ class clientPubNub extends Component {
       Source: '',
       finalDestination: {},
       groupPublisherEmail: '',
+      userPickup: [],
     };
   }
   componentDidMount() {
@@ -48,7 +49,6 @@ class clientPubNub extends Component {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
       this.state.groupPublisherEmail = JSON.parse(group_data).driverEmail;
-      console.log("userrrrrr email",JSON.parse(group_data).userEmail);
       this.pubnub = new PubNub({
         subscribe_key: CONFIG.pubnub.subscribeKey,
         publish_key: CONFIG.pubnub.publishKey,
@@ -57,10 +57,12 @@ class clientPubNub extends Component {
       });
 
       //Get the Destination Address from Group List for Unsubscribe
-      //this.state.Destination = JSON.parse(group_data).goingTo;
-      this.state.Destination = 'Hayward';
+
+      //this.state.Destination = JSON.parse(group_data).goingTo;  // actual destination uncomment this
+      this.state.Destination = 'somerset square park, cupertino, CA';  // simulation 
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
       .then((data) => {
+        console.log("destinationnnnnnn", data)
         this.state.finalDestination = data.data.results[0].geometry.location;
       })
       .catch((error) => {
@@ -69,6 +71,8 @@ class clientPubNub extends Component {
       if (this.state.channelUserRole === 'Driver') {
         this.watchUserPostion();
       } else if (this.state.channelUserRole === 'Rider') {
+        //Publish own location coordinates
+        addPubNubRiderPublisher(this.state.channelName,' Rider', this.props.username);
         this.addPubNubListener(this.state.channelName, 'Rider');
       }
     });
@@ -87,6 +91,7 @@ class clientPubNub extends Component {
   watchUserPostion() {
     let counter = 0;
     alert('Driver');
+    this.getPolyLineDetails();
     // call the subscribe
     this.addPubNubListener(this.state.channelName, 'Driver');
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -165,6 +170,11 @@ class clientPubNub extends Component {
             if (message.message.player === 'Driver') {
               //Plot the received driver's positions on the map
               console.log(message);
+              currentLatitude = message.message.position.latitude;
+              currentLongitude = message.message.position.longitude;
+              if((currentLatitude === that.state.riderCoords.latitude) && (currentLongitude === that.state.riderCoords.longitude)){
+                alert("Car has arrived")
+              }
               that.setState({ routeCoordinates: routeCoordinates.concat(message.message.position) });
             }
           }
@@ -214,7 +224,7 @@ class clientPubNub extends Component {
         });
         axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${currentRiderPosition}&destination=${DriverPosition}&key=${key}`)
           .then((data) => {
-            alert(`Driver will reach in ${data.data.routes[0].legs[0].duration.text}`);
+            alert(`Car will arrive in ${data.data.routes[0].legs[0].duration.text}`);
           })
           .catch((error) => {
             console.log('error from google', error);
@@ -240,6 +250,29 @@ class clientPubNub extends Component {
   //RegionChange
 
 
+
+  //Google polyline for Drivers
+  getPolyLineDetails = () => {
+    console.log("hellllo")
+    const startLocation = '37.331820, -122.031180';  // Apple office Demo purpose
+    const endLocation = '37.331509, 122.059153 '
+    //const wayPoints = ['Foster City, CA', 'Redwood City. CA'];
+    const key = CONFIG.GoogleGeocoder.key;
+    axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLocation}&destination=${endLocation}&key=${key}`)
+    .then((data) => {
+      const points = Polyline.decode(data.data.routes[0].overview_polyline.points);
+      const coords = points.map((point) => ({
+        latitude: point[0],
+        longitude: point[1],
+      }));
+      this.setState({coords: coords})
+    })
+    .catch((error) => {
+      console.log('error from google', error);
+    });
+  };
+
+
   render() {
     var coord = this.state.routeCoordinates.slice(-1);
     return (
@@ -260,7 +293,26 @@ class clientPubNub extends Component {
         <MapView.Polyline
           coordinates={this.state.routeCoordinates}
           strokeWidth={5}
-          strokeColor="blue" />         
+          strokeColor="blue" /> 
+
+    { (this.state.channelUserRole === 'Driver') ?
+       ( 
+        <MapView.Marker draggable
+          coordinate={this.state.riderCoords}
+          title= {'Pickups'}
+          onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
+        />  
+
+       ):(
+           null
+         )
+       }
+        <MapView.Marker
+            coordinate= {{latitude: 37.331509, longitude:-122.059153 }}
+            title= {'Destination'}
+            image={require('../assets/flag.png')}
+          />
+
         { this.state.routeCoordinates[this.state.routeCoordinates.length-1] ? 
           (
             <MapView.Marker
