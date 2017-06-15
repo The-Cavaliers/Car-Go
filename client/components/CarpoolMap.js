@@ -14,6 +14,7 @@ import axios from 'axios';
 import CONFIG from '../../config/development.json';
 import PubNub from 'pubnub';
 import { Button, Text } from 'native-base';
+import { GetCurrentLocation } from '../services/pubnubClient';
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -41,6 +42,8 @@ class clientPubNub extends Component {
     };
   }
   componentDidMount() {
+    //Get the initial values and set to map
+
     AsyncStorage.getItem('MapGroup', (err, group_data) => {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
@@ -48,8 +51,8 @@ class clientPubNub extends Component {
       this.pubnub = new PubNub({
         subscribe_key: CONFIG.pubnub.subscribeKey,
         publish_key: CONFIG.pubnub.publishKey,
-        //uuid:JSON.parse(group_data).userEmail,
-        uuid: "abc126",
+        uuid:JSON.parse(group_data).userEmail,
+        //uuid: "abc126",
       });
 
       //Get the Destination Address from Group List for Unsubscribe
@@ -119,8 +122,7 @@ class clientPubNub extends Component {
     const that = this;
     let counter = 0;
     this.pubnub.addListener({
-      message(message, event) {
-        console.log(event);
+      message(message) {
         //discard the messages for Driver
         if (Role === 'Rider') {
           //For Carpool live tracking on mount and unmount
@@ -134,6 +136,7 @@ class clientPubNub extends Component {
             }
             if (message.message.player === 'Driver') {
               //Plot the received driver's positions on the map
+              console.log(message);
               that.setState({ routeCoordinates: routeCoordinates.concat(message.message.position) });
             }
           }
@@ -158,7 +161,7 @@ class clientPubNub extends Component {
         let isDriverPresent = false;
         console.log("from presence", response.channels[channelName]['occupants'])
         response.channels[channelName]['occupants'].forEach(function (occupant) {
-          if ((occupant.uuid === "abc126")) {
+          if ((occupant.uuid === that.state.groupPublisherEmail)) {
             isDriverPresent = true;
           }
         });
@@ -211,11 +214,9 @@ class clientPubNub extends Component {
           .catch((error) => {
             console.log('error from google', error);
           });
-      },
-      (error) => alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 100 }
-    );
-  }
+      });
+  }  
+
 
   //Unsubscribe
   UnsubscribeRiders = () => {
@@ -244,28 +245,23 @@ class clientPubNub extends Component {
           latitudeDelta: 0.0522,
           longitudeDelta: 0.0421
         }}
-
-      // overlays={[{
-      //   coordinates: this.state.routeCoordinates,
-      //   strokeColor: 'purple',
-      //   strokeWidth: 5
-      // }]}
       >
         <MapView.Polyline
           coordinates={this.state.routeCoordinates}
           strokeWidth={5}
           strokeColor="blue" />
-
-        <MapView.Marker draggable
-          coordinate={this.state.riderCoords}
-          onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
-        />
-
-        <MapView.Marker
-          coordinate={this.state.routeCoordinates[this.state.routeCoordinates.length-1]}
-          title={"Driver"}
-          image={require('../assets/Car1.png')}
-        />
+    
+        { this.state.routeCoordinates[this.state.routeCoordinates.length-1] ? 
+          (
+            <MapView.Marker
+              coordinate={this.state.routeCoordinates[this.state.routeCoordinates.length-1]}
+              title={"Driver"}
+              image={require('../assets/Caar1.png')}
+            />
+          ):(
+            null
+          )
+        }
 
         <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>
           <Text>UnSubscribe</Text>

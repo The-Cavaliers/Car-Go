@@ -1,5 +1,6 @@
 import PubNub from 'pubnub';
 import CONFIG from '../../config/development.json';
+import Promise from 'bluebird';
 
 const pubnub = new PubNub({
   subscribe_key: CONFIG.pubnub.subscribeKey,
@@ -22,8 +23,8 @@ export const addPubNubListener = (channelName) => {
       }
     },
     message(message) {
-      //console.log('message', message);
-      //return (message.message.position);
+      // console.log('message', message);
+      // return (message.message.position);
       // alert(message);
     },
   });
@@ -62,5 +63,12 @@ export const unSubscribeAll = () => {
 
 export const pubnubStop = () => {
   console.log('stoppp');
-  pubnub.stop();  
+  pubnub.stop();
 };
+
+export const GetCurrentLocation = () => new Promise((resolve, reject) => {
+  navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position);
+    resolve({ lat: position.coords.latitude, long: position.coords.longitude });
+  }, (error) => reject(error));
+});

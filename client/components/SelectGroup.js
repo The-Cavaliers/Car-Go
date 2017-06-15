@@ -5,9 +5,15 @@ View,
 Button,
 AsyncStorage,
 } from 'react-native';
+import DrawerButton from './DrawerButton';
 //import { pubnubStop, unSubscribeAll, unSubscribe } from '../services/pubnubClient';
 
 class SelectGroup extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Select Group',
+    headerLeft: <DrawerButton navigation={navigation} />,
+    drawerLabel: 'Select Group Demo ',
+  });
 
   constructor(props) {
     super(props);
