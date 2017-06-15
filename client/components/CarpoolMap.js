@@ -48,6 +48,7 @@ class clientPubNub extends Component {
       this.state.channelName = JSON.parse(group_data).group;
       this.state.channelUserRole = JSON.parse(group_data).role;
       this.state.groupPublisherEmail = JSON.parse(group_data).driverEmail;
+      console.log("userrrrrr email",JSON.parse(group_data).userEmail);
       this.pubnub = new PubNub({
         subscribe_key: CONFIG.pubnub.subscribeKey,
         publish_key: CONFIG.pubnub.publishKey,
@@ -121,7 +122,34 @@ class clientPubNub extends Component {
     // alert("From listener");
     const that = this;
     let counter = 0;
+
+    //Check if the Driver has joined yet or not
+    if( Role === 'Rider') {
+    this.pubnub.hereNow(
+      {
+        channels: [channelName],
+        includeUUIDs: true,
+        includeState: true
+      },
+      function (status, response) {
+        // handle status, response
+        let isDriverPresent = false;
+        console.log("from presence", response.channels[channelName]['occupants'])
+        response.channels[channelName]['occupants'].forEach(function (occupant) {
+          if ((occupant.uuid === that.state.groupPublisherEmail)) {
+            isDriverPresent = true;
+          }
+        });
+        if (!isDriverPresent) {
+          alert("Driver did not start yet")
+        }
+      }
+    );
+  };
     this.pubnub.addListener({
+      presence: function(presenceEvent) {
+        console.log('presence event came in: ', presenceEvent)
+      },
       message(message) {
         //discard the messages for Driver
         if (Role === 'Rider') {
@@ -148,30 +176,7 @@ class clientPubNub extends Component {
       withPresence: true
     });
 
-    //Check if the Driver has joined yet or not
-    if( Role === 'Rider') {
-    this.pubnub.hereNow(
-      {
-        channels: [channelName],
-        includeUUIDs: true,
-        includeState: true
-      },
-      function (status, response) {
-        // handle status, response
-        let isDriverPresent = false;
-        console.log("from presence", response.channels[channelName]['occupants'])
-        response.channels[channelName]['occupants'].forEach(function (occupant) {
-          if ((occupant.uuid === that.state.groupPublisherEmail)) {
-            isDriverPresent = true;
-          }
-        });
-        if (!isDriverPresent) {
-          alert("Driver did not start yet")
-        }
-      }
-    );
 
-  };
   }
 
   addPubNubPublisher = (positionLatLngs, channelName, userRole) => {
@@ -220,10 +225,16 @@ class clientPubNub extends Component {
 
   //Unsubscribe
   UnsubscribeRiders = () => {
+    console.log('**********',this.state.channelName);
     //check if the user reached the destination, and stop subscription  and publish
     navigator.geolocation.clearWatch(this.watchID);
-    this.pubnub.unsubscribeAll();
-    this.props.navigation.navigate('Home');
+    this.pubnub.unsubscribe({
+      channels: [this.state.channelName],
+      presence: function(presenceEvent) {
+        console.log('presence event came in: ', presenceEvent)
+      },   
+    });
+    //this.props.navigation.navigate('Home');
   }
 
   //RegionChange
@@ -249,8 +260,7 @@ class clientPubNub extends Component {
         <MapView.Polyline
           coordinates={this.state.routeCoordinates}
           strokeWidth={5}
-          strokeColor="blue" />
-    
+          strokeColor="blue" />         
         { this.state.routeCoordinates[this.state.routeCoordinates.length-1] ? 
           (
             <MapView.Marker
@@ -262,7 +272,6 @@ class clientPubNub extends Component {
             null
           )
         }
-
         <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>
           <Text>UnSubscribe</Text>
         </Button>
