@@ -17,8 +17,6 @@ const Drawer = DrawerNavigator({
   'Find Ride': { screen: JoinGroup },
   'Create Group': { screen: CreateGroup },
   GroupList: { screen: GroupList },
-  // ViewGroups: { screen: ViewGroups },
-  // Join: { screen: Join },
   SelectGroup: { screen: SelectGroup },
   CarpoolMap: { screen: CarpoolMap },
 },

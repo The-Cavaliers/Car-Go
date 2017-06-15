@@ -1,6 +1,52 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    resizeMode: 'cover',
+    width: null,
+    height: null,
+  },
+  inputContainer: {
+    margin: 5,
+    marginBottom: 0,
+    padding: 10,
+    paddingBottom: 10,
+    alignSelf: 'stretch',
+    width: null,
+    borderWidth: 1,
+    borderColor: '#fff',
+    alignItems: 'center',
+  },
+  input: {
+    fontSize: 16,
+    height: 40,
+    padding: 10,
+    marginBottom: 10,
+    width: '100%',
+    backgroundColor: 'rgba(255,255,255,1)',
+    borderWidth: 1,
+    borderColor: '#D8D9DD',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  inputCustom: {
+    fontSize: 16,
+    height: 40,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: 'rgba(255,255,255,1)',
+    borderWidth: 1,
+    borderColor: '#D8D9DD',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -19,25 +65,23 @@ const styles = StyleSheet.create({
     width: 160,
     opacity: 0.6,
   },
-  inputContainer: {
-    margin: 5,
-    marginBottom: 0,
-    padding: 10,
-    paddingBottom: 10,
+  buttonStyle: {
+    flex: 1,
     alignSelf: 'stretch',
-    width: null,
+    backgroundColor: '#fff',
+    borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#fff',
-    alignItems: 'center',
+    borderColor: '#007aff',
+    marginLeft: 5,
+    marginRight: 5,
   },
-  input: {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#007aff',
     fontSize: 16,
-    height: 40,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: 'rgba(255,255,255,1)',
-    borderWidth: 1,
-    borderColor: '#D8D9DD',
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   bioinput: {
     fontSize: 16,
@@ -58,6 +102,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2E4CE5',
   },
   buttonText: {
+    alignItems: 'center',
+    justifyContent: 'center',
     textAlign: 'center',
     color: '#fff',
   },
@@ -151,7 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: '#dae5ed',
     borderWidth: 10,
-  alignSelf: 'stretch',
+    alignSelf: 'stretch',
   },
   piker: {
     width: 50,
@@ -159,7 +205,7 @@ const styles = StyleSheet.create({
   seatsContainer: {
     marginTop: 10,
     flexDirection: 'row',
-    marginBottom: 5
+    marginBottom: 5,
   },
   seatsButton: {
     width: 100,
@@ -175,15 +221,7 @@ const styles = StyleSheet.create({
   },
   seatsText: {
     fontSize: 20,
-    paddingLeft: 40
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-    flexGrow: 1,
-    resizeMode: 'cover',
-    width: null,
-    height: null,
+    paddingLeft: 40,
   },
   margin: {
     marginLeft: 2,
@@ -191,19 +229,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   small: {
-    marginLeft: 20
-  },
-  modals: {
-    marginTop: 200,
-    backgroundColor: '#fff',
-    paddingBottom: 20,
-  },
-  profileContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
     marginLeft: 20,
-    marginRight: 20,
-    marginBottom: 70,
   },
 });
 

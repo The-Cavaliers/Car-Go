@@ -9,7 +9,6 @@ import {
   Image,
   Modal,
   TouchableHighlight,
-  AsyncStorage,
 } from 'react-native';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker'
@@ -63,7 +62,7 @@ class CreateList extends Component {
     .then((res) => {
       this.setState({
         groups: res.data,
-      })
+      });
     })
     .catch((err) => {
        console.log('cant find match', err);
@@ -95,9 +94,7 @@ class CreateList extends Component {
        console.log('cant find match', err);
     });
   }
-  changeToMap() {
 
-  }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -152,6 +149,7 @@ class CreateList extends Component {
     this.props.navigation.navigate('CarpoolMap');
 
   }
+
   render() {
     return (
         <Container>

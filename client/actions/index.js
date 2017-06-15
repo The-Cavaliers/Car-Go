@@ -1,4 +1,4 @@
-import { LOGIN_PROFILE, SET_PROFILE, GET_CHAT_ID } from './type';
+import { LOGIN_PROFILE, SET_PROFILE, GET_CHAT_ID, GET_ROOM_ID } from './type';
 
 export const setProfile = (data) => {
   return {
@@ -33,4 +33,11 @@ const getChatId = chatId => ({
 
 export const getChatIdAsync = chatId => (dispatch) => {
   dispatch(getChatId(chatId));
+};
+
+export const getRoomId = (roomId) => {
+  return {
+    type: GET_ROOM_ID,
+    roomId,
+  };
 };
