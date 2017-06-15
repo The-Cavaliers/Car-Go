@@ -6,9 +6,8 @@ import DrawerButton from './DrawerButton';
 
 import SocketIOClient from 'socket.io-client';
 import CONFIG from '../../config/development.json';
-
 import { messenger } from '../reducers/index';
-import { onReceivedMessageAsync } from '../actions/index';
+
 
 class Messenger extends React.Component {
 
@@ -110,7 +109,7 @@ const mapStateToProps = ({ loginProfile, messenger }) => {
     created_at,
     id,
   } = loginProfile;
-  const { chatId, messages } = messenger;
+  const { chatId } = messenger;
   return {
     username,
     email,
@@ -120,8 +119,6 @@ const mapStateToProps = ({ loginProfile, messenger }) => {
     created_at,
     id,
     chatId,
-    messages,
   };
 };
-export default connect(mapStateToProps, { onReceivedMessageAsync })
-(Messenger);
+export default connect(mapStateToProps)(Messenger);

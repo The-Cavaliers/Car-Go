@@ -1,4 +1,4 @@
-import { GET_CHAT_ID, RECEIVE_MSG } from '../actions/type';
+import { GET_CHAT_ID } from '../actions/type';
 
 const INITIAL_STATE = {
   chatId: '',
@@ -11,11 +11,6 @@ function messenger(state = INITIAL_STATE, { type, chatId, messages }) {
       return {
         ...state,
         chatId,
-      };
-    case RECEIVE_MSG:
-      return {
-        ...state,
-        messages,
       };
     default:
       return state;

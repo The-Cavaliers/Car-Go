@@ -1,5 +1,5 @@
 import { setProfile, setLoginProfile } from './profileActions';
-import { getChatId, onReceivedMessage } from './chatActions';
+import { getChatId } from './chatActions';
 
 export const setProfileAsync = (data) => {
   return function (dispatch) {
@@ -16,7 +16,3 @@ export const setLoginProfileAsync = (data) => {
 export const getChatIdAsync = chatId => (dispatch) => {
   dispatch(getChatId(chatId));
 };
-
-export const onReceivedMessageAsync = messages => (dispatch) => {
-  dispatch(onReceivedMessage(messages));
-}

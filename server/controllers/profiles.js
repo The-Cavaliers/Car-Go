@@ -17,8 +17,9 @@ module.exports.checkDestinations = (req, res) => {
   const date = req.body.travelDate;
   const leaving_from = req.body.leaving_from;
   const going_to = req.body.going_to;
-  console.log('this is the date', date, leaving_from, going_to);
+  const email = req.body.email;
   knex('groups').where('leaving_from', leaving_from)
+  .whereNot('groups.email', email)
   .andWhere('going_to', going_to)
   .andWhere('travelDate', date)
   .andWhere('seats', '>', 0)

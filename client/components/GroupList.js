@@ -73,20 +73,23 @@ class CreateList extends Component {
     this.setState({
       showLoading: true,
     })
-    fetch(`${CONFIG.URL}/grouplist`, {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: this.props.id
-      }),
-    })
-    .then(res => (res.json()))
+    // fetch(`${CONFIG.URL}/grouplist`, {
+    //   method: 'POST',
+    //   headers: {
+    //   Accept: 'application/json',
+    //   'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     user_id: this.props.id
+    //   }),
+    // })
+    // .then(res => (res.json()))
+    axios.post(`${CONFIG.URL}/grouplist`, { user_id: this.props.id })
     .then((res) => {
+      console.log('this is the res array from grouplist', res.data[0])
       this.setState({
-        groups: res,
+        groups: res.data,
+        // groups: res,
         showLoading: false
       })
     })
