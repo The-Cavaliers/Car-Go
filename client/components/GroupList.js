@@ -224,7 +224,7 @@ class CreateList extends Component {
     )
   }
 }
-const mapStateToProps = ({ loginProfile, getChatId }) => {
+const mapStateToProps = ({ loginProfile, messenger }) => {
   const {
     username,
     email,
@@ -234,7 +234,7 @@ const mapStateToProps = ({ loginProfile, getChatId }) => {
     created_at,
     id,
   } = loginProfile;
-  const { chatId } = getChatId;
+  const { chatId } = messenger;
   return {
     username,
     email,
