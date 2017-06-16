@@ -164,9 +164,6 @@ class CreateGroup extends Component {
               )
           }) : null}
 
-          <Button onPress={() => {this.checkDestination('going_to', this.state.goingTo)}}>
-            <Text style={styles.buttonText}>Check For Cities></Text>
-          </Button>
 
           {this.state.goingResults.length ? 
             this.state.goingResults.map((destination, index) => {
