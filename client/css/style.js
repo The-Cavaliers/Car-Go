@@ -21,7 +21,17 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     margin: 5,
-    marginBottom: 0,
+    padding: 10,
+    paddingBottom: 10,
+    alignSelf: 'stretch',
+    width: null,
+    borderWidth: 1,
+    borderColor: '#fff',
+    alignItems: 'center',
+  },
+  inputContainerJoinGroup: {
+    margin: 5,
+    marginTop: 215,
     padding: 10,
     paddingBottom: 10,
     alignSelf: 'stretch',
@@ -119,7 +129,6 @@ const styles = StyleSheet.create({
     width: 25,
     color: '#fff',
   },
-
   mapbuttonText: {
     fontSize: 8,
     marginTop: 8,
@@ -143,7 +152,6 @@ const styles = StyleSheet.create({
     top: 2,
     left: 2,
   },
-
   scrollContainer: {
     backgroundColor: '#fff',
     padding: 10,
@@ -151,7 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: '#dae5ed',
     borderWidth: 10,
-  alignSelf: 'stretch',
+    alignSelf: 'stretch',
   },
   piker: {
     width: 50,
@@ -159,7 +167,10 @@ const styles = StyleSheet.create({
   seatsContainer: {
     marginTop: 10,
     flexDirection: 'row',
-    marginBottom: 5
+    marginBottom: 5,
+  },
+  searchButtonStyle: {
+    height: 20,
   },
   seatsButton: {
     width: 100,
@@ -175,7 +186,13 @@ const styles = StyleSheet.create({
   },
   seatsText: {
     fontSize: 20,
-    paddingLeft: 40
+    paddingLeft: 40,
+  },
+  searchText: {
+    fontSize: 15,
+    color: 'white',
+    height: 20,
+    paddingLeft: 20
   },
   backgroundImage: {
     flex: 1,
@@ -191,7 +208,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   small: {
-    marginLeft: 20
+    marginLeft: 20,
   },
   modals: {
     marginTop: 200,
@@ -206,5 +223,4 @@ const styles = StyleSheet.create({
     marginBottom: 70,
   },
 });
-
 export default styles;

@@ -1,26 +1,25 @@
 import * as actions from '../actions';
 import { connect } from 'react-redux';
+import { Container, Content, Button } from 'native-base';
 import React, { Component } from 'react';
+import axios from 'axios';
 import {
+  Text,
+  TouchableOpacity,
+  View,
   StyleSheet,
   TextInput,
-  View,
-  Text,
   ScrollView,
-  TouchableOpacity,
   Image,
-  AsyncStorage,
 } from 'react-native';
-import DatePicker from 'react-native-datepicker'
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
-import NumberPicker from 'react-native-numberpicker';
-import { Container, Content, Button } from 'native-base';
-
+import SearchResults from './SearchResults';
+import DatePicker from 'react-native-datepicker'
 import CONFIG from '../../config/development.json';
 
 class CreateGroup extends Component {
-  static navigationOptions= ({navigation}) => ({
+  static navigationOptions = ({navigation}) => ({
     title: 'Create Group',
     headerLeft: <DrawerButton navigation={navigation} />,
     drawerLabel: 'Create Group',
@@ -28,95 +27,117 @@ class CreateGroup extends Component {
     constructor(props) {
     super(props)
     this.state = {
-      showCityError: false,
-      LeavingFrom: '',
+      leavingFrom: '',
       username: '',
       user_id: '',
       email: '',
       picture_url: '',
       goingTo: '',
-      date: '05-13-2017',
-      user_img: 'person.png',
+      date: new Date(),
+      user_img: this.props.picture_url,
       seats: 1,
+      leavingResults: [],
+      goingResults: [],
+    }
+    this.checkDestination = this.checkDestination.bind(this);
+    this.getDestination = this.getDestination.bind(this);
+    this.setSeats = this.setSeats.bind(this);
+    this.handleAddGroupClick = this.handleAddGroupClick.bind(this);
+  }
+
+  handleAddGroupClick() {
+    if (!this.state.leavingFrom.length) {
+      alert("Please enter from where you're leaving from");
+    } else if (!this.state.goingTo.length) {
+      alert("Please enter your destination");
+    } else {  
+      this.addGroup(); 
     }
   }
 
-  handleAddGroupClick = () => {
-    var cities = {'Oakland': true, 'San Francisco':true, 'Sunnyvale': true, 'Mt. View': true, 'Hayward': true, 'Palo Alto': true, 'Santa Clara': true, 'Cupertino': true, 'Fremont': true, 'San Jose': true, 'San Mateo': true, 'Santa Clara': true };
-      if(cities[this.state.LeavingFrom] && cities[this.state.goingTo]) {
-        this.addGroup();
-        this.setState({
-          showCityError: false
-        })
-      } else {
-        console.log('we have an loser')
-        this.setState({
-          showCityError: true
-        })
-      }
-    this.setState({
-      LeavingFrom: '',
-      goingTo: '',
-      date: '01-01-2017'
-    })
-  }
-  addGroup = () => {
-    fetch(`${CONFIG.URL}/newgroup`, {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.props.username,
-        email: this.props.email,
-        picture_url: this.props.picture_url,
-        user_id: this.props.id,
-        going_to: this.state.goingTo,
-        leaving_from: this.state.LeavingFrom,
-        travelDate: this.state.date,
-        seats: this.state.seats,
-      }),
-    })
-    .then((res) => {
-      res.json()
-    })
-    .then((res) => {
-      console.log('this is the response',res)
+  addGroup() {
+    if (this.state.leavingFrom === this.state.goingTo) {
+      alert('Starting point cannot be the same as the destination');
+      return;
+    } 
+    const data = {
+      username: this.props.username,
+      email: this.props.email,
+      picture_url: this.props.picture_url,
+      user_id: this.props.id,
+      going_to: this.state.goingTo,
+      leaving_from: this.state.leavingFrom,
+      travelDate: this.state.date,
+      seats: this.state.seats,
+    }
+
+    axios.post(`${CONFIG.URL}/newgroup`, data)
+    .then((response) => {
+      this.props.navigation.navigate('GroupList');
     })
     .catch((err) => {
-      this.setState({
-        showError: true
-      })
-       console.log('cant find match', err);
+      console.log('cant find match', err);
     });
   }
-  incrementCount = () => {
-    if(this.state.seats >= 3) {
-      this.setState({
-        seats: 0
-      })
+
+  setSeats() {
+    if (this.state.seats >= 3) {
+      alert('Maximum of three seats');
     } else {
+      const newSeatCount = this.state.seats + 1
       this.setState({
-        seats: this.state.seats + 1
-      })
+        seats: newSeatCount,
+      });
     }
   }
+
+  checkDestination(travelQuery, destination) {
+    axios.post(`${CONFIG.URL}/check-destination`, { destination })
+    .then((data) => {
+      if (data.data.length === 0) {
+        travelQuery === 'leaving_from' ? this.setState({ leavingResults: [] }) : this.setState({ goingResults: [] });
+        alert('Could not find a city');
+      }
+      let dest = data.data
+      travelQuery === 'leaving_from' ? this.setState({ leavingResults: dest }) : this.setState({ goingResults: dest });
+    })
+    .catch((error) => {
+      console.log('ERROR FINDING DESTINATION', error);
+    })
+  }
+
+  getDestination(destination, type) {
+    type === 'going_to' ? this.setState({ goingTo: destination, goingResults: [] }) : this.setState({ leavingFrom: destination, leavingResults: [] });
+  }
+
   render() {
     return (
 
       <Image source={require('../assets/group_Background.png')} style={styles.backgroundImage}>
 
         <View style={styles.inputContainer}>
-          {this.state.showCityError ? <Text style={styles.error}>Not available in this city, try another location</Text> : null}
-
           <TextInput
-            underlineColorIos="transparent"
             style={styles.input}
-            onChangeText={LeavingFrom => this.setState({ LeavingFrom })}
-            value={this.state.LeavingFrom}
+            underlineColorIos="transparent"
+            onChangeText={leavingFrom => this.setState({ leavingFrom })}
+            value={this.state.leavingFrom}
             placeholder="Leaving From"
           />
+
+          <View style={{paddingBottom: 10}}>
+
+          <Button  style={{height: 30, width: 150, justifyContent: 'center', alignSelf: 'center'}} onPress={() => {this.checkDestination('leaving_from', this.state.leavingFrom)}}>
+            <Text style={styles.buttonText}>Search For City</Text>
+          </Button>
+
+          </View>
+
+          {this.state.leavingResults.length ? 
+            this.state.leavingResults.map((destination, index) => {
+              return (
+                <SearchResults style={styles.input} key={index} destination={destination} getDestination={this.getDestination} type={'leaving_from'}/> 
+              )
+          }) : null}
 
           <TextInput
             underlineColorIos="transparent"
@@ -125,6 +146,19 @@ class CreateGroup extends Component {
             value={this.state.goingTo}
             placeholder="Going To"
           />
+          <View style={{paddingBottom: 10}}>
+
+          <Button style={{height: 30, width: 150, justifyContent: 'center', alignSelf: 'center', }} onPress={() => {this.checkDestination('going_to', this.state.goingTo)}}>
+            <Text style={styles.buttonText}>Search For City</Text>
+          </Button>
+          </View>
+
+          {this.state.goingResults.length ? 
+            this.state.goingResults.map((destination, index) => {
+              return (
+                <SearchResults style={styles.input} key={index} destination={destination} getDestination={this.getDestination} type={'going_to'} /> 
+              )
+          }) : null}
 
           <DatePicker
             style={{width: 200, borderColor: '#fff'}}
@@ -132,7 +166,7 @@ class CreateGroup extends Component {
             mode="date"
             placeholder="Select Date"
             format="MM-DD-YYYY"
-            minDate="06-01-2017"
+            minDate={new Date()}
             maxDate="01-10-2021"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
@@ -152,7 +186,7 @@ class CreateGroup extends Component {
           />
 
           <View style={styles.seatsContainer}>
-            <Button primary onPress={this.incrementCount}>
+            <Button primary onPress={this.setSeats}>
               <Text style={styles.buttonText}>Seats</Text>
             </Button>
 
