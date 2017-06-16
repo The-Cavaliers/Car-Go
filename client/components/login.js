@@ -18,9 +18,10 @@ import { connect } from 'react-redux';
 import DrawerButton from './DrawerButton';
 import GroupsButton from './GroupsButton';
 import Map from './Map';
-import UserProfile from './UserProfile';
 import CONFIG from '../../config/development.json';
-import { setProfileAsync, setLoginProfileAsync } from '../actions';
+import * as actions from '../actions';
+
+// import { mapStateToProps, mapDispatchToProps } from './AppWithNavigationState';
 
 const Auth0Lock = require('react-native-lock');
 
@@ -30,11 +31,11 @@ const lock = new Auth0Lock({
 });
 
 
-class Home extends Component {
+class Login extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'CarGo',
     headerLeft: <DrawerButton navigation={navigation} />,
-    drawerLabel: 'Home',
+    drawerLabel: 'Log Out',
     headerRight: <GroupsButton navigation={navigation} />,
     drawerIcon: ({ tintColor }) => (
       <Image
@@ -43,7 +44,6 @@ class Home extends Component {
       />
     ),
   });
-
   constructor(props) {
     super(props);
       this.state ={
@@ -55,17 +55,17 @@ class Home extends Component {
           longitudeDelta: 0.0421,
         },
         isMapVisible: false,
-        isLoggedIn: false,
+        isLoggedIn: false
       }
     this._login = this._login.bind(this);
   };
 
   componentDidMount () {
-    if (this.props.username === '') {
-      this._login();
-    }
+    this._login();
     navigator.geolocation.getCurrentPosition((position) => {
       var initialPosition = JSON.stringify(position);
+      // console.log('JSON', initialPosition);
+      // console.log('POSITION', position);
       this.setState({
         region:  {
           latitude: 37.783692,
@@ -88,7 +88,6 @@ class Home extends Component {
 
   _login() {
     lock.show({}, (err, profile, token) => {
-      console.log("PROFILE PROFILE PROFILE", profile)
       if (err) {
         console.log(err);
         return;
@@ -105,49 +104,19 @@ class Home extends Component {
       }
       axios.post(`${CONFIG.URL}/sign-login`, newUser)
       .then((data) => {
-        const userProfile = data.data[1][0];
-        this.props.setLoginProfileAsync(userProfile);
-        return;
-      }).then((data) => {
-        axios.post(`${CONFIG.URL}/verifyProfile`, { email: this.props.email })
-        .then((data) => {
-          let profile = data.data;
-          if (profile[0]) {
-            console.log('PROFILEEEE', profile)
-            profile[1][0].home = true;
-            this.props.setProfileAsync(profile[1][0]);
-          } else {
-            this.props.setProfileAsync({ 'existing_user': false });
-          }
-        })
-        .catch((err) => {
-          console.log('err', err)
-        })
+        this.props.setLoginProfileAsync(data.data[1][0]);
       })
       .catch((error) => {
         console.log('error from /sign-up', error);
       });
     });
   }
-
   render() {
-    if (this.props.existing_user) {
-      return (
-        <TabView tabBarPosition={'bottom'} initialPage={1}>
-          <JoinGroupScreen tabLabel='Find a Ride' />
-          <Map tabLabel='View Map' />
-          <CreateGroup tabLabel='Create Group' />
-        </TabView>
-      )
-    } else {
-      return (
-
-        <UserProfile />
-      )
-    }
+    return (
+     null
+    )
   }
 }
-
 const styles = StyleSheet.create({
   icon: {
     width: 24,
@@ -155,7 +124,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ loginProfile, preferences }) => {
+const mapStateToProps = ({ loginProfile }) => {
   const {
     username,
     email,
@@ -164,13 +133,7 @@ const mapStateToProps = ({ loginProfile, preferences }) => {
     social_provider,
     created_at,
     id,
-    user_id,
   } = loginProfile;
-
-  const {
-    existing_user,
-  } = preferences;
-
   return {
     username,
     email,
@@ -178,10 +141,9 @@ const mapStateToProps = ({ loginProfile, preferences }) => {
     token,
     social_provider,
     created_at,
-    existing_user,
     id,
-    user_id,
   };
 };
 
-export default connect(mapStateToProps, { setProfileAsync, setLoginProfileAsync })(Home);
+
+export default connect(mapStateToProps, actions)(Home);

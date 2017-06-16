@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+
+  backgroundImage: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -9,15 +10,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     width: null,
     height: null,
-  },
-  welcome: {
-    textAlign: 'center',
-    margin: 20,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-    color: '#fff',
-    width: 160,
-    opacity: 0.6,
   },
   inputContainer: {
     margin: 5,
@@ -45,9 +37,61 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     marginBottom: 10,
+    width: '100%',
     backgroundColor: 'rgba(255,255,255,1)',
     borderWidth: 1,
     borderColor: '#D8D9DD',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  inputCustom: {
+    fontSize: 16,
+    height: 40,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: 'rgba(255,255,255,1)',
+    borderWidth: 1,
+    borderColor: '#D8D9DD',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    resizeMode: 'cover',
+    width: null,
+    height: null,
+  },
+  welcome: {
+    textAlign: 'center',
+    margin: 20,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    color: '#fff',
+    width: 160,
+    opacity: 0.6,
+  },
+  buttonStyle: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#007aff',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  textStyle: {
+    alignSelf: 'center',
+    color: '#007aff',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   bioinput: {
     fontSize: 16,
@@ -68,6 +112,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2E4CE5',
   },
   buttonText: {
+    alignItems: 'center',
+    justifyContent: 'center',
     textAlign: 'center',
     color: '#fff',
   },
@@ -219,8 +265,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 20,
-    marginRight: 20,
-    marginBottom: 70,
   },
 });
 export default styles;

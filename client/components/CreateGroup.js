@@ -14,8 +14,11 @@ import {
 } from 'react-native';
 import styles from '../css/style';
 import DrawerButton from './DrawerButton';
+
 import SearchResults from './SearchResults';
 import DatePicker from 'react-native-datepicker'
+
+
 import CONFIG from '../../config/development.json';
 
 class CreateGroup extends Component {
@@ -79,6 +82,7 @@ class CreateGroup extends Component {
       console.log('cant find match', err);
     });
   }
+
 
   setSeats() {
     if (this.state.seats >= 3) {
@@ -157,6 +161,17 @@ class CreateGroup extends Component {
             this.state.goingResults.map((destination, index) => {
               return (
                 <SearchResults style={styles.input} key={index} destination={destination} getDestination={this.getDestination} type={'going_to'} /> 
+              )
+          }) : null}
+
+          <Button onPress={() => {this.checkDestination('going_to', this.state.goingTo)}}>
+            <Text style={styles.buttonText}>Check For Cities></Text>
+          </Button>
+
+          {this.state.goingResults.length ? 
+            this.state.goingResults.map((destination, index) => {
+              return (
+                <SearchResults style={styles.input} destination={destination} getDestination={this.getDestination} type={'going_to'} /> 
               )
           }) : null}
 
