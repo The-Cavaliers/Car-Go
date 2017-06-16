@@ -9,7 +9,6 @@ import {
   Image,
   Modal,
   TouchableHighlight,
-  AsyncStorage,
 } from 'react-native';
 import axios from 'axios';
 import DatePicker from 'react-native-datepicker'
@@ -63,7 +62,7 @@ class CreateList extends Component {
     .then((res) => {
       this.setState({
         groups: res.data,
-      })
+      });
     })
     .catch((err) => {
        console.log('cant find match', err);
@@ -74,20 +73,23 @@ class CreateList extends Component {
     this.setState({
       showLoading: true,
     })
-    fetch(`${CONFIG.URL}/grouplist`, {
-      method: 'POST',
-      headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: this.props.id
-      }),
-    })
-    .then(res => (res.json()))
+    // fetch(`${CONFIG.URL}/grouplist`, {
+    //   method: 'POST',
+    //   headers: {
+    //   Accept: 'application/json',
+    //   'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     user_id: this.props.id
+    //   }),
+    // })
+    // .then(res => (res.json()))
+    axios.post(`${CONFIG.URL}/grouplist`, { user_id: this.props.id })
     .then((res) => {
+      console.log('this is the res array from grouplist', res.data[0])
       this.setState({
-        groups: res,
+        groups: res.data,
+        // groups: res,
         showLoading: false
       })
     })
@@ -95,9 +97,7 @@ class CreateList extends Component {
        console.log('cant find match', err);
     });
   }
-  changeToMap() {
 
-  }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -152,6 +152,7 @@ class CreateList extends Component {
     this.props.navigation.navigate('CarpoolMap');
 
   }
+
   render() {
     return (
         <Container>

@@ -4862,6 +4862,10 @@ lodash.create@3.1.1:
     lodash._basecreate "^3.0.0"
     lodash._isiterateecall "^3.0.0"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
 lodash.escape@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
@@ -5108,13 +5112,13 @@ mime-db@~1.23.0:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.23.0.tgz#a31b4070adaea27d732ea333740a64d0ec9a6659"
 
-mime-types@2.1.11:
+mime-types@2.1.11, mime-types@~2.1.7:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.11.tgz#c259c471bda808a85d6cd193b430a5fae4473b3c"
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.10, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6, mime-types@~2.1.7, mime-types@~2.1.9:
+mime-types@^2.1.10, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15, mime-types@~2.1.6, mime-types@~2.1.9:
   version "2.1.15"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.15.tgz#a4ebf5064094569237b8cf70046776d09fc92aed"
   dependencies:
@@ -5192,6 +5196,10 @@ mocha@^3.4.2:
 moment@2.17.1, moment@2.x.x:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
+
+moment@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
 morgan@^1.8.2:
   version "1.8.2"
@@ -6030,7 +6038,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8:
+prop-types@15.5.10, prop-types@^15.5.10, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -6103,6 +6111,10 @@ qs@4.0.0:
 qs@6.4.0, qs@^6.1.0, qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+
+qs@^5.2.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.1.tgz#801fee030e0b9450d6385adc48a4cc55b44aedfc"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
@@ -6191,6 +6203,10 @@ react-devtools-core@^2.0.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-animatable@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.2.tgz#a873550e6f7cb95f90baf46b9eb15b1ab56425cb"
+
 react-native-auth0@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/react-native-auth0/-/react-native-auth0-0.0.1.tgz#6a712cc0f00740337396205bc3da453f52d25026"
@@ -6268,6 +6284,13 @@ react-native-gifted-chat@^0.1.4:
     shallowequal "0.2.2"
     uuid "3.0.1"
 
+react-native-google-places-autocomplete@^1.2.12:
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-1.2.12.tgz#714c731be35bfca190239d98cbc7e0d518b38d98"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    qs "^5.2.0"
+
 react-native-invertible-scroll-view@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-invertible-scroll-view/-/react-native-invertible-scroll-view-1.0.0.tgz#60ceb384dc950c34eba3a5aeda39f97cdc7d4e23"
@@ -6308,6 +6331,21 @@ react-native-material-design@^0.3.7:
     react-native-material-design-styles "git+https://github.com/react-native-material-design/react-native-material-design-styles.git"
     react-native-vector-icons "^2.0.1"
 
+react-native-modal-datetime-picker@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-4.7.0.tgz#c2398894cf01fb58c9652ed258f93232c644de4a"
+  dependencies:
+    moment "^2.18.1"
+    prop-types "15.5.10"
+    react-native-modal "^2.4.0"
+
+react-native-modal@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-2.4.0.tgz#ea9794f5ba9fa21476d337da291ec26930904995"
+  dependencies:
+    prop-types "15.5.10"
+    react-native-animatable "^1.2.0"
+
 react-native-numberpicker@^0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/react-native-numberpicker/-/react-native-numberpicker-0.0.5.tgz#5386b2f5906e7306a67fe0d32fd89ffad08f21fa"
@@ -6339,6 +6377,10 @@ react-native-tab-view@^0.0.65:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
   dependencies:
     prop-types "^15.5.8"
+
+react-native-timepicker@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-timepicker/-/react-native-timepicker-1.0.3.tgz#f206cf1cdf19284f174b95a13aa4fcbbfe4f3bc8"
 
 react-native-vector-icons@^2.0.1:
   version "2.1.0"

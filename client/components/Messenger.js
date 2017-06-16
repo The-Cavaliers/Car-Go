@@ -96,7 +96,7 @@ class Messenger extends React.Component {
         renderAvatarOnTop={true}
       />
     );
-  }
+  };
 }
 
 const mapStateToProps = ({ loginProfile, getChatId }) => {
