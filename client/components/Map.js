@@ -21,8 +21,8 @@ class Maps extends Component {
       region: {
         latitude: 37.775037,
         longitude: -122.229411,
-        latitudeDelta: 0.4,
-        longitudeDelta: 0.3421,
+        latitudeDelta: 0.0122,
+        longitudeDelta: 0.2421,
       },
       isMapVisible: false,
       listOfRegions: [],
@@ -35,7 +35,7 @@ class Maps extends Component {
         region: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0522,
+          latitudeDelta: 0.0322,
           longitudeDelta: 0.0221,
           loc: 0,
         },

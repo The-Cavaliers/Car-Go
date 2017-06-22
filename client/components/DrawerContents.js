@@ -14,9 +14,9 @@ class DrawerContent extends React.Component {
     return (
       <View style={container}>
         <View style={profile}>
-          <Image source={{ uri: this.props.picture_url }} style={avatar} />
-          <Text style={name}>{this.props.username }</Text>
-          <Text style={email}>{this.props.email }</Text>
+          <Image source={{ url: this.props.picture_url || ''}} style={avatar} />        
+          <Text style={name}>{this.props.username || '' }</Text>
+          <Text style={email}>{this.props.email || '' }</Text>
         </View>
         <DrawerItems {...this.props} />
       </View>

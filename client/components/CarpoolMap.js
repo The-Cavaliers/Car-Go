@@ -14,7 +14,9 @@ import axios from 'axios';
 import CONFIG from '../../config/development.json';
 import PubNub from 'pubnub';
 import { Button, Text } from 'native-base';
-import { GetCurrentLocation, addPubNubRiderPublisher } from '../services/pubnubClient';
+// import { GetCurrentLocation, addPubNubRiderPublisher } from '../services/pubnubClient';
+import styles from '../css/style';
+import haversine from 'haversine';
 
 class clientPubNub extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -62,8 +64,8 @@ class clientPubNub extends Component {
       this.state.Destination = 'somerset square park, cupertino, CA';  // simulation 
       axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.state.Destination}&key=${CONFIG.GoogleGeocoder.key}`)
       .then((data) => {
-        console.log("destinationnnnnnn", data)
         this.state.finalDestination = data.data.results[0].geometry.location;
+       
       })
       .catch((error) => {
         console.log('error from google', error);
@@ -72,7 +74,7 @@ class clientPubNub extends Component {
         this.watchUserPostion();
       } else if (this.state.channelUserRole === 'Rider') {
         //Publish own location coordinates
-        addPubNubRiderPublisher(this.state.channelName,' Rider', this.props.username);
+        //addPubNubRiderPublisher(this.state.channelName,' Rider', this.props.username);
         this.addPubNubListener(this.state.channelName, 'Rider');
       }
     });
@@ -91,7 +93,7 @@ class clientPubNub extends Component {
   watchUserPostion() {
     let counter = 0;
     alert('Driver');
-    this.getPolyLineDetails();
+    //this.getPolyLineDetails();
     // call the subscribe
     this.addPubNubListener(this.state.channelName, 'Driver');
     this.watchID = navigator.geolocation.watchPosition((position) => {
@@ -106,11 +108,10 @@ class clientPubNub extends Component {
       }
       //For conditional publishing with switched groups
       AsyncStorage.getItem('MapGroup', (err, group_data) => {
+        
         if (this.state.channelName === JSON.parse(group_data).group) {
-          //check if the destination has reached and unsubscribe
-          if ((this.state.finalDestination.lat === positionLatLngs.latitude) && (this.state.finalDestination.lng === positionLatLngs.longitude)) {
-            this.UnsubscribeRiders();
-          }
+          //check if the destination has reached and unsubscribe  
+           console.log("destinationnnnn", this.state.finalDestination,positionLatLngs  );    
           this.addPubNubPublisher(positionLatLngs, this.state.channelName, this.state.channelUserRole)
         }
       });
@@ -170,11 +171,20 @@ class clientPubNub extends Component {
             if (message.message.player === 'Driver') {
               //Plot the received driver's positions on the map
               console.log(message);
-              currentLatitude = message.message.position.latitude;
-              currentLongitude = message.message.position.longitude;
-              if((currentLatitude === that.state.riderCoords.latitude) && (currentLongitude === that.state.riderCoords.longitude)){
-                alert("Car has arrived")
+              currentCoords = {
+                latitude: message.message.position.latitude,
+                longitude: message.message.position.longitude
               }
+              currentLongitude = message.message.position.longitude;
+              // if((currentLatitude === that.state.riderCoords.latitude) && (currentLongitude === that.state.riderCoords.longitude)){
+              //   alert("Car has arrived")
+              // }
+
+              if (haversine(that.state.riderCoords,currentCoords, {threshold:100, unit: 'meter'})) { 
+                  that.UnsubscribeRiders();
+            alert("Driver Reached your destination");
+            
+          }
               that.setState({ routeCoordinates: routeCoordinates.concat(message.message.position) });
             }
           }
@@ -254,13 +264,15 @@ class clientPubNub extends Component {
   //Google polyline for Drivers
   getPolyLineDetails = () => {
     console.log("hellllo")
-    const startLocation = '37.331820, -122.031180';  // Apple office Demo purpose
-    const endLocation = '37.331509, 122.059153 '
+    const startLocation = '7 Infinite Loop, Cupertino, CA 95014, USA';  // Apple office Demo purpose, Replace with this.state.finalDestination
+    const endLocation = '37.33414, -122.047359 '
     //const wayPoints = ['Foster City, CA', 'Redwood City. CA'];
     const key = CONFIG.GoogleGeocoder.key;
-    axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLocation}&destination=${endLocation}&key=${key}`)
+    axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLocation}&destination=${endLocation}&alternatives=true&key=${key}`)
     .then((data) => {
+      console.log(data);
       const points = Polyline.decode(data.data.routes[0].overview_polyline.points);
+      
       const coords = points.map((point) => ({
         latitude: point[0],
         longitude: point[1],
@@ -290,10 +302,15 @@ class clientPubNub extends Component {
           longitudeDelta: 0.0421
         }}
       >
+    { (this.state.channelUserRole === 'Rider') ?
+       ( 
         <MapView.Polyline
           coordinates={this.state.routeCoordinates}
           strokeWidth={5}
           strokeColor="blue" /> 
+       ):(
+         null
+       )}
 
     { (this.state.channelUserRole === 'Driver') ?
        ( 
@@ -324,41 +341,30 @@ class clientPubNub extends Component {
             null
           )
         }
-        <Button small rounded danger onPress={() => this.UnsubscribeRiders()}>
-          <Text>UnSubscribe</Text>
-        </Button>
+        { (this.state.channelUserRole === 'Driver') ?
+        (
+          <MapView.Polyline
+            coordinates={this.state.coords}
+            strokeWidth={5}
+            strokeColor="red"/> 
+
+        ): (
+          null
+        )
+        
+
+        }
+        <View style={styles.MapButton}>
+          <Button
+          small danger onPress={() => this.UnsubscribeRiders()}>
+            <Text>UnSubscribe</Text>
+          </Button>
+        </View>
       </MapView>
 
     );
   }
 }
-const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  containers: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
-  map: {
-    flex: 1,
-  },
-  bubble: {
-    flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
-});
-
 const mapStateToProps = ({ loginProfile }) => {
   const {
     username,

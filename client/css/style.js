@@ -187,11 +187,11 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   loading: {
-    height:50,
+    height: 50,
     width: 50,
   },
   icon: {
-    height:36,
+    height: 36,
     width: 36,
     borderRadius: 16,
     position: 'absolute',
@@ -265,6 +265,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 20,
+  },
+  MapButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 100,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+  containers: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  },
+  map: {
+    flex: 1,
   },
 });
 export default styles;
