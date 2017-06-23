@@ -47,6 +47,11 @@ class CreateList extends Component {
     this.getGroups(this.props.id)
     this.getProfile(this.props.email);
   }
+  componentWillReceiveProps () {
+    this.setState({
+      profile: []
+    });
+  }
 
   handleChatClick(id) {
     this.props.getChatIdAsync(id);

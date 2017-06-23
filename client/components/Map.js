@@ -21,8 +21,8 @@ class Maps extends Component {
       region: {
         latitude: 37.775037,
         longitude: -122.229411,
-        latitudeDelta: 0.0322,
-        longitudeDelta: 0.6421,
+        latitudeDelta: 0.0122,
+        longitudeDelta: 0.2421,
       },
       isMapVisible: false,
       listOfRegions: [],
@@ -35,7 +35,7 @@ class Maps extends Component {
         region: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0522,
+          latitudeDelta: 0.0322,
           longitudeDelta: 0.0221,
           loc: 0,
         },
@@ -54,7 +54,7 @@ class Maps extends Component {
         });
       });
       this.setState({ listOfRegions: coords });
-      // console.log(this.state.listOfRegions);
+        console.log(this.state.listOfRegions);
     })
     .catch((error) => {
       // console.log(error);
@@ -79,7 +79,7 @@ class Maps extends Component {
           <MapView.Marker
             key={id}
             coordinate={marker}
-            image={require('../assets/Car1.png')}
+            image={require('../assets/Caar1.png')}
           />
          ))}
       </MapView>
