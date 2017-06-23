@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'white',
     height: 20,
-    paddingLeft: 20
+    paddingLeft: 20,
   },
   backgroundImage: {
     flex: 1,
@@ -270,10 +270,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 100,
-  },
-  icon: {
-    width: 24,
-    height: 24,
   },
   containers: {
     flex: 1,
